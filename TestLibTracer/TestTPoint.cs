@@ -45,12 +45,12 @@ namespace TestLibTracer
         }
 
         [Test]
-        public void AddingVectorToPoint_Returns_Vector()
+        public void AddingVectorToPoint_Returns_Point()
         {
             var point1 = new TPoint(0, 0, 0);
             var vector2 = new TVector(0, 0, 0);
 
-            Assert.That(point1 + vector2, Is.InstanceOf<TVector>());
+            Assert.That(point1 + vector2, Is.InstanceOf<TPoint>());
         }
 
         [Test]
@@ -59,9 +59,9 @@ namespace TestLibTracer
             var point1 = new TPoint(1, 0, 0);
             var vector2 = new TVector(2, 0, 0);
 
-            TVector vector3 = point1 + vector2;
+            TPoint point3 = point1 + vector2;
 
-            Assert.That(vector3.X, Is.EqualTo(3));
+            Assert.That(point3.X, Is.EqualTo(3));
         }
 
         [Test]
@@ -70,9 +70,9 @@ namespace TestLibTracer
             var point1 = new TPoint(0, 2, 0);
             var vector2 = new TVector(0, 4, 0);
 
-            TVector vector3 = point1 + vector2;
+            TPoint point3 = point1 + vector2;
 
-            Assert.That(vector3.Y, Is.EqualTo(6));
+            Assert.That(point3.Y, Is.EqualTo(6));
         }
 
         [Test]
@@ -81,9 +81,9 @@ namespace TestLibTracer
             var point1 = new TPoint(0, 0, 4);
             var vector2 = new TVector(0, 0, 8);
 
-            TVector vector3 = point1 + vector2;
+            TPoint point3 = point1 + vector2;
 
-            Assert.That(vector3.Z, Is.EqualTo(12));
+            Assert.That(point3.Z, Is.EqualTo(12));
         }
 
         [Test]
