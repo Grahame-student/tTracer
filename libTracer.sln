@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libTracer", "libTracer\libT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestLibTracer", "TestLibTracer\TestLibTracer.csproj", "{352FC593-9C84-4E62-B566-1B193BDE846D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "projectileDemo", "projectileDemo\projectileDemo.csproj", "{334B6ABB-8366-40F3-83BB-A43327D803AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoProjectile", "projectileDemo\demoProjectile.csproj", "{334B6ABB-8366-40F3-83BB-A43327D803AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
