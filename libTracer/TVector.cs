@@ -15,7 +15,7 @@ namespace libTracer
         public Single X { get; }
         public Single Y { get; }
         public Single Z { get; }
-        public static Single W => 0;
+        public Single W => 0;
         public Single Magnitude => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         public static TVector operator +(TVector v1, TVector v2) => new(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);

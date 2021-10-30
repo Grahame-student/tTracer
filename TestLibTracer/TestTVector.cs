@@ -41,7 +41,7 @@ namespace TestLibTracer
         {
             _vector = new TVector(0, 0, SOME_Z);
 
-            Assert.That(TVector.W, Is.EqualTo(0f));
+            Assert.That(_vector.W, Is.EqualTo(0f));
         }
 
 

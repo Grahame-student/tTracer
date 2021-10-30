@@ -13,7 +13,19 @@ namespace libTracer
 
         public Int32 Columns => _members.GetLength(DIMINSION_COLS);
 
+        public Boolean IsInvertable => Determinant() != 0;
+
         public Single this[Int32 col, Int32 row] => _members[row, col];
+
+        public TMatrix() : this(new Single[,]
+        {
+            { 1, 0, 0, 0 },
+            { 0, 1, 0, 0 },
+            { 0, 0, 1, 0 },
+            { 0, 0, 0, 1 },
+        })
+        {
+        }
 
         public TMatrix(Single[,] members)
         {
@@ -53,6 +65,20 @@ namespace libTracer
             });
         }
 
+        public static TVector operator *(TMatrix m, TVector v)
+        {
+            // Hard coding for 4x4 matrix
+            return new TVector(m[0, 0] * v.X + 
+                                 m[1, 0] * v.Y + 
+                                 m[2, 0] * v.Z + 
+                                 m[3, 0] * v.W,
+                               m[0, 1] * v.X + 
+                                 m[1, 1] * v.Y + 
+                                 m[2, 1] * v.Z + 
+                                 m[3, 1] * v.W,
+                               m[0, 2] * v.X + m[1, 2] * v.Y + m[2, 2] * v.Z + m[3, 2] * v.W);
+        }
+
         public Boolean Equals(TMatrix other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -89,6 +115,87 @@ namespace libTracer
             }
 
             return result;
+        }
+
+        public TMatrix Transpose()
+        {
+            var result = new Single[Columns, Rows];
+            for (var row = 0; row < Rows; row++)
+            {
+                for (var col = 0; col < Columns; col++)
+                {
+                    result[col, row] = _members[row, col];
+                }
+            }
+
+            return new TMatrix(result);
+        }
+
+        public Single Determinant()
+        {
+            Single result = 0;
+            if ((Rows == 2) && (Columns == 2))
+            {
+                result = _members[0, 0] * _members[1, 1] -
+                         _members[0, 1] * _members[1, 0];
+            }
+            else
+            {
+                for (var col = 0; col < Columns; col++)
+                {
+                    result += Cofactor(0, col) * _members[0, col];
+                }
+            }
+
+            return result;
+        }
+
+        public TMatrix SubMatrix(Int32 delRow, Int32 delCol)
+        {
+            var result = new Single[Rows - 1, Columns - 1];
+            var newRow = 0;
+
+            for (var curRow = 0; curRow < Rows; curRow++)
+            {
+                var newCol = 0;
+                if (curRow == delRow) continue;
+                for (var curCol = 0; curCol < Columns; curCol++)
+                {
+                    if (curCol == delCol) continue;
+                    result[newRow, newCol] = _members[curRow, curCol];
+                    newCol++;
+                }
+
+                newRow++;
+            }
+
+            return new TMatrix(result);
+        }
+
+        public Single Minor(Int32 row, Int32 col)
+        {
+            return SubMatrix(row, col).Determinant();
+        }
+
+        public Single Cofactor(Int32 row, Int32 col)
+        {
+            return ((row + col) & 1) == 0 ?  Minor(row, col) : -Minor(row, col);
+        }
+
+        public TMatrix Inverse()
+        {
+            var result = new Single[Rows, Columns];
+
+            Single determinant = Determinant();
+            for (var row = 0; row < Rows; row++)
+            {
+                for (var col = 0; col < Columns; col++)
+                {
+                    result[col, row] = Cofactor(row, col) / determinant;
+                }
+            }
+
+            return new TMatrix(result);
         }
     }
 }
