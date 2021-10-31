@@ -41,7 +41,7 @@ namespace TestLibTracer
         {
             _point = new TPoint(0, 0, SOME_Z);
 
-            Assert.That(TPoint.W, Is.EqualTo(1f));
+            Assert.That(_point.W, Is.EqualTo(1f));
         }
 
         [Test]
@@ -168,6 +168,87 @@ namespace TestLibTracer
             TPoint point3 = point1 - vector2;
 
             Assert.That(point3.Z, Is.EqualTo(8));
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenXEqualToOtherX()
+        {
+            var point1 = new TPoint(1, 0, 0);
+            var point2 = new TPoint(1, 0, 0);
+
+            Assert.That(point1, Is.EqualTo(point2));
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenYEqualToOtherY()
+        {
+            var point1 = new TPoint(0, 2, 0);
+            var point2 = new TPoint(0, 2, 0);
+
+            Assert.That(point1, Is.EqualTo(point2));
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenZEqualToOtherZ()
+        {
+            var point1 = new TPoint(0, 0, 3);
+            var point2 = new TPoint(0, 0, 3);
+
+            Assert.That(point1, Is.EqualTo(point2));
+        }
+
+        [Test]
+        public void Equals_ReturnsFalse_WhenOtherIsObjectAndNull()
+        {
+            var point1 = new TPoint(0, 0, 0);
+            Object point2 = null;
+
+            Assert.That(point1.Equals(point2), Is.False);
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenOtherIsObject()
+        {
+            var point1 = new TPoint(0, 0, 0);
+            Object point2 = new TPoint(0, 0, 0);
+
+            Assert.That(point1.Equals(point2), Is.True);
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenOtherIsObjectAndSameReference()
+        {
+            var point1 = new TPoint(0, 0, 0);
+            Object point2 = point1;
+
+            Assert.That(point1.Equals(point2), Is.True);
+        }
+
+        [Test]
+        public void Equals_ReturnsFalse_WhenOtherIsVectorAndNull()
+        {
+            var point1 = new TPoint(0, 0, 0);
+            TPoint point2 = null;
+
+            Assert.That(point1.Equals(point2), Is.False);
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenOtherIsVectorAndSameReference()
+        {
+            var point1 = new TPoint(0, 0, 0);
+            TPoint point2 = point1;
+
+            Assert.That(point1.Equals(point2), Is.True);
+        }
+
+        [Test]
+        public void Hashcode_ReturnsSameValue_WhenSetToSameValues()
+        {
+            var point1 = new TPoint(2, 3, 4);
+            var point2 = new TPoint(2, 3, 4);
+
+            Assert.That(point1.GetHashCode(), Is.EqualTo(point2.GetHashCode()));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Runtime.InteropServices.ComTypes;
 using libTracer;
 
 using NUnit.Framework;
@@ -10,6 +10,13 @@ namespace TestLibTracer
     {
         private const Int32 ROW_1 = 1;
         private const Int32 COL_1 = 1;
+
+        private const Single SOME_X = 1.25f;
+        private const Single SOME_Y = 2.33f;
+        private const Single SOME_Z = 3.66f;
+
+        private const Single EIGHTH_ROTATION_CLOCKWISE  = MathF.PI / 4;
+        private const Single QUARTER_ROTATION_CLOCKWISE = MathF.PI / 2;
 
         private TMatrix _matrix;
 
@@ -278,7 +285,7 @@ namespace TestLibTracer
         }
 
         [Test]
-        public void Multiply_TreatsVectorsX_AsCol0Row0()
+        public void Multiply_ReturnsDotProductForEachCell_WhenMultipliedByVector()
         {
             var matrix1 = new TMatrix(
                 new[,] {
@@ -304,6 +311,27 @@ namespace TestLibTracer
             TVector result = matrix1 * vector2;
 
             Assert.That(result, Is.EqualTo(vector2));
+        }
+
+        [Test]
+        public void Multiply_ReturnsInstanceOfPoint_WhenMultiplyingByPoint()
+        {
+            var matrix1 = new TMatrix();
+            var point2 = new TPoint(1, 2, 3);
+
+            Assert.That(matrix1 * point2, Is.InstanceOf<TPoint>());
+        }
+
+        [Test]
+        public void Multiply_ReturnsDotProductForEachCell_WhenMultipliedByPoint()
+        {
+            TMatrix matrix1 = new TMatrix().Translation(5, -3, 2);
+            var point2 = new TPoint(-3, 4, 5);
+
+            TPoint result = matrix1 * point2;
+
+            var expectedResult = new TPoint(2, 1, 7);
+            Assert.That(result, Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -582,6 +610,740 @@ namespace TestLibTracer
             TMatrix result = _matrix.Inverse();
 
             Assert.That(result.Inverse(), Is.EqualTo(original));
+        }
+
+        [Test]
+        public void Translation_Returns_InstanceOfMatrix()
+        {
+            _matrix = new TMatrix();
+
+            Assert.That(_matrix.Translation(0, 0, 0), Is.InstanceOf<TMatrix>());
+        }
+
+        [Test]
+        public void Translation_ReturnsMatrix_With4Rows()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Translation(0, 0, 0);
+
+            Assert.That(result.Rows, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void Translation_ReturnsMatrix_With4Columns()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Translation(0, 0, 0);
+
+            Assert.That(result.Columns, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void Translation_SetsR0C3_ToXComponent()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Translation(SOME_X, 0, 0);
+
+            Assert.That(result[3, 0], Is.EqualTo(SOME_X));
+        }
+
+        [Test]
+        public void Translation_SetsR1C3_ToYComponent()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Translation(0, SOME_Y, 0);
+
+            Assert.That(result[3, 1], Is.EqualTo(SOME_Y));
+        }
+
+        [Test]
+        public void Translation_SetsR2C3_ToZComponent()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Translation(0, 0, SOME_Z);
+
+            Assert.That(result[3, 2], Is.EqualTo(SOME_Z));
+        }
+
+        [Test]
+        public void Translation_MovesPointInOppositeDirection_WhenInverted()
+        {
+            _matrix = new TMatrix().Translation(5, -3, 2).Inverse();
+            var point = new TPoint(-3, 4, 5);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(-8, 7, 3);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Translation_ReturnsOriginalVector_WhenMultiplyingByVector()
+        {
+            TMatrix matrix = new TMatrix().Translation(SOME_X, SOME_Y, SOME_Z);
+            var vector = new TVector(5, 6, 7);
+
+            TVector result = matrix * vector;
+
+            Assert.That(result, Is.EqualTo(vector));
+        }
+
+        [Test]
+        public void Scaling_Returns_InstanceOfMatrix()
+        {
+            _matrix = new TMatrix();
+
+            Assert.That(_matrix.Scaling(0, 0, 0), Is.InstanceOf<TMatrix>());
+        }
+
+        [Test]
+        public void Scaling_ReturnsMatrix_With4Rows()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Scaling(0, 0, 0);
+
+            Assert.That(result.Rows, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void Scaling_ReturnsMatrix_With4Columns()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Scaling(0, 0, 0);
+
+            Assert.That(result.Columns, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void Scaling_SetsR0C0_ToXComponent()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Scaling(SOME_X, 0, 0);
+
+            Assert.That(result[0, 0], Is.EqualTo(SOME_X));
+        }
+
+        [Test]
+        public void Scaling_SetsR1C1_ToYComponent()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Scaling(0, SOME_Y, 0);
+
+            Assert.That(result[1, 1], Is.EqualTo(SOME_Y));
+        }
+
+        [Test]
+        public void Scaling_SetsR2C2_ToZComponent()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Scaling(0, 0, SOME_Z);
+
+            Assert.That(result[2, 2], Is.EqualTo(SOME_Z));
+        }
+
+        [Test]
+        public void Scaling_ScalesPoint_ByScalingMatrix()
+        {
+            _matrix = new TMatrix().Scaling(2, 3, 4);
+            var point = new TPoint(-4, 6, 8);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(-8, 18, 32);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Scaling_ScalesVector_ByScalingMatrix()
+        {
+            _matrix = new TMatrix().Scaling(2, 3, 4);
+            var vector = new TVector(-4, 6, 8);
+
+            TVector result = _matrix * vector;
+
+            var expectedResult = new TVector(-8, 18, 32);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Scaling_ShrinksPointByScalingMatrix_WhenMatrixInverted()
+        {
+            _matrix = new TMatrix().Scaling(2, 3, 4).Inverse();
+            var point = new TPoint(-4, 6, 8);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(-2, 2, 2);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Scaling_ReflectsPoint_WhenScalingFactorIsNegative()
+        {
+            _matrix = new TMatrix().Scaling(-1, 1, 1);
+            var point = new TPoint(2, 3, 4);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(-2, 3, 4);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationX_Returns_InstanceOfMatrix()
+        {
+            _matrix = new TMatrix();
+
+            Assert.That(_matrix.RotationX(0), Is.InstanceOf<TMatrix>());
+        }
+
+        [Test]
+        public void RotationX_ReturnsMatrix_With4Rows()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationX(0);
+
+            Assert.That(result.Rows, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void RotationX_ReturnsMatrix_With4Columns()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationX(0);
+
+            Assert.That(result.Columns, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void RotationX_SetsR1C1_ToCosAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationX(MathF.PI);
+
+            Assert.That(result[1, 1], Is.EqualTo(MathF.Cos(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationX_SetsR1C2_ToNegativeSinAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationX(MathF.PI);
+
+            Assert.That(result[2, 1], Is.EqualTo(-MathF.Sin(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationX_SetsR2C1_ToSinAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationX(MathF.PI);
+
+            Assert.That(result[1, 2], Is.EqualTo(MathF.Sin(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationX_SetsR2C2_ToCosAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationX(MathF.PI);
+
+            Assert.That(result[2, 2], Is.EqualTo(MathF.Cos(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationX_RotatesPointAroundXAxis_ByEighthOfRotationClockwise()
+        {
+            _matrix = new TMatrix().RotationX(EIGHTH_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 1, 0);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(0, MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationX_RotatesPointAroundXAxis_ByQuarterOfRotationClockwise()
+        {
+            _matrix = new TMatrix().RotationX(QUARTER_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 1, 0);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(0, 0, 1);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationX_RotatesPointAroundXAxis_ByEighthOfRotationAntiClockwise()
+        {
+            _matrix = new TMatrix().RotationX(-EIGHTH_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 1, 0);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationY_Returns_InstanceOfMatrix()
+        {
+            _matrix = new TMatrix();
+
+            Assert.That(_matrix.RotationY(0), Is.InstanceOf<TMatrix>());
+        }
+
+        [Test]
+        public void RotationY_ReturnsMatrix_With4Rows()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationY(0);
+
+            Assert.That(result.Rows, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void RotationY_ReturnsMatrix_With4Columns()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationY(0);
+
+            Assert.That(result.Columns, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void RotationY_SetsR0C0_ToCosAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationY(MathF.PI);
+
+            Assert.That(result[0, 0], Is.EqualTo(MathF.Cos(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationY_SetsR0C2_ToSinAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationY(MathF.PI);
+
+            Assert.That(result[2, 0], Is.EqualTo(MathF.Sin(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationY_SetsR2C0_ToNegativeSinAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationY(MathF.PI);
+
+            Assert.That(result[0, 2], Is.EqualTo(-MathF.Sin(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationY_SetsR2C2_ToCosAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationY(MathF.PI);
+
+            Assert.That(result[2, 2], Is.EqualTo(MathF.Cos(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationY_RotatesPointAroundYAxis_ByEighthOfRotationClockwise()
+        {
+            _matrix = new TMatrix().RotationY(EIGHTH_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 0, 1);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(MathF.Sqrt(2) / 2, 0, MathF.Sqrt(2) / 2);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationY_RotatesPointAroundYAxis_ByQuarterOfRotationClockwise()
+        {
+            _matrix = new TMatrix().RotationY(QUARTER_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 0, 1);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(1, 0, 0);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationY_RotatesPointAroundYAxis_ByEighthOfRotationAntiClockwise()
+        {
+            _matrix = new TMatrix().RotationY(-EIGHTH_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 0, 1);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(-MathF.Sqrt(2) / 2, 0, MathF.Sqrt(2) / 2);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationZ_Returns_InstanceOfMatrix()
+        {
+            _matrix = new TMatrix();
+
+            Assert.That(_matrix.RotationZ(0), Is.InstanceOf<TMatrix>());
+        }
+
+        [Test]
+        public void RotationZ_ReturnsMatrix_With4Rows()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationZ(0);
+
+            Assert.That(result.Rows, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void RotationZ_ReturnsMatrix_With4Columns()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationZ(0);
+
+            Assert.That(result.Columns, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void RotationZ_SetsR0C0_ToCosAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationZ(MathF.PI);
+
+            Assert.That(result[0, 0], Is.EqualTo(MathF.Cos(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationZ_SetsR0C1_ToNegativeSinAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationZ(MathF.PI);
+
+            Assert.That(result[1, 0], Is.EqualTo(-MathF.Sin(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationZ_SetsR2C0_ToSinAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationZ(MathF.PI);
+
+            Assert.That(result[0, 1], Is.EqualTo(MathF.Sin(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationZ_SetsR2C2_ToCosAngleInRadians()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.RotationZ(MathF.PI);
+
+            Assert.That(result[1, 1], Is.EqualTo(MathF.Cos(MathF.PI)));
+        }
+
+        [Test]
+        public void RotationZ_RotatesPointAroundZAxis_ByEighthOfRotationClockwise()
+        {
+            _matrix = new TMatrix().RotationZ(EIGHTH_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 1, 0);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(-MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2, 0);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationZ_RotatesPointAroundZAxis_ByQuarterOfRotationClockwise()
+        {
+            _matrix = new TMatrix().RotationZ(QUARTER_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 1, 0);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(-1, 0, 0);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void RotationZ_RotatesPointAroundZAxis_ByEighthOfRotationAntiClockwise()
+        {
+            _matrix = new TMatrix().RotationZ(-EIGHTH_ROTATION_CLOCKWISE);
+            var point = new TPoint(0, 1, 0);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2, 0);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+
+        [Test]
+        public void Shearing_Returns_InstanceOfMatrix()
+        {
+            _matrix = new TMatrix();
+
+            Assert.That(_matrix.Shearing(0, 0, 0, 0, 0, 0), Is.InstanceOf<TMatrix>());
+        }
+
+        [Test]
+        public void Shearing_ReturnsMatrix_With4Rows()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Shearing(0, 0, 0, 0, 0, 0);
+
+            Assert.That(result.Rows, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void Shearing_ReturnsMatrix_With4Columns()
+        {
+            _matrix = new TMatrix();
+
+            TMatrix result = _matrix.Shearing(0, 0, 0, 0, 0, 0);
+
+            Assert.That(result.Columns, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void Shearing_SetsR0C1_ToXYValue()
+        {
+            _matrix = new TMatrix().Shearing(2, 0, 0, 0, 0, 0);
+
+            Assert.That(_matrix[1, 0], Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Shearing_SetsR0C2_ToXZValue()
+        {
+            _matrix = new TMatrix().Shearing(0, 2, 0, 0, 0, 0);
+
+            Assert.That(_matrix[2, 0], Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Shearing_SetsR1C0_ToYXValue()
+        {
+            _matrix = new TMatrix().Shearing(0, 0, 2, 0, 0, 0);
+
+            Assert.That(_matrix[0, 1], Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Shearing_SetsR1C2_ToYZValue()
+        {
+            _matrix = new TMatrix().Shearing(0, 0, 0, 2, 0, 0);
+
+            Assert.That(_matrix[2, 1], Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Shearing_SetsR1C2_ToZXValue()
+        {
+            _matrix = new TMatrix().Shearing(0, 0, 0, 0, 2, 0);
+
+            Assert.That(_matrix[0, 2], Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Shearing_SetsR1C2_ToZYValue()
+        {
+            _matrix = new TMatrix().Shearing(0, 0, 0, 0, 0, 2);
+
+            Assert.That(_matrix[1, 2], Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Shearing_MovesX_InProportionToY()
+        {
+            _matrix = new TMatrix().Shearing(1, 0, 0, 0, 0, 0);
+            var point = new TPoint(2, 3, 4);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(5, 3, 4);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Shearing_MovesX_InProportionToZ()
+        {
+            _matrix = new TMatrix().Shearing(0, 1, 0, 0, 0, 0);
+            var point = new TPoint(2, 3, 4);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(6, 3, 4);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Shearing_MovesY_InProportionToX()
+        {
+            _matrix = new TMatrix().Shearing(0, 0, 1, 0, 0, 0);
+            var point = new TPoint(2, 3, 4);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(2, 5, 4);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Shearing_MovesY_InProportionToZ()
+        {
+            _matrix = new TMatrix().Shearing(0, 0, 0, 1, 0, 0);
+            var point = new TPoint(2, 3, 4);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(2, 7, 4);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Shearing_MovesZ_InProportionToX()
+        {
+            _matrix = new TMatrix().Shearing(0, 0, 0, 0, 1, 0);
+            var point = new TPoint(2, 3, 4);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(2, 3, 6);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Shearing_MovesZ_InProportionToY()
+        {
+            _matrix = new TMatrix().Shearing(0, 0, 0, 0, 0, 1);
+            var point = new TPoint(2, 3, 4);
+
+            TPoint result = _matrix * point;
+
+            var expectedResult = new TPoint(2, 3, 7);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void ChainedTransformations_AreExecuted_InCorrectOrder()
+        {
+            // TODO: Make into a fluent API
+            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix scaling = new TMatrix().Scaling(5, 5, 5);
+            TMatrix translate = new TMatrix().Translation(10, 5, 7);
+            TMatrix transform = translate * scaling * rotate;
+            var point = new TPoint(1, 0, 1);
+
+            TPoint result = transform * point;
+
+            var expectedResult = new TPoint(15, 0, 7);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void ChainedTransformations_AreExecutedInCorrectOrder_WhenCalledFluently2()
+        {
+            var point = new TPoint(1, 0, 1);
+            TMatrix fluent = new TMatrix()
+                .RotationX(MathF.PI / 2)
+                .Scaling(5, 5, 5)
+                .Translation(10, 5, 7);
+            TPoint fluentResult = fluent * point;
+
+            var expectedResult = new TPoint(15, 0, 7);
+            Assert.That(fluentResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Rotation_MultipliesScaling_WhenCalledFluently()
+        {
+            TMatrix fluent = new TMatrix()
+                .RotationX(MathF.PI / 2)
+                .Scaling(5, 5, 5);
+
+            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix scaling = new TMatrix().Scaling(5, 5, 5);
+            TMatrix transform = scaling * rotate;
+
+            Assert.That(fluent, Is.EqualTo(transform));
+        }
+
+        [Test]
+        public void Rotation_MultipliesTranslation_WhenCalledFluently()
+        {
+            TMatrix fluent = new TMatrix()
+                .RotationX(MathF.PI / 2)
+                .Translation(10, 5, 7);
+
+            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix translate = new TMatrix().Translation(10, 5, 7);
+            TMatrix transform = translate * rotate;
+
+            Assert.That(fluent, Is.EqualTo(transform));
+        }
+
+        [Test]
+        public void Scaling_MultipliesRotation_WhenCalledFluently()
+        {
+            TMatrix fluent = new TMatrix()
+                .Scaling(5, 5, 5)
+                .RotationX(MathF.PI / 2);
+
+            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix scaling = new TMatrix().Scaling(5, 5, 5);
+            TMatrix transform = rotate * scaling;
+
+            Assert.That(fluent, Is.EqualTo(transform));
+        }
+
+        [Test]
+        public void Translation_MultipliesRotation_WhenCalledFluently()
+        {
+            TMatrix fluent = new TMatrix()
+                .Translation(10, 5, 7)
+                .RotationX(MathF.PI / 2);
+
+            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix translate = new TMatrix().Translation(10, 5, 7);
+            TMatrix transform = rotate * translate;
+
+            Assert.That(fluent, Is.EqualTo(transform));
         }
     }
 }

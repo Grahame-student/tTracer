@@ -15,7 +15,11 @@ namespace libTracer
 
         public Boolean IsInvertable => Determinant() != 0;
 
-        public Single this[Int32 col, Int32 row] => _members[row, col];
+        public Single this[Int32 col, Int32 row]
+        {
+            get => _members[row, col];
+            private init => _members[row, col] = value;
+        }
 
         public TMatrix() : this(new Single[,]
         {
@@ -68,15 +72,16 @@ namespace libTracer
         public static TVector operator *(TMatrix m, TVector v)
         {
             // Hard coding for 4x4 matrix
-            return new TVector(m[0, 0] * v.X + 
-                                 m[1, 0] * v.Y + 
-                                 m[2, 0] * v.Z + 
-                                 m[3, 0] * v.W,
-                               m[0, 1] * v.X + 
-                                 m[1, 1] * v.Y + 
-                                 m[2, 1] * v.Z + 
-                                 m[3, 1] * v.W,
+            return new TVector(m[0, 0] * v.X + m[1, 0] * v.Y + m[2, 0] * v.Z + m[3, 0] * v.W,
+                               m[0, 1] * v.X + m[1, 1] * v.Y + m[2, 1] * v.Z + m[3, 1] * v.W,
                                m[0, 2] * v.X + m[1, 2] * v.Y + m[2, 2] * v.Z + m[3, 2] * v.W);
+        }
+
+        public static TPoint operator *(TMatrix m, TPoint p)
+        {
+            return new TPoint(m[0, 0] * p.X + m[1, 0] * p.Y + m[2, 0] * p.Z + m[3, 0] * p.W,
+                              m[0, 1] * p.X + m[1, 1] * p.Y + m[2, 1] * p.Z + m[3, 1] * p.W,
+                              m[0, 2] * p.X + m[1, 2] * p.Y + m[2, 2] * p.Z + m[3, 2] * p.W);
         }
 
         public Boolean Equals(TMatrix other)
@@ -196,6 +201,72 @@ namespace libTracer
             }
 
             return new TMatrix(result);
+        }
+
+        public TMatrix Translation(Single x, Single y, Single z)
+        {
+            return new TMatrix
+            {
+                [3, 0] = x,
+                [3, 1] = y,
+                [3, 2] = z
+            } * this;
+        }
+
+        public TMatrix Scaling(Single x, Single y, Single z)
+        {
+            return new TMatrix
+            {
+                [0, 0] = x,
+                [1, 1] = y,
+                [2, 2] = z
+            } * this;
+        }
+
+        public TMatrix RotationX(Single angleRads)
+        {
+            return new TMatrix
+            {
+                [1, 1] = MathF.Cos(angleRads),
+                [2, 1] = -MathF.Sin(angleRads),
+                [1, 2] = MathF.Sin(angleRads),
+                [2, 2] = MathF.Cos(angleRads)
+            } * this;
+        }
+
+        public TMatrix RotationY(Single angleRads)
+        {
+            return new TMatrix
+            {
+                [0, 0] = MathF.Cos(angleRads),
+                [2, 0] = MathF.Sin(angleRads),
+                [0, 2] = -MathF.Sin(angleRads),
+                [2, 2] = MathF.Cos(angleRads)
+            } * this;
+        }
+
+        public TMatrix RotationZ(Single angleRads)
+        {
+            return new TMatrix
+            {
+                [0, 0] = MathF.Cos(angleRads),
+                [1, 0] = -MathF.Sin(angleRads),
+                [0, 1] = MathF.Sin(angleRads),
+                [1, 1] = MathF.Cos(angleRads)
+            } * this;
+        }
+
+        public TMatrix Shearing(Single xy, Single xz, Single yx, Single yz, Single zx, Single zy)
+        {
+            return new TMatrix()
+            {
+                [1, 0] = xy,
+                [2, 0] = xz,
+                [0, 1] = yx,
+                [2, 1] = yz,
+                [0, 2] = zx,
+                [1, 2] = zy
+            } * this;
         }
     }
 }
