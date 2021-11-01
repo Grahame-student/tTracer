@@ -583,5 +583,38 @@ namespace TestLibTracer
 
             Assert.That(vector1.GetHashCode(), Is.EqualTo(vector2.GetHashCode()));
         }
+
+        [Test]
+        public void Reflect_Returns_InstanceOfVector()
+        {
+            var inVector = new TVector(1, -1, 0);
+            var normal = new TVector(0, 1, 0);
+
+            Assert.That(inVector.Reflect(normal), Is.InstanceOf<TVector>());
+        }
+
+        [Test]
+        public void Reflect_Returns_VectorAt45DegreesToOriginal()
+        {
+            var inVector = new TVector(1, -1, 0);
+            var normal = new TVector(0, 1, 0);
+
+            TVector result = inVector.Reflect(normal);
+
+            var expectedResult = new TVector(1, 1, 0);
+            Assert.That(inVector.Reflect(normal), Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Reflect_Returns_VectorOfSlantedSurface()
+        {
+            var inVector = new TVector(0, -1, 0);
+            var normal = new TVector(MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2, 0);
+
+            TVector result = inVector.Reflect(normal);
+
+            var expectedResult = new TVector(1, 0, 0);
+            Assert.That(inVector.Reflect(normal), Is.EqualTo(expectedResult));
+        }
     }
 }

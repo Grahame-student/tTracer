@@ -4,6 +4,8 @@ namespace libTracer
 {
     public class TColour : IEquatable<TColour>
     {
+        private const Single EPSILON = 0.001f;
+
         public Single Red { get; }
         public Single Green { get; }
         public Single Blue { get; }
@@ -39,9 +41,9 @@ namespace libTracer
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Red.Equals(other.Red) && 
-                   Green.Equals(other.Green) &&
-                   Blue.Equals(other.Blue);
+            return MathF.Abs(Red - other.Red) < EPSILON &&
+                   MathF.Abs(Green - other.Green) < EPSILON &&
+                   MathF.Abs(Blue - other.Blue) < EPSILON;
         }
 
         public override Boolean Equals(Object obj)

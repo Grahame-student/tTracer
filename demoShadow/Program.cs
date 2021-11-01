@@ -10,13 +10,13 @@ namespace demoShadow
         static void Main(String[] args)
         {
             var rayOrigin = new TPoint(0, 0, -5);
-            Single wallZ = 10;
-            Single wallSize = 7;
+            const Single wallZ = 10;
+            const Single wallSize = 7;
 
-            var size = 500;
+            const Int32 size = 500;
             var canvas = new Canvas(size, size);
             Single pixelSize = wallSize / canvas.Width;
-            Single halfWall = wallSize / 2;
+            const Single halfWall = wallSize / 2;
 
             var sphereColour= new TColour(1, 0, 0);
             var sphere = new Sphere();

@@ -5,6 +5,8 @@ namespace libTracer
     // ReSharper disable once InconsistentNaming
     public class TVector : IEquatable<TVector>
     {
+        private const Single EPSILON = 0.001f;
+
         public TVector(Single x, Single y, Single z)
         {
             X = x;
@@ -44,14 +46,19 @@ namespace libTracer
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return X.Equals(other.X) && 
-                   Y.Equals(other.Y) && 
-                   Z.Equals(other.Z);
+            return MathF.Abs(X - other.X) < EPSILON &&
+                   MathF.Abs(Y - other.Y) < EPSILON &&
+                   MathF.Abs(Z - other.Z) < EPSILON;
         }
 
         public override Int32 GetHashCode()
         {
             return HashCode.Combine(X, Y, Z);
+        }
+
+        public TVector Reflect(TVector normal)
+        {
+            return this - normal * 2 * Dot(normal);
         }
     }
 }

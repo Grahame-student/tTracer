@@ -5,11 +5,10 @@ namespace libTracer
 {
     public class Sphere : Shape
     {
-        public TMatrix Transform { get; set; }
-
         public Sphere()
         {
             Transform = new TMatrix();
+            Material = new Material();
         }
 
         public IList<Intersection> Intersects(TRay ray)
@@ -37,6 +36,14 @@ namespace libTracer
             // of sorts that occur
             result.Sort();
             return result;
+        }
+
+        public override TVector Normal(TPoint worldPoint)
+        {
+            TPoint objectPoint = Transform.Inverse() * worldPoint;
+            TVector objectNormal = objectPoint - new TPoint(0, 0, 0);
+            var worldNormal = Transform.Inverse().Transpose() * objectNormal;
+            return worldNormal.Normalise();
         }
     }
 }
