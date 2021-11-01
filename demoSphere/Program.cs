@@ -16,13 +16,6 @@ namespace demoSphere
             var canvas = new Canvas(size, size);
             Single pixelSize = world.WallSize / canvas.Width;
 
-            /*
-            foreach (Pixel pixel in canvas.Pixels)
-            {
-                RenderPixel(world, pixelSize, pixel, canvas);
-            }
-            */
-
             Parallel.ForEach(canvas.Pixels, pixel => RenderPixel(world, pixelSize, pixel, canvas));
 
             var writer = new BitmapWriter();
