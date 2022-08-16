@@ -1,5 +1,7 @@
 ﻿using libTracer;
-
+using libTracer.Common;
+using libTracer.Scene;
+using libTracer.Shapes;
 using System;
 
 namespace demoSphere

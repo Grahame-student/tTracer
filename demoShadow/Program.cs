@@ -1,7 +1,9 @@
 ﻿using libTracer;
-
+using libTracer.Scene;
 using System;
 using System.Collections.Generic;
+using libTracer.Common;
+using libTracer.Shapes;
 
 namespace demoShadow
 {

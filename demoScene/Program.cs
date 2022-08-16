@@ -1,19 +1,21 @@
 ﻿using libTracer;
+using libTracer.Common;
+using libTracer.Scene;
+using libTracer.Shapes;
 
 namespace demoScene
 {
     internal class Program
     {
-        static void Main(String[] args)
+        private static void Main(String[] args)
         {
             var world = new World
             {
                 Light = new Light(new TPoint(-10, 10, -10), new TColour(1, 1, 1))
             };
 
-            var floor = new Sphere
+            var floor = new Plane()
             {
-                Transform = new TMatrix().Scaling(10, 0.01f, 10),
                 Material = new Material
                 {
                     Colour = new TColour(1, 0.9f, 0.9f),

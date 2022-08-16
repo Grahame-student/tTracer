@@ -1,5 +1,6 @@
 ﻿using libTracer;
-
+using libTracer.Common;
+using libTracer.Scene;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace demoSphere
             TVector normal = hit.Shape.Normal(point);
             TVector eye = -ray.Direction;
 
-            TColour colour = hit.Shape.Material.Lighting(world.Light, point, eye, normal);
+            TColour colour = hit.Shape.Material.Lighting(world.Light, point, eye, normal, false);
             canvas.SetPixel(pixel.X, pixel.Y, colour);
         }
     }
