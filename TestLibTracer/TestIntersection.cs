@@ -101,5 +101,125 @@ namespace TestLibTracer
 
             Assert.That(result, Is.Null);
         }
+
+        [Test]
+        public void PrepareComputations_Returns_InstanceOfComputations()
+        {
+            var ray = new TRay(new TPoint(0, 0, -5), new TVector(0, 0, 1));
+            Shape shape = new Sphere();
+            _intersection = new Intersection(4, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result, Is.InstanceOf<Computations>());
+        }
+
+        [Test]
+        public void PrepareComputations_SetsTime_ToIntersectionTime()
+        {
+            var ray = new TRay(new TPoint(0, 0, -5), new TVector(0, 0, 1));
+            Shape shape = new Sphere();
+            _intersection = new Intersection(4, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result.Time, Is.EqualTo(_intersection.Time));
+        }
+
+        [Test]
+        public void PrepareComputations_SetsObject_ToShape()
+        {
+            var ray = new TRay(new TPoint(0, 0, -5), new TVector(0, 0, 1));
+            Shape shape = new Sphere();
+            _intersection = new Intersection(4, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result.Object, Is.EqualTo(shape));
+        }
+
+        [Test]
+        public void PrepareComputations_SetsPoint_ToHitPosition()
+        {
+            var origin = new TPoint(0, 0, -5);
+            var direction = new TVector(0, 0, 1);
+            var ray = new TRay(origin, direction);
+            Shape shape = new Sphere();
+            _intersection = new Intersection(4, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result.Point, Is.EqualTo(new TPoint(0, 0, -1)));
+        }
+
+        [Test]
+        public void PrepareComputations_SetsEyeV_ToOppositeOfRayDirection()
+        {
+            var origin = new TPoint(0, 0, -5);
+            var direction = new TVector(0, 0, 1);
+            var ray = new TRay(origin, direction);
+            Shape shape = new Sphere();
+            _intersection = new Intersection(4, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result.EyeV, Is.EqualTo(-direction));
+        }
+
+        [Test]
+        public void PrepareComputations_SetsNormalV_ToNormalOfIntersection()
+        {
+            var origin = new TPoint(0, 0, -5);
+            var direction = new TVector(0, 0, 1);
+            var ray = new TRay(origin, direction);
+            Shape shape = new Sphere();
+            _intersection = new Intersection(4, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result.NormalV, Is.EqualTo(new TVector(0, 0, -1)));
+        }
+
+        [Test]
+        public void PrepareComputations_SetsInsideToFalse_WhenRayOriginatesOutsideShape()
+        {
+            var origin = new TPoint(0, 0, -5);
+            var direction = new TVector(0, 0, 1);
+            var ray = new TRay(origin, direction);
+            Shape shape = new Sphere();
+            _intersection = new Intersection(4, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result.Inside, Is.False);
+        }
+
+        [Test]
+        public void PrepareComputations_SetsInsideToTrue_WhenRayOriginatesInsideShape()
+        {
+            var origin = new TPoint(0, 0, 0);
+            var direction = new TVector(0, 0, 1);
+            var ray = new TRay(origin, direction);
+            Shape shape = new Sphere();
+            _intersection = new Intersection(1, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result.Inside, Is.True);
+        }
+
+        [Test]
+        public void PrepareComputations_NegatesNormalV_WhenRayOriginatesInsideShape()
+        {
+            var origin = new TPoint(0, 0, 0);
+            var direction = new TVector(0, 0, 1);
+            var ray = new TRay(origin, direction);
+            Shape shape = new Sphere();
+            _intersection = new Intersection(1, shape);
+
+            Computations result = _intersection.PrepareComputations(ray);
+
+            Assert.That(result.NormalV, Is.EqualTo(new TVector(0, 0, -1)));
+        }
     }
 }

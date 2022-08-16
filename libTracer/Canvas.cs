@@ -20,8 +20,7 @@ namespace libTracer
                 var newRow = new List<Pixel>();
                 for (var col = 0; col < width; col++)
                 {
-                    // Invert the y-axis so that when the canvas is used it is the right way up
-                    newRow.Add(new Pixel(col, maxHeight - row));
+                    newRow.Add(new Pixel(col, row));
                 }
                 _pixels.Add(newRow);
             }
@@ -32,6 +31,11 @@ namespace libTracer
         public void SetPixel(Int32 x, Int32 y, TColour colour)
         {
             _pixels[y][x].SetColour(colour.Red, colour.Green, colour.Blue);
+        }
+
+        public TColour GetPixel(Int32 x, Int32 y)
+        {
+            return _pixels[y][x].Colour;
         }
     }
 }

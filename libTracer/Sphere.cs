@@ -11,7 +11,7 @@ namespace libTracer
             Material = new Material();
         }
 
-        public IList<Intersection> Intersects(TRay ray)
+        public override IList<Intersection> Intersects(TRay ray)
         {
             var result = new List<Intersection>();
 
@@ -34,7 +34,6 @@ namespace libTracer
             // We sort the list to make it easier to determine the order of the hits
             // This may need to move to a better place later to reduce the total number
             // of sorts that occur
-            result.Sort();
             return result;
         }
 
@@ -42,7 +41,7 @@ namespace libTracer
         {
             TPoint objectPoint = Transform.Inverse() * worldPoint;
             TVector objectNormal = objectPoint - new TPoint(0, 0, 0);
-            var worldNormal = Transform.Inverse().Transpose() * objectNormal;
+            TVector worldNormal = Transform.Inverse().Transpose() * objectNormal;
             return worldNormal.Normalise();
         }
     }

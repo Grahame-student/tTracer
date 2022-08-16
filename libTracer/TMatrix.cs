@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace libTracer
 {
@@ -267,6 +266,23 @@ namespace libTracer
                 [0, 2] = zx,
                 [1, 2] = zy
             } * this;
+        }
+
+        public static TMatrix ViewTransformation(TPoint from, TPoint to, TVector up)
+        {
+            TVector forward = (to - from).Normalise();
+            TVector left = forward.Cross(up.Normalise());
+            TVector trueUp = left.Cross(forward);
+
+            var orientation = new TMatrix(new[,]
+            {
+                {  left.X,     left.Y,     left.Z,    0 },
+                {  trueUp.X,   trueUp.Y,   trueUp.Z,  0 },
+                { -forward.X, -forward.Y, -forward.Z, 0 },
+                {  0,          0,          0,         1 }
+            });
+
+            return orientation * new TMatrix().Translation(-from.X, -from.Y, -from.Z);
         }
     }
 }

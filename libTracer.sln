@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libTracer", "libTracer\libTracer.csproj", "{E4C7D858-F760-4D11-8036-42C0A136166B}"
 EndProject
@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestLibTracer", "TestLibTra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoShadow", "demoShadow\demoShadow.csproj", "{25453635-A727-4012-8A97-20555236B830}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demoSphere", "demoSphere\demoSphere.csproj", "{3E5BA2DB-FA83-49D8-B208-3866B14C4E5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoSphere", "demoSphere\demoSphere.csproj", "{3E5BA2DB-FA83-49D8-B208-3866B14C4E5A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoProjectile", "demoProjectile\demoProjectile.csproj", "{F2E0E90E-C2F1-488B-A834-B2B05CA2BD2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demoScene", "demoScene\demoScene.csproj", "{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{F2E0E90E-C2F1-488B-A834-B2B05CA2BD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2E0E90E-C2F1-488B-A834-B2B05CA2BD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2E0E90E-C2F1-488B-A834-B2B05CA2BD2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

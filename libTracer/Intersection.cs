@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace libTracer
@@ -31,6 +30,23 @@ namespace libTracer
         public static Intersection Hit(IList<Intersection> list)
         {
             return list.FirstOrDefault(intersection => !(intersection.Time < 0));
+        }
+
+        public Computations PrepareComputations(TRay ray)
+        {
+            var result = new Computations
+            {
+                Time = Time,
+                Object = Shape
+            };
+            result.Point = ray.Position(result.Time);
+            result.EyeV = -ray.Direction;
+            result.NormalV = result.Object.Normal(result.Point);
+            if (!(result.NormalV.Dot(result.EyeV) < 0)) return result;
+
+            result.Inside = true;
+            result.NormalV = -result.NormalV;
+            return result;
         }
     }
 }

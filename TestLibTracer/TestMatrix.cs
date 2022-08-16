@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.ComTypes;
 using libTracer;
 
 using NUnit.Framework;
@@ -1344,6 +1343,55 @@ namespace TestLibTracer
             TMatrix transform = rotate * translate;
 
             Assert.That(fluent, Is.EqualTo(transform));
+        }
+
+        [Test]
+        public void ViewTransformation_Returns_InstanceOfMatrix()
+        {
+            var from = new TPoint(0, 0, 0);
+            var to = new TPoint(0, 0, 0);
+            var up = new TVector(0, 0, 0);
+
+            Assert.That(TMatrix.ViewTransformation(from, to, up), Is.InstanceOf<TMatrix>());
+        }
+
+        [Test]
+        public void ViewTransformation_ReturnsMatrix_LookingInPositiveZDirection()
+        {
+            var from = new TPoint(0, 0, 0);
+            var to = new TPoint(0, 0, 1);
+            var up = new TVector(0, 1, 0);
+
+            TMatrix expectedResult = new TMatrix().Scaling(-1, 1, -1);
+            Assert.That(TMatrix.ViewTransformation(from, to, up), Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void ViewTransformation_ReturnsMatrix_ThatTranslatesTheWorld()
+        {
+            var from = new TPoint(0, 0, 8);
+            var to = new TPoint(0, 0, 0);
+            var up = new TVector(0, 1, 0);
+
+            TMatrix expectedResult = new TMatrix().Translation(0, 0, -8);
+            Assert.That(TMatrix.ViewTransformation(from, to, up), Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void ViewTransformation_ReturnsMatrix_WithArbitraryView()
+        {
+            var from = new TPoint(1, 3, 2);
+            var to = new TPoint(4, -2, 8);
+            var up = new TVector(1, 1, 0);
+
+            var expectedResult = new TMatrix(new[,]
+            {
+                { -0.50709f, 0.50709f,  0.67612f, -2.36643f },
+                {  0.76772f, 0.60609f,  0.12122f, -2.82843f },
+                { -0.35857f, 0.59761f, -0.71714f,  0.00000f },
+                {  0.00000f, 0.00000f,  0.00000f,  1.00000f }
+            });
+            Assert.That(TMatrix.ViewTransformation(from, to, up), Is.EqualTo(expectedResult));
         }
     }
 }

@@ -308,5 +308,92 @@ namespace TestLibTracer
             var expectedResult = new TVector(0, 0.97014f, -0.24254f);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenMaterialEqualToOtherMaterial()
+        {
+            Shape sphere1 = new Sphere();
+            Shape sphere2 = new Sphere();
+
+            sphere1.Material.Ambient = 12;
+            sphere2.Material.Ambient = 12;
+
+            Assert.That(sphere1, Is.EqualTo(sphere2));
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenTransformEqualToOtherTransform()
+        {
+            Shape sphere1 = new Sphere();
+            Shape sphere2 = new Sphere();
+
+            sphere1.Transform = new TMatrix().RotationX(123);
+            sphere2.Transform = new TMatrix().RotationX(123);
+
+            Assert.That(sphere1, Is.EqualTo(sphere2));
+        }
+
+        [Test]
+        public void Equals_ReturnsFalse_WhenOtherIsObjectAndNull()
+        {
+            Shape sphere1 = new Sphere();
+            Object sphere2 = null;
+
+            Assert.That(sphere1.Equals(sphere2), Is.False);
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenOtherIsObject()
+        {
+            Shape sphere1 = new Sphere();
+            Object sphere2 = new Sphere();
+
+            Assert.That(sphere1.Equals(sphere2), Is.True);
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenOtherIsObjectAndSameReference()
+        {
+            Shape sphere1 = new Sphere();
+            Object sphere2 = sphere1;
+
+            Assert.That(sphere1.Equals(sphere2), Is.True);
+        }
+
+        [Test]
+        public void Equals_ReturnsFalse_WhenOtherIsShapeAndNull()
+        {
+            Shape sphere1 = new Sphere();
+            Shape sphere2 = null;
+
+            Assert.That(sphere1.Equals(sphere2), Is.False);
+        }
+
+        [Test]
+        public void Equals_ReturnsTrue_WhenOtherIsShapeAndSameReference()
+        {
+            Shape sphere1 = new Sphere();
+            Shape sphere2 = sphere1;
+
+            Assert.That(sphere1.Equals(sphere2), Is.True);
+        }
+
+        [Test]
+        public void Equals_ReturnsFalse_WhenOtherIsDifferentType()
+        {
+            Shape sphere1 = new Sphere();
+            var sphere2 = new TVector(1, 1, 1);
+
+            Assert.That(sphere1.Equals(sphere2), Is.False);
+        }
+
+        [Test]
+        public void Hashcode_ReturnsSameValue_WhenSetToSameValues()
+        {
+            Shape sphere1 = new Sphere();
+            Shape sphere2 = new Sphere();
+
+            Assert.That(sphere1.GetHashCode(), Is.EqualTo(sphere2.GetHashCode()));
+        }
     }
 }
