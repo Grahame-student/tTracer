@@ -6,15 +6,15 @@ namespace TestLibTracer.Common
 {
     internal class TestTMatrix
     {
-        private const int ROW_1 = 1;
-        private const int COL_1 = 1;
+        private const Int32 ROW_1 = 1;
+        private const Int32 COL_1 = 1;
 
-        private const float SOME_X = 1.25f;
-        private const float SOME_Y = 2.33f;
-        private const float SOME_Z = 3.66f;
+        private const Single SOME_X = 1.25f;
+        private const Single SOME_Y = 2.33f;
+        private const Single SOME_Z = 3.66f;
 
-        private const float EIGHTH_ROTATION_CLOCKWISE = MathF.PI / 4;
-        private const float QUARTER_ROTATION_CLOCKWISE = MathF.PI / 2;
+        private const Single EIGHTH_ROTATION_CLOCKWISE = MathF.PI / 4;
+        private const Single QUARTER_ROTATION_CLOCKWISE = MathF.PI / 2;
 
         private TMatrix _matrix;
 
@@ -23,7 +23,7 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            var expectedResult = new TMatrix(new float[,]
+            var expectedResult = new TMatrix(new Single[,]
             {
                 { 1, 0, 0, 0 },
                 { 0, 1, 0, 0 },
@@ -144,7 +144,7 @@ namespace TestLibTracer.Common
                 new[,] {
                     { 1f, 2f, 3f },
                     { 3f, 4f, 5f } });
-            object matrix2 = null;
+            Object matrix2 = null;
 
             Assert.That(matrix1.Equals(matrix2), Is.False);
         }
@@ -156,7 +156,7 @@ namespace TestLibTracer.Common
                 new[,] {
                     { 1f, 2f, 3f },
                     { 3f, 4f, 5f } });
-            object matrix2 = matrix1;
+            Object matrix2 = matrix1;
 
             Assert.That(matrix1.Equals(matrix2), Is.True);
         }
@@ -168,7 +168,7 @@ namespace TestLibTracer.Common
                 new[,] {
                     { 1f, 2f, 3f },
                     { 3f, 4f, 5f } });
-            object matrix2 = new TMatrix(
+            Object matrix2 = new TMatrix(
                 new[,] {
                     { 1f, 2f, 3f },
                     { 3f, 4f, 5f } });
@@ -195,8 +195,8 @@ namespace TestLibTracer.Common
         [Test]
         public void Multiply_ReturnsInstanceOfMatrix_WhenMultipliedByMatrix()
         {
-            var matrix1 = new TMatrix(new float[4, 4]);
-            var matrix2 = new TMatrix(new float[4, 4]);
+            var matrix1 = new TMatrix(new Single[4, 4]);
+            var matrix2 = new TMatrix(new Single[4, 4]);
 
 
             Assert.That(matrix1 * matrix2, Is.InstanceOf<TMatrix>());
@@ -205,8 +205,8 @@ namespace TestLibTracer.Common
         [Test]
         public void Multiply_ReturnsMatrix_With4Rows()
         {
-            var matrix1 = new TMatrix(new float[4, 4]);
-            var matrix2 = new TMatrix(new float[4, 4]);
+            var matrix1 = new TMatrix(new Single[4, 4]);
+            var matrix2 = new TMatrix(new Single[4, 4]);
 
             TMatrix result = matrix1 * matrix2;
 
@@ -216,8 +216,8 @@ namespace TestLibTracer.Common
         [Test]
         public void Multiply_ReturnsMatrix_With4Columns()
         {
-            var matrix1 = new TMatrix(new float[4, 4]);
-            var matrix2 = new TMatrix(new float[4, 4]);
+            var matrix1 = new TMatrix(new Single[4, 4]);
+            var matrix2 = new TMatrix(new Single[4, 4]);
 
             TMatrix result = matrix1 * matrix2;
 
@@ -275,7 +275,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Multiply_ReturnsInstanceOfVector_WhenMultiplyingByVector()
         {
-            var matrix1 = new TMatrix(new float[4, 4]);
+            var matrix1 = new TMatrix(new Single[4, 4]);
             var vector2 = new TVector(1, 2, 3);
 
 
@@ -381,7 +381,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Determinant_Returns_R0C0TimesR1C1MinusR0C1TimesR1C0()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 {  1, 5 },
                 { -3, 2 }
@@ -421,7 +421,7 @@ namespace TestLibTracer.Common
         [Test]
         public void SubMatrix_ReturnsMatrix_WithRowRemoved()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { 2, 2, 2, 2 },
                 { 2, 2, 2, 2 },
@@ -431,7 +431,7 @@ namespace TestLibTracer.Common
 
             TMatrix result = _matrix.SubMatrix(2, 0);
 
-            var expectedResult = new TMatrix(new float[,]
+            var expectedResult = new TMatrix(new Single[,]
             {
                 { 2, 2, 2 },
                 { 2, 2, 2 },
@@ -443,7 +443,7 @@ namespace TestLibTracer.Common
         [Test]
         public void SubMatrix_ReturnsMatrix_WithColRemoved()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { 2, 2, 1, 2 },
                 { 2, 2, 1, 2 },
@@ -453,7 +453,7 @@ namespace TestLibTracer.Common
 
             TMatrix result = _matrix.SubMatrix(0, 2);
 
-            var expectedResult = new TMatrix(new float[,]
+            var expectedResult = new TMatrix(new Single[,]
             {
                 { 2, 2, 2 },
                 { 2, 2, 2 },
@@ -465,7 +465,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Minor_ReturnsTheDeterminant_OfTheSubmatrixAtTheSpecifiedLocation()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { 3,  5,  0 },
                 { 2, -1, -7 },
@@ -478,7 +478,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Cofactor_ReturnsMinorAtLocation_WhenRowPlusColumnIsEven()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { 3,  5,  0 },
                 { 2, -1, -7 },
@@ -491,7 +491,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Cofactor_ReturnsNegativeMinorAtLocation_WhenRowPlusColumnIsOdd()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { 3,  5,  0 },
                 { 2, -1, -7 },
@@ -504,7 +504,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Determinant_Returns_DeterminantOf3x3Matrix()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 {  1, 2,  6 },
                 { -5, 8, -4 },
@@ -517,7 +517,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Determinant_Returns_DeterminantOf4x4Matrix()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { -2, -8,  3,  5 },
                 { -3,  1,  7,  3 },
@@ -531,7 +531,7 @@ namespace TestLibTracer.Common
         [Test]
         public void IsInvertable_ReturnsTrue_WhenMatrixCanBeInverted()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { 6,  4, 4,  4 },
                 { 5,  5, 7,  6 },
@@ -545,7 +545,7 @@ namespace TestLibTracer.Common
         [Test]
         public void IsInvertable_ReturnsFalse_WhenMatrixCanNotBeInverted()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { -4,  2, -2, -3 },
                 {  9,  6,  2,  6 },
@@ -559,7 +559,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Inverse_Returns_Matrix()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { -5,  2,  6, -8 },
                 {  1, -5,  1,  8 },
@@ -573,7 +573,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Inverse_Returns_InvertedMatrix()
         {
-            _matrix = new TMatrix(new float[,]
+            _matrix = new TMatrix(new Single[,]
             {
                 { -5,  2,  6, -8 },
                 {  1, -5,  1,  8 },
@@ -583,7 +583,7 @@ namespace TestLibTracer.Common
 
             TMatrix result = _matrix.Inverse();
 
-            var expectedResult = new TMatrix(new float[,]
+            var expectedResult = new TMatrix(new Single[,]
             {
                 {  0.21805f,  0.45113f,  0.24060f, -0.04511f },
                 { -0.80827f, -1.45677f, -0.44361f,  0.52068f },
@@ -597,7 +597,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Inverse_ReturnsOriginalMatrix_WhenCalledOnInvertedMatrix()
         {
-            var original = new TMatrix(new float[,]
+            var original = new TMatrix(new Single[,]
             {
                 { -5,  2,  6, -8 },
                 {  1, -5,  1,  8 },

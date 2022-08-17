@@ -9,12 +9,12 @@ namespace TestLibTracer.Scene
 {
     internal class TestCanvas
     {
-        private const int SOME_WIDTH = 10;
-        private const int SOME_HEIGHT = 20;
+        private const Int32 SOME_WIDTH = 10;
+        private const Int32 SOME_HEIGHT = 20;
 
-        private const float SOME_RED = 0.1f;
-        private const float SOME_GREEN = 0.2f;
-        private const float SOME_BLUE = 0.3f;
+        private const Single SOME_RED = 0.1f;
+        private const Single SOME_GREEN = 0.2f;
+        private const Single SOME_BLUE = 0.3f;
 
         private Canvas _canvas;
 

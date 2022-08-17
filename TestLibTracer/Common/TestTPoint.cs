@@ -6,9 +6,9 @@ namespace TestLibTracer.Common
 {
     internal class TestTPoint
     {
-        private const float SOME_X = 1.2f;
-        private const float SOME_Y = 3.4f;
-        private const float SOME_Z = 5.6f;
+        private const Single SOME_X = 1.2f;
+        private const Single SOME_Y = 3.4f;
+        private const Single SOME_Z = 5.6f;
 
         private TPoint _point;
 
@@ -201,7 +201,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsFalse_WhenOtherIsObjectAndNull()
         {
             var point1 = new TPoint(0, 0, 0);
-            object point2 = null;
+            Object point2 = null;
 
             Assert.That(point1.Equals(point2), Is.False);
         }
@@ -210,7 +210,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsTrue_WhenOtherIsObject()
         {
             var point1 = new TPoint(0, 0, 0);
-            object point2 = new TPoint(0, 0, 0);
+            Object point2 = new TPoint(0, 0, 0);
 
             Assert.That(point1.Equals(point2), Is.True);
         }
@@ -219,7 +219,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsTrue_WhenOtherIsObjectAndSameReference()
         {
             var point1 = new TPoint(0, 0, 0);
-            object point2 = point1;
+            Object point2 = point1;
 
             Assert.That(point1.Equals(point2), Is.True);
         }

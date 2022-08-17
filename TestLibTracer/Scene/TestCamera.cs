@@ -7,11 +7,11 @@ namespace TestLibTracer.Scene
 {
     internal class TestCamera
     {
-        private const int SOME_WIDTH = 160;
-        private const int SOME_HEIGHT = 120;
-        private const float SOME_FIELD_OF_VIEW = MathF.PI / 2;
-        private const int SOME_X = 100;
-        private const int SOME_Y = 25;
+        private const Int32 SOME_WIDTH = 160;
+        private const Int32 SOME_HEIGHT = 120;
+        private const Single SOME_FIELD_OF_VIEW = MathF.PI / 2;
+        private const Int32 SOME_X = 100;
+        private const Int32 SOME_Y = 25;
 
         private Camera _camera;
 

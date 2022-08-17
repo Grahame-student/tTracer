@@ -10,10 +10,10 @@ namespace TestLibTracer.Common
         [Test]
         public void AddingArrays_Creates_NewArray()
         {
-            int[] first = Array.Empty<int>();
-            int[] second = Array.Empty<int>();
+            Int32[] first = Array.Empty<Int32>();
+            Int32[] second = Array.Empty<Int32>();
 
-            IEnumerable<int> third = first.Concat(second);
+            IEnumerable<Int32> third = first.Concat(second);
 
             Assert.That(ReferenceEquals(third, first), Is.False);
             Assert.That(ReferenceEquals(third, second), Is.False);
@@ -22,13 +22,13 @@ namespace TestLibTracer.Common
         [Test]
         public void AddingArrays_Concatentates_Arrays()
         {
-            int[] first = { 1, 2 };
-            int[] second = { 3, 4 };
+            Int32[] first = { 1, 2 };
+            Int32[] second = { 3, 4 };
 
 
-            IEnumerable<int> third = first.Concat(second);
+            IEnumerable<Int32> third = first.Concat(second);
 
-            int[] expected = { 1, 2, 3, 4 };
+            Int32[] expected = { 1, 2, 3, 4 };
             Assert.That(third, Is.EqualTo(expected));
         }
     }

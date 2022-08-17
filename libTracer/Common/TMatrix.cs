@@ -4,23 +4,23 @@ namespace libTracer.Common
 {
     public class TMatrix : IEquatable<TMatrix>
     {
-        private const int DIMINSION_ROWS = 0;
-        private const int DIMINSION_COLS = 1;
+        private const Int32 DIMINSION_ROWS = 0;
+        private const Int32 DIMINSION_COLS = 1;
 
-        private readonly float[,] _members;
-        public int Rows => _members.GetLength(DIMINSION_ROWS);
+        private readonly Single[,] _members;
+        public Int32 Rows => _members.GetLength(DIMINSION_ROWS);
 
-        public int Columns => _members.GetLength(DIMINSION_COLS);
+        public Int32 Columns => _members.GetLength(DIMINSION_COLS);
 
-        public bool IsInvertable => Determinant() != 0;
+        public Boolean IsInvertable => Determinant() != 0;
 
-        public float this[int col, int row]
+        public Single this[Int32 col, Int32 row]
         {
             get => _members[row, col];
             private init => _members[row, col] = value;
         }
 
-        public TMatrix() : this(new float[,]
+        public TMatrix() : this(new Single[,]
         {
             { 1, 0, 0, 0 },
             { 0, 1, 0, 0 },
@@ -30,7 +30,7 @@ namespace libTracer.Common
         {
         }
 
-        public TMatrix(float[,] members)
+        public TMatrix(Single[,] members)
         {
             _members = members;
         }
@@ -83,7 +83,7 @@ namespace libTracer.Common
                               m[0, 2] * p.X + m[1, 2] * p.Y + m[2, 2] * p.Z + m[3, 2] * p.W);
         }
 
-        public bool Equals(TMatrix other)
+        public Boolean Equals(TMatrix other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -100,16 +100,16 @@ namespace libTracer.Common
             return true;
         }
 
-        public override bool Equals(object obj)
+        public override Boolean Equals(Object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             return Equals((TMatrix)obj);
         }
 
-        public override int GetHashCode()
+        public override Int32 GetHashCode()
         {
-            int result = HashCode.Combine(Rows, Columns);
+            Int32 result = HashCode.Combine(Rows, Columns);
             for (var row = 0; row < Rows; row++)
             {
                 for (var col = 0; col < Columns; col++)
@@ -123,7 +123,7 @@ namespace libTracer.Common
 
         public TMatrix Transpose()
         {
-            var result = new float[Columns, Rows];
+            var result = new Single[Columns, Rows];
             for (var row = 0; row < Rows; row++)
             {
                 for (var col = 0; col < Columns; col++)
@@ -135,9 +135,9 @@ namespace libTracer.Common
             return new TMatrix(result);
         }
 
-        public float Determinant()
+        public Single Determinant()
         {
-            float result = 0;
+            Single result = 0;
             if (Rows == 2 && Columns == 2)
             {
                 result = _members[0, 0] * _members[1, 1] -
@@ -154,9 +154,9 @@ namespace libTracer.Common
             return result;
         }
 
-        public TMatrix SubMatrix(int delRow, int delCol)
+        public TMatrix SubMatrix(Int32 delRow, Int32 delCol)
         {
-            var result = new float[Rows - 1, Columns - 1];
+            var result = new Single[Rows - 1, Columns - 1];
             var newRow = 0;
 
             for (var curRow = 0; curRow < Rows; curRow++)
@@ -176,21 +176,21 @@ namespace libTracer.Common
             return new TMatrix(result);
         }
 
-        public float Minor(int row, int col)
+        public Single Minor(Int32 row, Int32 col)
         {
             return SubMatrix(row, col).Determinant();
         }
 
-        public float Cofactor(int row, int col)
+        public Single Cofactor(Int32 row, Int32 col)
         {
             return (row + col & 1) == 0 ? Minor(row, col) : -Minor(row, col);
         }
 
         public TMatrix Inverse()
         {
-            var result = new float[Rows, Columns];
+            var result = new Single[Rows, Columns];
 
-            float determinant = Determinant();
+            Single determinant = Determinant();
             for (var row = 0; row < Rows; row++)
             {
                 for (var col = 0; col < Columns; col++)
@@ -202,7 +202,7 @@ namespace libTracer.Common
             return new TMatrix(result);
         }
 
-        public TMatrix Translation(float x, float y, float z)
+        public TMatrix Translation(Single x, Single y, Single z)
         {
             return new TMatrix
             {
@@ -212,7 +212,7 @@ namespace libTracer.Common
             } * this;
         }
 
-        public TMatrix Scaling(float x, float y, float z)
+        public TMatrix Scaling(Single x, Single y, Single z)
         {
             return new TMatrix
             {
@@ -222,7 +222,7 @@ namespace libTracer.Common
             } * this;
         }
 
-        public TMatrix RotationX(float angleRads)
+        public TMatrix RotationX(Single angleRads)
         {
             return new TMatrix
             {
@@ -233,7 +233,7 @@ namespace libTracer.Common
             } * this;
         }
 
-        public TMatrix RotationY(float angleRads)
+        public TMatrix RotationY(Single angleRads)
         {
             return new TMatrix
             {
@@ -244,7 +244,7 @@ namespace libTracer.Common
             } * this;
         }
 
-        public TMatrix RotationZ(float angleRads)
+        public TMatrix RotationZ(Single angleRads)
         {
             return new TMatrix
             {
@@ -255,7 +255,7 @@ namespace libTracer.Common
             } * this;
         }
 
-        public TMatrix Shearing(float xy, float xz, float yx, float yz, float zx, float zy)
+        public TMatrix Shearing(Single xy, Single xz, Single yx, Single yz, Single zx, Single zy)
         {
             return new TMatrix()
             {

@@ -6,9 +6,9 @@ namespace TestLibTracer.Common
 {
     internal class TestTColour
     {
-        private const float SOME_RED = 0.1f;
-        private const float SOME_GREEN = 0.2f;
-        private const float SOME_BLUE = 0.3f;
+        private const Single SOME_RED = 0.1f;
+        private const Single SOME_GREEN = 0.2f;
+        private const Single SOME_BLUE = 0.3f;
 
         private TColour _colour;
 
@@ -231,7 +231,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsFalse_WhenOtherIsObjectAndNull()
         {
             var colour1 = new TColour(0, 0, 0);
-            object colour2 = null;
+            Object colour2 = null;
 
             Assert.That(colour1.Equals(colour2), Is.False);
         }
@@ -240,7 +240,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsTrue_WhenOtherIsObject()
         {
             var colour1 = new TColour(0, 0, 0);
-            object colour2 = new TColour(0, 0, 0);
+            Object colour2 = new TColour(0, 0, 0);
 
             Assert.That(colour1.Equals(colour2), Is.True);
         }
@@ -249,7 +249,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsTrue_WhenOtherIsObjectAndSameReference()
         {
             var colour1 = new TColour(0, 0, 0);
-            object colour2 = colour1;
+            Object colour2 = colour1;
 
             Assert.That(colour1.Equals(colour2), Is.True);
         }

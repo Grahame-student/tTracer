@@ -6,17 +6,17 @@ namespace libTracer.Scene
 {
     public class Camera
     {
-        private long _processedPixels;
+        private Int64 _processedPixels;
 
-        private float _halfWidth;
-        private float _halfHeight;
+        private Single _halfWidth;
+        private Single _halfHeight;
 
         public Canvas Canvas { get; }
-        public float FieldOfView { get; set; }
+        public Single FieldOfView { get; set; }
         public TMatrix Transformation { get; set; }
-        public float PixelSize { get; private set; }
+        public Single PixelSize { get; private set; }
 
-        public Camera(int width, int height, float fieldOfView)
+        public Camera(Int32 width, Int32 height, Single fieldOfView)
         {
             Canvas = new Canvas(width, height);
             FieldOfView = fieldOfView;
@@ -27,8 +27,8 @@ namespace libTracer.Scene
 
         private void SetPixelSize()
         {
-            float halfView = MathF.Tan(FieldOfView / 2);
-            float aspect = Canvas.Width / (float)Canvas.Height;
+            Single halfView = MathF.Tan(FieldOfView / 2);
+            Single aspect = Canvas.Width / (Single)Canvas.Height;
 
             if (aspect >= 1)
             {
@@ -44,13 +44,13 @@ namespace libTracer.Scene
             PixelSize = _halfWidth * 2 / Canvas.Width;
         }
 
-        public TRay PixelRay(int pixelX, int pixelY)
+        public TRay PixelRay(Int32 pixelX, Int32 pixelY)
         {
-            float xOffset = (pixelX + 0.5f) * PixelSize;
-            float yOffset = (pixelY + 0.5f) * PixelSize;
+            Single xOffset = (pixelX + 0.5f) * PixelSize;
+            Single yOffset = (pixelY + 0.5f) * PixelSize;
 
-            float worldX = _halfWidth - xOffset;
-            float worldY = _halfHeight - yOffset;
+            Single worldX = _halfWidth - xOffset;
+            Single worldY = _halfHeight - yOffset;
 
             TMatrix inverse = Transformation.Inverse();
             TPoint pixel = inverse * new TPoint(worldX, worldY, -1);
@@ -74,7 +74,7 @@ namespace libTracer.Scene
             _processedPixels++;
             if (_processedPixels % 100000 == 0)
             {
-                Console.WriteLine($"Processing pixel {_processedPixels} of {Canvas.PixelCount} {_processedPixels / (float)Canvas.PixelCount * 100:F2}%");
+                Console.WriteLine($"Processing pixel {_processedPixels} of {Canvas.PixelCount} {_processedPixels / (Single)Canvas.PixelCount * 100:F2}%");
             };
         }
     }

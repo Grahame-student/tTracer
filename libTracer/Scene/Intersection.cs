@@ -43,16 +43,18 @@ namespace libTracer
             var result = new Computations
             {
                 Time = Time,
-                Object = Shape
+                Object = Shape,
+                Inside = false
             };
             result.Point = ray.Position(result.Time);
             result.EyeV = -ray.Direction;
             result.NormalV = result.Object.Normal(result.Point);
+            if (result.NormalV.Dot(result.EyeV) < 0)
+            {
+                result.Inside = true;
+                result.NormalV = -result.NormalV;
+            }
             result.OverPoint = result.Point + result.NormalV * EPSILON;
-            if (!(result.NormalV.Dot(result.EyeV) < 0)) return result;
-
-            result.Inside = true;
-            result.NormalV = -result.NormalV;
             return result;
         }
     }

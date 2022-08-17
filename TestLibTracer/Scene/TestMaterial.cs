@@ -102,7 +102,7 @@ namespace TestLibTracer.Scene
         public void Equals_ReturnsFalse_WhenOtherIsObjectAndNull()
         {
             var material1 = new Material();
-            object material2 = null;
+            Object material2 = null;
 
             Assert.That(material1.Equals(material2), Is.False);
         }
@@ -111,7 +111,7 @@ namespace TestLibTracer.Scene
         public void Equals_ReturnsTrue_WhenOtherIsObject()
         {
             var material1 = new Material();
-            object material2 = new Material();
+            Object material2 = new Material();
 
             Assert.That(material1.Equals(material2), Is.True);
         }
@@ -120,7 +120,7 @@ namespace TestLibTracer.Scene
         public void Equals_ReturnsTrue_WhenOtherIsObjectAndSameReference()
         {
             var material1 = new Material();
-            object material2 = material1;
+            Object material2 = material1;
 
             Assert.That(material1.Equals(material2), Is.True);
         }

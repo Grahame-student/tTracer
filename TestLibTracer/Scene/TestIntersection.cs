@@ -10,11 +10,11 @@ namespace TestLibTracer.Scene
 {
     internal class TestIntersection
     {
-        private const float EARLIER_TIME = 120;
-        private const float SOME_TIME = 123;
-        private const float LATER_TIME = 130;
+        private const Single EARLIER_TIME = 120;
+        private const Single SOME_TIME = 123;
+        private const Single LATER_TIME = 130;
 
-        private const float EPSILON = 0.001f;
+        private const Single EPSILON = 0.001f;
 
         private Intersection _intersection;
 

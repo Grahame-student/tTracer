@@ -14,7 +14,7 @@ namespace libTracer.Shapes
         protected override IList<Intersection> LocalIntersects(TRay ray)
         {
             var result = new List<Intersection>();
-            if (!(MathF.Abs(ray.Direction.Y) > EPSILON)) return result;
+            if (MathF.Abs(ray.Direction.Y) < EPSILON) return result;
             Single t = -ray.Origin.Y / ray.Direction.Y;
             result.Add(new Intersection(t, this));
 

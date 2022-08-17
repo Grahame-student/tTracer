@@ -6,10 +6,10 @@ namespace libTracer.Scene
     public class Material : IEquatable<Material>
     {
         public TColour Colour { get; set; }
-        public float Ambient { get; set; }
-        public float Diffuse { get; set; }
-        public float Specular { get; set; }
-        public float Shininess { get; set; }
+        public Single Ambient { get; set; }
+        public Single Diffuse { get; set; }
+        public Single Specular { get; set; }
+        public Single Shininess { get; set; }
 
         public Material()
         {
@@ -20,14 +20,14 @@ namespace libTracer.Scene
             Shininess = 200f;
         }
 
-        public override bool Equals(object obj)
+        public override Boolean Equals(Object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             return Equals((Material)obj);
         }
 
-        public bool Equals(Material other)
+        public Boolean Equals(Material other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -38,19 +38,19 @@ namespace libTracer.Scene
                    Shininess.Equals(other.Shininess);
         }
 
-        public override int GetHashCode()
+        public override Int32 GetHashCode()
         {
             return HashCode.Combine(Colour);
         }
 
-        public TColour Lighting(Light light, TPoint position, TVector eye, TVector normal, bool inShadow)
+        public TColour Lighting(Light light, TPoint position, TVector eye, TVector normal, Boolean inShadow)
         {
             TColour diffuse;
             TColour specular;
             TColour effectiveColour = Colour * light.Intensity;
             TVector lightV = (light.Position - position).Normalise();
             TColour ambient = effectiveColour * Ambient;
-            float lightDotNormal = lightV.Dot(normal);
+            Single lightDotNormal = lightV.Dot(normal);
             if (lightDotNormal < 0 || inShadow)
             {
                 diffuse = new TColour(0, 0, 0);
@@ -60,14 +60,14 @@ namespace libTracer.Scene
             {
                 diffuse = effectiveColour * Diffuse * lightDotNormal;
                 TVector reflectV = -lightV.Reflect(normal);
-                float reflectDotEye = reflectV.Dot(eye);
+                Single reflectDotEye = reflectV.Dot(eye);
                 if (reflectDotEye <= 0)
                 {
                     specular = new TColour(0, 0, 0);
                 }
                 else
                 {
-                    float factor = MathF.Pow(reflectDotEye, Shininess);
+                    Single factor = MathF.Pow(reflectDotEye, Shininess);
                     specular = light.Intensity * Specular * factor;
                 }
             }

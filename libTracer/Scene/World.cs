@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using libTracer.Common;
 using libTracer.Shapes;
 
@@ -72,10 +73,10 @@ namespace libTracer.Scene
             return ShadeHit(comp);
         }
 
-        public bool IsShadowed(TPoint point)
+        public Boolean IsShadowed(TPoint point)
         {
             TVector v = Light.Position - point;
-            float distance = v.Magnitude;
+            Single distance = v.Magnitude;
             TVector direction = v.Normalise();
 
             var r = new TRay(point, direction);

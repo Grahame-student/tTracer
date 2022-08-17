@@ -7,12 +7,12 @@ namespace TestLibTracer.Scene
 {
     internal class TestPixel
     {
-        private const int SOME_X = 123;
-        private const int SOME_Y = 321;
+        private const Int32 SOME_X = 123;
+        private const Int32 SOME_Y = 321;
 
-        private const float SOME_RED = 0.1f;
-        private const float SOME_GREEN = 0.2f;
-        private const float SOME_BLUE = 0.3f;
+        private const Single SOME_RED = 0.1f;
+        private const Single SOME_GREEN = 0.2f;
+        private const Single SOME_BLUE = 0.3f;
 
         private Pixel _pixel;
 

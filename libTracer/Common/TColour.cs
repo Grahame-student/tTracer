@@ -4,13 +4,13 @@ namespace libTracer.Common
 {
     public class TColour : IEquatable<TColour>
     {
-        private const float EPSILON = 0.001f;
+        private const Single EPSILON = 0.01f;
 
-        public float Red { get; }
-        public float Green { get; }
-        public float Blue { get; }
+        public Single Red { get; }
+        public Single Green { get; }
+        public Single Blue { get; }
 
-        public TColour(float red, float green, float blue)
+        public TColour(Single red, Single green, Single blue)
         {
             Red = red;
             Green = green;
@@ -27,7 +27,7 @@ namespace libTracer.Common
             c1.Green - c2.Green,
             c1.Blue - c2.Blue);
 
-        public static TColour operator *(TColour c, float s) => new(
+        public static TColour operator *(TColour c, Single s) => new(
             c.Red * s,
             c.Green * s,
             c.Blue * s);
@@ -37,7 +37,7 @@ namespace libTracer.Common
             c1.Green * c2.Green,
             c1.Blue * c2.Blue);
 
-        public bool Equals(TColour other)
+        public Boolean Equals(TColour other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -46,14 +46,14 @@ namespace libTracer.Common
                    MathF.Abs(Blue - other.Blue) < EPSILON;
         }
 
-        public override bool Equals(object obj)
+        public override Boolean Equals(Object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             return Equals((TColour)obj);
         }
 
-        public override int GetHashCode()
+        public override Int32 GetHashCode()
         {
             return HashCode.Combine(Red, Green, Blue);
         }

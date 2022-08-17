@@ -6,9 +6,9 @@ namespace TestLibTracer.Common
 {
     internal class TestTVector
     {
-        private const float SOME_X = 1.2f;
-        private const float SOME_Y = 3.4f;
-        private const float SOME_Z = 5.6f;
+        private const Single SOME_X = 1.2f;
+        private const Single SOME_Y = 3.4f;
+        private const Single SOME_Z = 5.6f;
 
         private TVector _vector;
 
@@ -316,7 +316,7 @@ namespace TestLibTracer.Common
         {
             _vector = new TVector(SOME_X, SOME_Y, SOME_Z);
 
-            float expected = MathF.Sqrt(SOME_X * SOME_X + SOME_Y * SOME_Y + SOME_Z * SOME_Z);
+            Single expected = MathF.Sqrt(SOME_X * SOME_X + SOME_Y * SOME_Y + SOME_Z * SOME_Z);
 
             Assert.That(_vector.Magnitude, Is.EqualTo(expected));
         }
@@ -411,7 +411,7 @@ namespace TestLibTracer.Common
             var vector1 = new TVector(2, 3, 4);
             var vector2 = new TVector(3, 4, 5);
 
-            float expected = 2 * 3 + 3 * 4 + 4 * 5 + 0 * 0;
+            Single expected = 2 * 3 + 3 * 4 + 4 * 5 + 0 * 0;
 
             Assert.That(vector1.Dot(vector2), Is.EqualTo(expected));
         }
@@ -534,7 +534,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsFalse_WhenOtherIsObjectAndNull()
         {
             var vector1 = new TVector(0, 0, 0);
-            object vector2 = null;
+            Object vector2 = null;
 
             Assert.That(vector1.Equals(vector2), Is.False);
         }
@@ -543,7 +543,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsTrue_WhenOtherIsObject()
         {
             var vector1 = new TVector(0, 0, 0);
-            object vector2 = new TVector(0, 0, 0);
+            Object vector2 = new TVector(0, 0, 0);
 
             Assert.That(vector1.Equals(vector2), Is.True);
         }
@@ -552,7 +552,7 @@ namespace TestLibTracer.Common
         public void Equals_ReturnsTrue_WhenOtherIsObjectAndSameReference()
         {
             var vector1 = new TVector(0, 0, 0);
-            object vector2 = vector1;
+            Object vector2 = vector1;
 
             Assert.That(vector1.Equals(vector2), Is.True);
         }

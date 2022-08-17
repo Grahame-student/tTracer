@@ -13,7 +13,7 @@ namespace libTracer.Common
             Direction = direction;
         }
 
-        public TPoint Position(float time)
+        public TPoint Position(Single time)
         {
             return Origin + Direction * time;
         }

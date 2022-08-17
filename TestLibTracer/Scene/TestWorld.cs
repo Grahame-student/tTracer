@@ -171,7 +171,6 @@ namespace TestLibTracer.Scene
         }
 
         [Test]
-        [Ignore("Not clear if shadowing should be cause this test to fail")]
         public void ShadeHit_ShadesIntersection_fromInside()
         {
             _world = World.CreateWorld();

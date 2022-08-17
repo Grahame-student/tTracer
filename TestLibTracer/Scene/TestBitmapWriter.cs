@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using libTracer.Common;
 using libTracer.Scene;
 using NUnit.Framework;
@@ -10,7 +11,7 @@ namespace TestLibTracer.Scene
     /// </summary>
     internal class TestBitmapWriter
     {
-        private const string SOME_PATH = "SomeFile.png";
+        private const String SOME_PATH = "SomeFile.png";
 
         [SetUp]
         public void Setup()

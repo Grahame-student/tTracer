@@ -9,11 +9,11 @@ namespace libTracer.Scene
     {
         private readonly IList<IList<Pixel>> _pixels;
 
-        public int Width => _pixels[0].Count;
-        public int Height => _pixels.Count;
-        public long PixelCount { get; }
+        public Int32 Width => _pixels[0].Count;
+        public Int32 Height => _pixels.Count;
+        public Int64 PixelCount { get; }
 
-        public Canvas(int width, int height)
+        public Canvas(Int32 width, Int32 height)
         {
             _pixels = new List<IList<Pixel>>();
             PixelCount = width * height;
@@ -31,12 +31,12 @@ namespace libTracer.Scene
 
         public IEnumerable<Pixel> Pixels => _pixels.SelectMany(row => row);
 
-        public void SetPixel(int x, int y, TColour colour)
+        public void SetPixel(Int32 x, Int32 y, TColour colour)
         {
             _pixels[y][x].SetColour(colour.Red, colour.Green, colour.Blue);
         }
 
-        public TColour GetPixel(int x, int y)
+        public TColour GetPixel(Int32 x, Int32 y)
         {
             return _pixels[y][x].Colour;
         }
