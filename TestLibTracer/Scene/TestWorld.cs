@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
-using libTracer;
 using libTracer.Common;
 using libTracer.Scene;
 using libTracer.Shapes;
-using Microsoft.VisualBasic;
 
 using NUnit.Framework;
 

@@ -1,11 +1,14 @@
 ﻿using System;
 using libTracer.Common;
+using libTracer.Scene.Patterns;
+using libTracer.Shapes;
 
 namespace libTracer.Scene
 {
     public class Material : IEquatable<Material>
     {
         public TColour Colour { get; set; }
+        public Pattern Pattern { get; set; }
         public Single Ambient { get; set; }
         public Single Diffuse { get; set; }
         public Single Specular { get; set; }
@@ -43,11 +46,14 @@ namespace libTracer.Scene
             return HashCode.Combine(Colour);
         }
 
-        public TColour Lighting(Light light, TPoint position, TVector eye, TVector normal, Boolean inShadow)
+        public TColour Lighting(Shape shape, Light light, TPoint position, TVector eye, TVector normal, Boolean inShadow)
         {
             TColour diffuse;
             TColour specular;
-            TColour effectiveColour = Colour * light.Intensity;
+
+            TColour colour = Pattern?.ColourAt(shape, position) ?? Colour;
+
+            TColour effectiveColour = colour * light.Intensity;
             TVector lightV = (light.Position - position).Normalise();
             TColour ambient = effectiveColour * Ambient;
             Single lightDotNormal = lightV.Dot(normal);

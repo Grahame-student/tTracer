@@ -1,5 +1,6 @@
 ﻿using libTracer.Common;
 using libTracer.Scene;
+using libTracer.Scene.Patterns;
 using libTracer.Shapes;
 
 namespace demoScene;
@@ -79,9 +80,15 @@ internal class Program
     {
         return new Sphere
         {
-            Transform = new TMatrix().Translation(-0.5f, 1, 0.5f),
+            Transform = new TMatrix()
+                .RotationY(MathF.PI/4)
+                .Translation(-0.5f, 1, 0.5f),
             Material = new Material
             {
+                Pattern = new Checkers(ColourFactory.White(), ColourFactory.Black())
+                {
+                    Transform = new TMatrix().Scaling(0.5f, 0.5f, 0.5f)
+                },
                 Colour = new TColour(0.1f, 1, 0.5f),
                 Diffuse = 0.7f,
                 Specular = 0.3f
@@ -94,11 +101,12 @@ internal class Program
         return new Sphere
         {
             Transform = new TMatrix()
+                .RotationZ(MathF.PI / 8)
                 .Scaling(0.5f, 0.5f, 0.5f)
                 .Translation(1.5f, 0.5f, -0.5f),
             Material = new Material
             {
-                Colour = new TColour(0.9f, 0.1f, 0.1f),
+                Pattern = new Gradient(new TColour(0.9f, 0.1f, 0.1f), new TColour(0.1f, 0.1f, 0.9f)),
                 Diffuse = 0.7f,
                 Specular = 0.3f
             }

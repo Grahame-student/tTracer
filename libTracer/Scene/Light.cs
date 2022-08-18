@@ -1,5 +1,4 @@
-﻿using System;
-using libTracer.Common;
+﻿using libTracer.Common;
 
 namespace libTracer.Scene
 {

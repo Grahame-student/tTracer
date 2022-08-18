@@ -59,7 +59,7 @@ namespace libTracer.Scene
 
         public TColour ShadeHit(Computations computations)
         {
-            return computations.Object.Material.Lighting(Light, computations.OverPoint, computations.EyeV,
+            return computations.Object.Material.Lighting(computations.Object, Light, computations.OverPoint, computations.EyeV,
                 computations.NormalV, IsShadowed(computations.OverPoint));
         }
 

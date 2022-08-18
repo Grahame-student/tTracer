@@ -3,6 +3,8 @@ using libTracer.Scene;
 using NUnit.Framework;
 
 using System;
+using libTracer.Scene.Patterns;
+using libTracer.Shapes;
 
 namespace TestLibTracer.Scene
 {
@@ -161,7 +163,7 @@ namespace TestLibTracer.Scene
             TVector eye = new TVector(0, 0, -1);
             TVector normal = new TVector(0, 0, -1);
 
-            Assert.That(_material.Lighting(light, position, eye, normal, false), Is.InstanceOf<TColour>());
+            Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.InstanceOf<TColour>());
         }
 
         [Test]
@@ -174,7 +176,7 @@ namespace TestLibTracer.Scene
             TVector normal = new TVector(0, 0, -1);
 
             var expectedResult = new TColour(1.9f, 1.9f, 1.9f);
-            Assert.That(_material.Lighting(light, position, eye, normal, false), Is.EqualTo(expectedResult));
+            Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -187,7 +189,7 @@ namespace TestLibTracer.Scene
             TVector normal = new TVector(0, 0, -1);
 
             var expectedResult = new TColour(1.0f, 1.0f, 1.0f);
-            Assert.That(_material.Lighting(light, position, eye, normal, false), Is.EqualTo(expectedResult));
+            Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -199,7 +201,7 @@ namespace TestLibTracer.Scene
             var eye = new TVector(0, 0, -1);
             var normal = new TVector(0, 0, -1);
 
-            TColour result = _material.Lighting(light, position, eye, normal, false);
+            TColour result = _material.Lighting(new Sphere(), light, position, eye, normal, false);
 
             var expectedResult = new TColour(0.7364f, 0.7364f, 0.7364f);
             Assert.That(result, Is.EqualTo(expectedResult));
@@ -215,7 +217,7 @@ namespace TestLibTracer.Scene
             var normal = new TVector(0, 0, -1);
 
             var expectedResult = new TColour(1.6364f, 1.6364f, 1.6364f);
-            Assert.That(_material.Lighting(light, position, eye, normal, false), Is.EqualTo(expectedResult));
+            Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.EqualTo(expectedResult));
         }
 
         [Test]
@@ -228,11 +230,11 @@ namespace TestLibTracer.Scene
             var normal = new TVector(0, 0, -1);
 
             var expectedResult = new TColour(0.1f, 0.1f, 0.1f);
-            Assert.That(_material.Lighting(light, position, eye, normal, false), Is.EqualTo(expectedResult));
+            Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.EqualTo(expectedResult));
         }
 
         [Test]
-        public void Lighting_RetrunsLittleColour_WhenPointInShadow()
+        public void Lighting_ReturnsLittleColour_WhenPointInShadow()
         {
             _material = new Material();
             var position = new TPoint(0, 0, 0);
@@ -241,10 +243,46 @@ namespace TestLibTracer.Scene
             var light = new Light(new TPoint(0, 0, -10), new TColour(1, 1, 1));
             var inShadow = true;
 
-            var result = _material.Lighting(light, position, eye, normal, inShadow);
+            var result = _material.Lighting(new Sphere(), light, position, eye, normal, inShadow);
 
             var expectedResult = new TColour(0.1f, 0.1f, 0.1f);
             Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void Lighting_ReturnsWhite_WhenStripePatternAppliedToMaterialAndRayHitsWhiteStripe()
+        {
+            _material = new Material
+            {
+                Pattern = new Stripes(ColourFactory.White(), ColourFactory.Black()),
+                Ambient = 1,
+                Diffuse = 0,
+                Specular = 0
+            };
+            var eyev = new TVector(0, 0, -1);
+            var normalv = new TVector(0, 0, -1);
+            var light = new Light(new TPoint(0, 0, -10), new TColour(1, 1, 1));
+
+            Assert.That(_material.Lighting(new Sphere(), light, new TPoint(0.9f, 0, 0), eyev, normalv, false),
+                Is.EqualTo(ColourFactory.White()));
+        }
+
+        [Test]
+        public void Lighting_ReturnsBlack_WhenStripePatternAppliedToMaterialAndRayHitsBlackStripe()
+        {
+            _material = new Material
+            {
+                Pattern = new Stripes(ColourFactory.White(), ColourFactory.Black()),
+                Ambient = 1,
+                Diffuse = 0,
+                Specular = 0
+            };
+            var eyev = new TVector(0, 0, -1);
+            var normalv = new TVector(0, 0, -1);
+            var light = new Light(new TPoint(0, 0, -10), new TColour(1, 1, 1));
+
+            Assert.That(_material.Lighting(new Sphere(), light, new TPoint(1.1f, 0, 0), eyev, normalv, false),
+                Is.EqualTo(ColourFactory.Black()));
         }
     }
 }

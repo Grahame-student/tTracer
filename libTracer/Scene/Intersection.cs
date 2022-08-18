@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using libTracer.Common;
-using libTracer.Scene;
 using libTracer.Shapes;
 
-namespace libTracer
+namespace libTracer.Scene
 {
     public class Intersection : IComparable<Intersection>
     {

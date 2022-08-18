@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using libTracer.Common;
+using libTracer.Scene;
 
 namespace libTracer.Shapes
 {
