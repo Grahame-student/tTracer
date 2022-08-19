@@ -39,7 +39,7 @@ namespace demoSphere
             TVector normal = hit.Shape.Normal(point);
             TVector eye = -ray.Direction;
 
-            TColour colour = hit.Shape.Material.Lighting(world.Light, point, eye, normal, false);
+            TColour colour = hit.Shape.Material.Lighting(hit.Shape, world.Light, point, eye, normal, false);
             canvas.SetPixel(pixel.X, pixel.Y, colour);
         }
     }

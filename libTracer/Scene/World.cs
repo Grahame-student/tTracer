@@ -57,20 +57,23 @@ namespace libTracer.Scene
             return result;
         }
 
-        public TColour ShadeHit(Computations computations)
+        public TColour ShadeHit(Computations computations, Int32 remaining)
         {
-            return computations.Object.Material.Lighting(computations.Object, Light, computations.OverPoint, computations.EyeV,
-                computations.NormalV, IsShadowed(computations.OverPoint));
+            return computations.Object.Material.Lighting(computations.Object, Light, computations.OverPoint,
+                       computations.EyeV,
+                       computations.NormalV, IsShadowed(computations.OverPoint)) +
+                   ReflectedColour(computations, remaining) +
+                   RefractedColour(computations, remaining);
         }
 
-        public TColour ColourAt(TRay ray)
+        public TColour ColourAt(TRay ray, Int32 remaining)
         {
             IList<Intersection> intersections = Intersects(ray);
             Intersection hit = Intersection.Hit(intersections);
             if (hit == null) return new TColour(0, 0, 0);
 
-            Computations comp = hit.PrepareComputations(ray);
-            return ShadeHit(comp);
+            Computations comp = hit.PrepareComputations(ray, intersections);
+            return ShadeHit(comp, remaining);
         }
 
         public Boolean IsShadowed(TPoint point)
@@ -84,6 +87,39 @@ namespace libTracer.Scene
 
             Intersection h = Intersection.Hit(intersections);
             return h != null && h.Time < distance;
+        }
+
+        public TColour ReflectedColour(Computations comps, Int32 remaining)
+        {
+            if (remaining <= 0 || comps.Object.Material.Reflective == 0.0f)
+            {
+                return ColourFactory.Black();
+            }
+
+            var reflectRay = new TRay(comps.OverPoint, comps.ReflectV);
+            TColour colour = ColourAt(reflectRay, remaining - 1);
+            return colour * comps.Object.Material.Reflective;
+        }
+
+        public TColour RefractedColour(Computations comps, Int32 remaining)
+        {
+            if (remaining <=0 || comps.Object.Material.Transparency == 0.0f)
+            {
+                return ColourFactory.Black();
+            }
+            Single ratio = comps.N1 / comps.N2;
+            Single cosI = comps.EyeV.Dot(comps.NormalV);
+            Single sin2T = MathF.Pow(ratio, 2) * (1 - MathF.Pow(cosI, 2));
+            if (sin2T > 1)
+            {
+                return ColourFactory.Black();
+            }
+
+            Single cosT = MathF.Sqrt(1.0f - sin2T);
+            TVector direction = comps.NormalV * (ratio * cosI - cosT) - comps.EyeV * ratio;
+            var refractedRay = new TRay(comps.UnderPoint, direction);
+
+            return ColourAt(refractedRay, remaining - 1) * comps.Object.Material.Transparency;
         }
     }
 }

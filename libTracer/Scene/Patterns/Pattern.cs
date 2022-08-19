@@ -16,8 +16,9 @@ namespace libTracer.Scene.Patterns
         {
             TPoint objectPoint = shape.Transform.Inverse() * point;
             TPoint patternpoint = Transform.Inverse() * objectPoint;
-            return LocalColourAt(patternpoint);
+            return LocalColourAt(shape, patternpoint);
         }
-        protected abstract TColour LocalColourAt(TPoint point);
+
+        protected abstract TColour LocalColourAt(Shape shape, TPoint point);
     }
 }

@@ -31,5 +31,17 @@ namespace libTracer.Shapes
         {
             return point - new TPoint(0, 0, 0);
         }
+
+        public static Sphere Glass()
+        {
+            return new Sphere
+            {
+                Material = new Material
+                {
+                    Transparency = 1.0f,
+                    RefractiveIndex = 1.5f
+                }
+            };
+        }
     }
 }

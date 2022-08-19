@@ -15,7 +15,7 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Stripes(ColourFactory.White(), ColourFactory.Black());
 
-            Assert.That(_pattern.A, Is.EqualTo(ColourFactory.White()));
+            Assert.That(_pattern.A, Is.EqualTo(new Solid(ColourFactory.White())));
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Stripes(ColourFactory.White(), ColourFactory.Black());
 
-            Assert.That(_pattern.B, Is.EqualTo(ColourFactory.Black()));
+            Assert.That(_pattern.B, Is.EqualTo(new Solid(ColourFactory.Black())));
         }
 
         [Test]

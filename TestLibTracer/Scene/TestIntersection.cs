@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using libTracer;
 using libTracer.Common;
 using libTracer.Scene;
 using libTracer.Shapes;
@@ -114,7 +113,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(4, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result, Is.InstanceOf<Computations>());
         }
@@ -126,7 +125,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(4, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result.Time, Is.EqualTo(_intersection.Time));
         }
@@ -138,7 +137,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(4, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result.Object, Is.EqualTo(shape));
         }
@@ -152,7 +151,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(4, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result.Point, Is.EqualTo(new TPoint(0, 0, -1)));
         }
@@ -166,7 +165,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(4, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result.EyeV, Is.EqualTo(-direction));
         }
@@ -180,7 +179,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(4, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result.NormalV, Is.EqualTo(new TVector(0, 0, -1)));
         }
@@ -194,7 +193,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(4, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result.Inside, Is.False);
         }
@@ -208,7 +207,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(1, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result.Inside, Is.True);
         }
@@ -222,7 +221,7 @@ namespace TestLibTracer.Scene
             Shape shape = new Sphere();
             _intersection = new Intersection(1, shape);
 
-            Computations result = _intersection.PrepareComputations(ray);
+            Computations result = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(result.NormalV, Is.EqualTo(new TVector(0, 0, -1)));
         }
@@ -239,7 +238,7 @@ namespace TestLibTracer.Scene
             };
             _intersection = new Intersection(1, shape);
 
-            Computations comps = _intersection.PrepareComputations(ray);
+            Computations comps = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
 
             Assert.That(comps.OverPoint.Z, Is.LessThan(-EPSILON / 2));
         }
@@ -256,9 +255,83 @@ namespace TestLibTracer.Scene
             };
             _intersection = new Intersection(1, shape);
 
-            Computations comps = _intersection.PrepareComputations(ray);
+            Computations comps = _intersection.PrepareComputations(ray, new List<Intersection>{_intersection});
 
             Assert.That(comps.Point.Z, Is.GreaterThan(comps.OverPoint.Z));
+        }
+
+        [Test]
+        public void PrepareComputations_SetsReflectVTo_DirectionOfReflection()
+        {
+            var shape = new Plane();
+            var ray = new TRay(new TPoint(0, 1, -1), new TVector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
+            _intersection = new Intersection(MathF.Sqrt(2), shape);
+
+            Computations comps = _intersection.PrepareComputations(ray, new List<Intersection> { _intersection });
+
+            Assert.That(comps.ReflectV, Is.EqualTo(new TVector(0, MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2)));
+        }
+
+        [TestCase(0, 1.0f, 1.5f)]
+        [TestCase(1, 1.5f, 2.0f)]
+        [TestCase(2, 2.0f, 2.5f)]
+        [TestCase(3, 2.5f, 2.5f)]
+        [TestCase(4, 2.5f, 1.5f)]
+        [TestCase(5, 1.5f, 1.0f)]
+        public void PrepareComputation_Calculates_AllHitsInScene(Int32 index, Single n1, Single n2)
+        {
+            Sphere shape1 = Sphere.Glass();
+            shape1.Transform = new TMatrix().Scaling(2, 2, 2);
+            shape1.Material.RefractiveIndex = 1.5f;
+            Sphere shape2 = Sphere.Glass();
+            shape2.Transform = new TMatrix().Translation(0, 0, -0.25f);
+            shape2.Material.RefractiveIndex = 2.0f;
+            Sphere shape3 = Sphere.Glass();
+            shape3.Transform = new TMatrix().Translation(0, 0, 0.25f);
+            shape3.Material.RefractiveIndex = 2.5f;
+            var ray = new TRay(new TPoint(0, 0, -4), new TVector(0, 0, 1));
+            var intersections = new List<Intersection>
+            {
+                new(2.00f, shape1),
+                new(2.75f, shape2),
+                new(3.25f, shape3),
+                new(4.75f, shape2),
+                new(5.25f, shape3),
+                new(6.00f, shape1)
+            };
+
+            Computations comps = intersections[index].PrepareComputations(ray, intersections);
+
+            Assert.That(comps.N1, Is.EqualTo(n1));
+            Assert.That(comps.N2, Is.EqualTo(n2));
+        }
+
+        [Test]
+        public void PrepareComputation_SetsUnderPointZ_ToGreaterThanHalfEpsilon()
+        {
+            var ray = new TRay(new TPoint(0, 0, -5), new TVector(0, 0, 1));
+            Sphere shape = Sphere.Glass();
+            shape.Transform = new TMatrix().Translation(0, 0, 1);
+            var intersection = new Intersection(5, shape);
+            var intersections = new List<Intersection> { intersection };
+
+            Computations comps = intersection.PrepareComputations(ray, intersections);
+
+            Assert.That(comps.UnderPoint.Z, Is.GreaterThan(EPSILON / 2));
+        }
+
+        [Test]
+        public void PrepareComputation_SetsUnderPointZ_ToJustBelowPointZ()
+        {
+            var ray = new TRay(new TPoint(0, 0, -5), new TVector(0, 0, 1));
+            Sphere shape = Sphere.Glass();
+            shape.Transform = new TMatrix().Translation(0, 0, 1);
+            var intersection = new Intersection(5, shape);
+            var intersections = new List<Intersection> { intersection };
+
+            Computations comps = intersection.PrepareComputations(ray, intersections);
+
+            Assert.That(comps.Point.Z, Is.LessThan(comps.UnderPoint.Z));
         }
     }
 }

@@ -13,6 +13,9 @@ namespace libTracer.Scene
         public Single Diffuse { get; set; }
         public Single Specular { get; set; }
         public Single Shininess { get; set; }
+        public Single Reflective { get; set; }
+        public Single Transparency { get; set; }
+        public Single RefractiveIndex { get; set; }
 
         public Material()
         {
@@ -21,6 +24,9 @@ namespace libTracer.Scene
             Diffuse = 0.9f;
             Specular = 0.9f;
             Shininess = 200f;
+            Reflective = 0.0f;
+            Transparency = 0.0f;
+            RefractiveIndex = 1.0f;
         }
 
         public override Boolean Equals(Object obj)

@@ -39,8 +39,12 @@ internal class Program
         {
             Material = new Material
             {
-                Colour = new TColour(1, 0.9f, 0.9f),
-                Specular = 0
+                Pattern = new Stripes(
+                    new Gradient(new TColour(1, 0.9f, 0.9f), new TColour(0.9f, 0.9f, 1)),
+                    new Solid(new TColour(0.5f, 0.5f, 0.5f))
+                    ),
+                Specular = 0,
+                Reflective = 0.5f
             }
         };
     }
@@ -91,7 +95,8 @@ internal class Program
                 },
                 Colour = new TColour(0.1f, 1, 0.5f),
                 Diffuse = 0.7f,
-                Specular = 0.3f
+                Specular = 0.3f,
+                Reflective = 0.5f
             }
         };
     }
@@ -124,7 +129,9 @@ internal class Program
             {
                 Colour = new TColour(1, 0.8f, 0.1f),
                 Diffuse = 0.7f,
-                Specular = 0.3f
+                Specular = 0.3f,
+                Transparency = 0.75f,
+                RefractiveIndex = 1.5f
             }
         };
     }

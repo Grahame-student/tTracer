@@ -69,7 +69,7 @@ namespace libTracer.Scene
         private void RenderPixel(World world, Pixel pixel, Canvas canvas)
         {
             TRay ray = PixelRay(pixel.X, pixel.Y);
-            TColour colour = world.ColourAt(ray);
+            TColour colour = world.ColourAt(ray, 5);
             canvas.SetPixel(pixel.X, pixel.Y, colour);
             _processedPixels++;
             if (_processedPixels % 100000 == 0)

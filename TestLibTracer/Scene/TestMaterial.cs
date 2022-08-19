@@ -53,6 +53,30 @@ namespace TestLibTracer.Scene
         }
 
         [Test]
+        public void Constructor_SetsReflective_ToDefault()
+        {
+            _material = new Material();
+
+            Assert.That(_material.Reflective, Is.EqualTo(0.0f));
+        }
+
+        [Test]
+        public void Constructor_SetsTransparency_ToDefault()
+        {
+            _material = new Material();
+
+            Assert.That(_material.Transparency, Is.EqualTo(0.0f));
+        }
+
+        [Test]
+        public void Constructor_SetsRefractiveIndex_ToDefault()
+        {
+            _material = new Material();
+
+            Assert.That(_material.RefractiveIndex, Is.EqualTo(1.0f));
+        }
+
+        [Test]
         public void Equals_ReturnsTrue_WhenAmbientEqualToOtherAmbient()
         {
             var material1 = new Material();
