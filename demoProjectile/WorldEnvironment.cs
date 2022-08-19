@@ -1,6 +1,6 @@
 ﻿using libTracer.Common;
 
-namespace projectileDemo
+namespace demoProjectile
 {
     internal class WorldEnvironment
     {

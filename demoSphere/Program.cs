@@ -1,5 +1,4 @@
-﻿using libTracer;
-using libTracer.Common;
+﻿using libTracer.Common;
 using libTracer.Scene;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace demoSphere
 
             const Int32 size = 500;
             var canvas = new Canvas(size, size);
-            Single pixelSize = world.WallSize / canvas.Width;
+            Double pixelSize = world.WallSize / canvas.Width;
 
             Parallel.ForEach(canvas.Pixels, pixel => RenderPixel(world, pixelSize, pixel, canvas));
 
@@ -23,10 +22,10 @@ namespace demoSphere
             writer.SaveToBitmap(canvas, @"sphere.png");
         }
 
-        private static void RenderPixel(DemoWorld world, Single pixelSize, Pixel pixel, Canvas canvas)
+        private static void RenderPixel(DemoWorld world, Double pixelSize, Pixel pixel, Canvas canvas)
         {
-            Single worldY = -world.HalfWall + pixelSize * pixel.Y;
-            Single worldX = -world.HalfWall + pixelSize * pixel.X;
+            Double worldY = -world.HalfWall + pixelSize * pixel.Y;
+            Double worldX = -world.HalfWall + pixelSize * pixel.X;
 
             var position = new TPoint(worldX, worldY, world.WallZ);
 

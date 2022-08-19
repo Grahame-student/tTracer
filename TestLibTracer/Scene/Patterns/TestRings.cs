@@ -46,7 +46,7 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Rings(ColourFactory.White(), ColourFactory.Black());
 
-            TColour colour1 = _pattern.ColourAt(new Sphere(), new TPoint(0.708f, 0, 0.708f));
+            TColour colour1 = _pattern.ColourAt(new Sphere(), new TPoint(0.708, 0, 0.708));
 
             Assert.That(colour1, Is.EqualTo(ColourFactory.Black()));
         }

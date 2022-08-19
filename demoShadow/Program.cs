@@ -1,5 +1,4 @@
-﻿using libTracer;
-using libTracer.Scene;
+﻿using libTracer.Scene;
 using System;
 using System.Collections.Generic;
 using libTracer.Common;
@@ -12,21 +11,21 @@ namespace demoShadow
         static void Main(String[] args)
         {
             var rayOrigin = new TPoint(0, 0, -5);
-            const Single wallZ = 10;
-            const Single wallSize = 7;
+            const Double wallZ = 10;
+            const Double wallSize = 7;
 
             const Int32 size = 500;
             var canvas = new Canvas(size, size);
-            Single pixelSize = wallSize / canvas.Width;
-            const Single halfWall = wallSize / 2;
+            Double pixelSize = wallSize / canvas.Width;
+            const Double halfWall = wallSize / 2;
 
-            var sphereColour= new TColour(1, 0, 0);
+            var sphereColour = new TColour(1, 0, 0);
             var sphere = new Sphere();
 
             foreach (Pixel pixel in canvas.Pixels)
             {
-                Single worldY = -halfWall + pixelSize * pixel.Y;
-                Single worldX = -halfWall + pixelSize * pixel.X;
+                Double worldY = -halfWall + pixelSize * pixel.Y;
+                Double worldX = -halfWall + pixelSize * pixel.X;
 
                 var position = new TPoint(worldX, worldY, wallZ);
 

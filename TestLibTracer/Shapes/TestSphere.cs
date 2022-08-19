@@ -268,9 +268,9 @@ namespace TestLibTracer.Shapes
         {
             _sphere = new Sphere();
 
-            TVector result = _sphere.Normal(new TPoint(MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3));
+            TVector result = _sphere.Normal(new TPoint(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
 
-            var expectedResult = new TVector(MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3);
+            var expectedResult = new TVector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -279,7 +279,7 @@ namespace TestLibTracer.Shapes
         {
             _sphere = new Sphere();
 
-            TVector result = _sphere.Normal(new TPoint(MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3, MathF.Sqrt(3) / 3));
+            TVector result = _sphere.Normal(new TPoint(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
 
             Assert.That(result.Normalise(), Is.EqualTo(result));
         }
@@ -292,9 +292,9 @@ namespace TestLibTracer.Shapes
                 Transform = new TMatrix().Translation(0, 1, 0)
             };
 
-            TVector result = _sphere.Normal(new TPoint(0, 1.70711f, -0.70711f));
+            TVector result = _sphere.Normal(new TPoint(0, 1.70711, -0.70711));
 
-            var expectedResult = new TVector(0, 0.70711f, -0.70711f);
+            var expectedResult = new TVector(0, 0.70711, -0.70711);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -303,12 +303,12 @@ namespace TestLibTracer.Shapes
         {
             _sphere = new Sphere
             {
-                Transform = new TMatrix().RotationZ(MathF.PI / 5).Scaling(1, 0.5f, 1)
+                Transform = new TMatrix().RotationZ(Math.PI / 5).Scaling(1, 0.5, 1)
             };
 
-            TVector result = _sphere.Normal(new TPoint(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2));
+            TVector result = _sphere.Normal(new TPoint(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
 
-            var expectedResult = new TVector(0, 0.97014f, -0.24254f);
+            var expectedResult = new TVector(0, 0.97014, -0.24254);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 

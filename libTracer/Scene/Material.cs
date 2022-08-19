@@ -9,24 +9,24 @@ namespace libTracer.Scene
     {
         public TColour Colour { get; set; }
         public Pattern Pattern { get; set; }
-        public Single Ambient { get; set; }
-        public Single Diffuse { get; set; }
-        public Single Specular { get; set; }
-        public Single Shininess { get; set; }
-        public Single Reflective { get; set; }
-        public Single Transparency { get; set; }
-        public Single RefractiveIndex { get; set; }
+        public Double Ambient { get; set; }
+        public Double Diffuse { get; set; }
+        public Double Specular { get; set; }
+        public Double Shininess { get; set; }
+        public Double Reflective { get; set; }
+        public Double Transparency { get; set; }
+        public Double RefractiveIndex { get; set; }
 
         public Material()
         {
             Colour = new TColour(1, 1, 1);
-            Ambient = 0.1f;
-            Diffuse = 0.9f;
-            Specular = 0.9f;
-            Shininess = 200f;
-            Reflective = 0.0f;
-            Transparency = 0.0f;
-            RefractiveIndex = 1.0f;
+            Ambient = 0.1;
+            Diffuse = 0.9;
+            Specular = 0.9;
+            Shininess = 200;
+            Reflective = 0.0;
+            Transparency = 0.0;
+            RefractiveIndex = 1.0;
         }
 
         public override Boolean Equals(Object obj)
@@ -62,7 +62,7 @@ namespace libTracer.Scene
             TColour effectiveColour = colour * light.Intensity;
             TVector lightV = (light.Position - position).Normalise();
             TColour ambient = effectiveColour * Ambient;
-            Single lightDotNormal = lightV.Dot(normal);
+            Double lightDotNormal = lightV.Dot(normal);
             if (lightDotNormal < 0 || inShadow)
             {
                 diffuse = new TColour(0, 0, 0);
@@ -72,14 +72,14 @@ namespace libTracer.Scene
             {
                 diffuse = effectiveColour * Diffuse * lightDotNormal;
                 TVector reflectV = -lightV.Reflect(normal);
-                Single reflectDotEye = reflectV.Dot(eye);
+                Double reflectDotEye = reflectV.Dot(eye);
                 if (reflectDotEye <= 0)
                 {
                     specular = new TColour(0, 0, 0);
                 }
                 else
                 {
-                    Single factor = MathF.Pow(reflectDotEye, Shininess);
+                    Double factor = Math.Pow(reflectDotEye, Shininess);
                     specular = light.Intensity * Specular * factor;
                 }
             }

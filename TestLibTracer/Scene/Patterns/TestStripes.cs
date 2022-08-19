@@ -61,7 +61,8 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Stripes(ColourFactory.White(), ColourFactory.Black());
 
-            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(1 - 0.001f, 0, 0)), Is.EqualTo(ColourFactory.White()));
+            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(1 - Constants.EPSILON, 0, 0)),
+                Is.EqualTo(ColourFactory.White()));
         }
 
         [Test]
@@ -89,7 +90,7 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Stripes(ColourFactory.White(), ColourFactory.Black());
 
-            TColour result = _pattern.ColourAt(new Sphere(), new TPoint(-1.001f, 0, 0));
+            TColour result = _pattern.ColourAt(new Sphere(), new TPoint(-1.001, 0, 0));
 
             Assert.That(result, Is.EqualTo(ColourFactory.White()));
         }
@@ -103,7 +104,7 @@ namespace TestLibTracer.Scene.Patterns
                 Transform = new TMatrix().Scaling(2, 2, 2)
             };
 
-            TColour colour = _pattern.ColourAt(shape, new TPoint(1.5f, 0, 0));
+            TColour colour = _pattern.ColourAt(shape, new TPoint(1.5, 0, 0));
 
             Assert.That(colour, Is.EqualTo(ColourFactory.White()));
         }
@@ -115,7 +116,7 @@ namespace TestLibTracer.Scene.Patterns
             _pattern.Transform = new TMatrix().Scaling(2, 2, 2);
             var shape = new Sphere();
 
-            TColour colour = _pattern.ColourAt(shape, new TPoint(1.5f, 0, 0));
+            TColour colour = _pattern.ColourAt(shape, new TPoint(1.5, 0, 0));
 
             Assert.That(colour, Is.EqualTo(ColourFactory.White()));
         }
@@ -125,14 +126,14 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Stripes(ColourFactory.White(), ColourFactory.Black())
             {
-                Transform = new TMatrix().Translation(0.5f, 0, 0)
+                Transform = new TMatrix().Translation(0.5, 0, 0)
             };
             var shape = new Sphere
             {
                 Transform = new TMatrix().Scaling(2, 2, 2)
             };
 
-            TColour colour = _pattern.ColourAt(shape, new TPoint(2.5f, 0, 0));
+            TColour colour = _pattern.ColourAt(shape, new TPoint(2.5, 0, 0));
 
             Assert.That(colour, Is.EqualTo(ColourFactory.White()));
         }

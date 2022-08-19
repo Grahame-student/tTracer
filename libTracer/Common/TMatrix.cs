@@ -7,20 +7,20 @@ namespace libTracer.Common
         private const Int32 DIMINSION_ROWS = 0;
         private const Int32 DIMINSION_COLS = 1;
 
-        private readonly Single[,] _members;
+        private readonly Double[,] _members;
         public Int32 Rows => _members.GetLength(DIMINSION_ROWS);
 
         public Int32 Columns => _members.GetLength(DIMINSION_COLS);
 
         public Boolean IsInvertable => Determinant() != 0;
 
-        public Single this[Int32 col, Int32 row]
+        public Double this[Int32 col, Int32 row]
         {
             get => _members[row, col];
             private init => _members[row, col] = value;
         }
 
-        public TMatrix() : this(new Single[,]
+        public TMatrix() : this(new Double[,]
         {
             { 1, 0, 0, 0 },
             { 0, 1, 0, 0 },
@@ -30,7 +30,7 @@ namespace libTracer.Common
         {
         }
 
-        public TMatrix(Single[,] members)
+        public TMatrix(Double[,] members)
         {
             _members = members;
         }
@@ -93,7 +93,7 @@ namespace libTracer.Common
             {
                 for (var col = 0; col < Columns; col++)
                 {
-                    if (Math.Abs(_members[row, col] - other._members[row, col]) > 0.001) return false;
+                    if (Math.Abs(_members[row, col] - other._members[row, col]) > Constants.EPSILON) return false;
                 }
             }
 
@@ -123,7 +123,7 @@ namespace libTracer.Common
 
         public TMatrix Transpose()
         {
-            var result = new Single[Columns, Rows];
+            var result = new Double[Columns, Rows];
             for (var row = 0; row < Rows; row++)
             {
                 for (var col = 0; col < Columns; col++)
@@ -135,9 +135,9 @@ namespace libTracer.Common
             return new TMatrix(result);
         }
 
-        public Single Determinant()
+        public Double Determinant()
         {
-            Single result = 0;
+            Double result = 0;
             if (Rows == 2 && Columns == 2)
             {
                 result = _members[0, 0] * _members[1, 1] -
@@ -156,7 +156,7 @@ namespace libTracer.Common
 
         public TMatrix SubMatrix(Int32 delRow, Int32 delCol)
         {
-            var result = new Single[Rows - 1, Columns - 1];
+            var result = new Double[Rows - 1, Columns - 1];
             var newRow = 0;
 
             for (var curRow = 0; curRow < Rows; curRow++)
@@ -176,21 +176,21 @@ namespace libTracer.Common
             return new TMatrix(result);
         }
 
-        public Single Minor(Int32 row, Int32 col)
+        public Double Minor(Int32 row, Int32 col)
         {
             return SubMatrix(row, col).Determinant();
         }
 
-        public Single Cofactor(Int32 row, Int32 col)
+        public Double Cofactor(Int32 row, Int32 col)
         {
             return (row + col & 1) == 0 ? Minor(row, col) : -Minor(row, col);
         }
 
         public TMatrix Inverse()
         {
-            var result = new Single[Rows, Columns];
+            var result = new Double[Rows, Columns];
 
-            Single determinant = Determinant();
+            Double determinant = Determinant();
             for (var row = 0; row < Rows; row++)
             {
                 for (var col = 0; col < Columns; col++)
@@ -202,7 +202,7 @@ namespace libTracer.Common
             return new TMatrix(result);
         }
 
-        public TMatrix Translation(Single x, Single y, Single z)
+        public TMatrix Translation(Double x, Double y, Double z)
         {
             return new TMatrix
             {
@@ -212,7 +212,7 @@ namespace libTracer.Common
             } * this;
         }
 
-        public TMatrix Scaling(Single x, Single y, Single z)
+        public TMatrix Scaling(Double x, Double y, Double z)
         {
             return new TMatrix
             {
@@ -222,40 +222,40 @@ namespace libTracer.Common
             } * this;
         }
 
-        public TMatrix RotationX(Single angleRads)
+        public TMatrix RotationX(Double angleRads)
         {
             return new TMatrix
             {
-                [1, 1] = MathF.Cos(angleRads),
-                [2, 1] = -MathF.Sin(angleRads),
-                [1, 2] = MathF.Sin(angleRads),
-                [2, 2] = MathF.Cos(angleRads)
+                [1, 1] = Math.Cos(angleRads),
+                [2, 1] = -Math.Sin(angleRads),
+                [1, 2] = Math.Sin(angleRads),
+                [2, 2] = Math.Cos(angleRads)
             } * this;
         }
 
-        public TMatrix RotationY(Single angleRads)
+        public TMatrix RotationY(Double angleRads)
         {
             return new TMatrix
             {
-                [0, 0] = MathF.Cos(angleRads),
-                [2, 0] = MathF.Sin(angleRads),
-                [0, 2] = -MathF.Sin(angleRads),
-                [2, 2] = MathF.Cos(angleRads)
+                [0, 0] = Math.Cos(angleRads),
+                [2, 0] = Math.Sin(angleRads),
+                [0, 2] = -Math.Sin(angleRads),
+                [2, 2] = Math.Cos(angleRads)
             } * this;
         }
 
-        public TMatrix RotationZ(Single angleRads)
+        public TMatrix RotationZ(Double angleRads)
         {
             return new TMatrix
             {
-                [0, 0] = MathF.Cos(angleRads),
-                [1, 0] = -MathF.Sin(angleRads),
-                [0, 1] = MathF.Sin(angleRads),
-                [1, 1] = MathF.Cos(angleRads)
+                [0, 0] = Math.Cos(angleRads),
+                [1, 0] = -Math.Sin(angleRads),
+                [0, 1] = Math.Sin(angleRads),
+                [1, 1] = Math.Cos(angleRads)
             } * this;
         }
 
-        public TMatrix Shearing(Single xy, Single xz, Single yx, Single yz, Single zx, Single zy)
+        public TMatrix Shearing(Double xy, Double xz, Double yx, Double yz, Double zx, Double zy)
         {
             return new TMatrix()
             {

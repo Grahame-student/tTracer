@@ -18,7 +18,7 @@ namespace libTracer.Scene.Patterns
         protected override TColour LocalColourAt(Shape shape, TPoint point)
         {
             TColour distance = B.ColourAt(shape, point) - A.ColourAt(shape, point);
-            Single fraction = point.X - MathF.Floor(point.X);
+            Double fraction = point.X - Math.Floor(point.X);
             return A.ColourAt(shape, point) + distance * fraction;
         }
     }

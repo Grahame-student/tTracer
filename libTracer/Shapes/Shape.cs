@@ -7,7 +7,7 @@ namespace libTracer.Shapes
 {
     public abstract class Shape : IEquatable<Shape>
     {
-        protected const Single EPSILON = 0.001f;
+        protected const Double EPSILON = 0.001f;
 
         public TMatrix Transform { get; set; }
         public Material Material { get; set; }

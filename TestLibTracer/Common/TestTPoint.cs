@@ -6,9 +6,9 @@ namespace TestLibTracer.Common
 {
     internal class TestTPoint
     {
-        private const Single SOME_X = 1.2f;
-        private const Single SOME_Y = 3.4f;
-        private const Single SOME_Z = 5.6f;
+        private const Double SOME_X = 1.2f;
+        private const Double SOME_Y = 3.4f;
+        private const Double SOME_Z = 5.6f;
 
         private TPoint _point;
 
@@ -41,7 +41,7 @@ namespace TestLibTracer.Common
         {
             _point = new TPoint(0, 0, SOME_Z);
 
-            Assert.That(_point.W, Is.EqualTo(1f));
+            Assert.That(_point.W, Is.EqualTo(1));
         }
 
         [Test]

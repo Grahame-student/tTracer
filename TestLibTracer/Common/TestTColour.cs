@@ -6,9 +6,9 @@ namespace TestLibTracer.Common
 {
     internal class TestTColour
     {
-        private const Single SOME_RED = 0.1f;
-        private const Single SOME_GREEN = 0.2f;
-        private const Single SOME_BLUE = 0.3f;
+        private const Double SOME_RED = 0.1;
+        private const Double SOME_GREEN = 0.2;
+        private const Double SOME_BLUE = 0.3;
 
         private TColour _colour;
 
@@ -125,37 +125,37 @@ namespace TestLibTracer.Common
         {
             var colour1 = new TColour(0, 0, 0);
 
-            Assert.That(colour1 * 0.1f, Is.InstanceOf<TColour>());
+            Assert.That(colour1 * 0.1, Is.InstanceOf<TColour>());
         }
 
         [Test]
         public void Multiply_Multiplies_RedComponentByScalar()
         {
-            var colour = new TColour(0.1f, 0, 0);
+            var colour = new TColour(0.1, 0, 0);
 
-            TColour result = colour * 0.2f;
+            TColour result = colour * 0.2;
 
-            Assert.That(MathF.Abs(result.Red - 0.02f), Is.LessThan(0.0001f));
+            Assert.That(Math.Abs(result.Red - 0.02f), Is.LessThan(0.0001f));
         }
 
         [Test]
         public void Multiply_Multiplies_GreenComponentByScalar()
         {
-            var colour = new TColour(0, 0.2f, 0);
+            var colour = new TColour(0, 0.2, 0);
 
-            TColour result = colour * 0.3f;
+            TColour result = colour * 0.3;
 
-            Assert.That(MathF.Abs(result.Green - 0.06f), Is.LessThan(0.0001f));
+            Assert.That(Math.Abs(result.Green - 0.06f), Is.LessThan(0.0001f));
         }
 
         [Test]
         public void Multiply_Multiplies_BlueComponentByScalar()
         {
-            var colour = new TColour(0, 0, 0.3f);
+            var colour = new TColour(0, 0, 0.3);
 
             TColour result = colour * 0.4f;
 
-            Assert.That(MathF.Abs(result.Blue - 0.12f), Is.LessThan(0.0001f));
+            Assert.That(Math.Abs(result.Blue - 0.12f), Is.LessThan(0.0001f));
         }
 
         [Test]

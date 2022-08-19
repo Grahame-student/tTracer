@@ -16,7 +16,7 @@ namespace libTracer.Scene
             Colour = new TColour(0, 0, 0);
         }
 
-        public void SetColour(Single red, Single green, Single blue)
+        public void SetColour(Double red, Double green, Double blue)
         {
             Colour = new TColour(red, green, blue);
         }

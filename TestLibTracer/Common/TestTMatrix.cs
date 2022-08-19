@@ -9,12 +9,12 @@ namespace TestLibTracer.Common
         private const Int32 ROW_1 = 1;
         private const Int32 COL_1 = 1;
 
-        private const Single SOME_X = 1.25f;
-        private const Single SOME_Y = 2.33f;
-        private const Single SOME_Z = 3.66f;
+        private const Double SOME_X = 1.25f;
+        private const Double SOME_Y = 2.33f;
+        private const Double SOME_Z = 3.66f;
 
-        private const Single EIGHTH_ROTATION_CLOCKWISE = MathF.PI / 4;
-        private const Single QUARTER_ROTATION_CLOCKWISE = MathF.PI / 2;
+        private const Double EIGHTH_ROTATION_CLOCKWISE = Math.PI / 4;
+        private const Double QUARTER_ROTATION_CLOCKWISE = Math.PI / 2;
 
         private TMatrix _matrix;
 
@@ -23,7 +23,7 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            var expectedResult = new TMatrix(new Single[,]
+            var expectedResult = new TMatrix(new Double[,]
             {
                 { 1, 0, 0, 0 },
                 { 0, 1, 0, 0 },
@@ -39,8 +39,8 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
-                    { 3f, 4f, 5f } });
+                    { 1.0, 2.0, 3.0 },
+                    { 3.0, 4.0, 5.0 } });
             Assert.That(_matrix.Columns, Is.EqualTo(3));
         }
 
@@ -49,8 +49,8 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
-                    { 3f, 4f, 5f } });
+                    { 1.0, 2.0, 3.0 },
+                    { 3.0, 4.0, 5.0 } });
             Assert.That(_matrix.Rows, Is.EqualTo(2));
         }
 
@@ -59,8 +59,8 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
-                    { 3f, 4f, 5f } });
+                    { 1.0, 2.0, 3.0 },
+                    { 3.0, 4.0, 5.0 } });
 
 
             Assert.That(_matrix[COL_1, ROW_1], Is.EqualTo(4f));
@@ -71,12 +71,12 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
-                    { 3f, 4f, 5f } });
+                    { 1.0, 2.0, 3.0 },
+                    { 3.0, 4.0, 5.0 } });
             var matrix2 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
-                    { 3f, 4f, 5f } });
+                    { 1.0, 2.0, 3.0 },
+                    { 3.0, 4.0, 5.0 } });
 
             Assert.That(matrix1.Equals(matrix2), Is.True);
         }
@@ -86,12 +86,12 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
-                    { 3f, 4f, 5f } });
+                    { 1.0, 2.0, 3.0 },
+                    { 3.0, 4.0, 5.0 } });
             var matrix2 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
-                    { 3f, 4f, 6f } });
+                    { 1.0, 2.0, 3.0 },
+                    { 3.0, 4.0, 6.0 } });
 
             Assert.That(matrix1.Equals(matrix2), Is.False);
         }
@@ -101,8 +101,8 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
-                    { 3f, 4f, 5f } });
+                    { 1.0, 2.0, 3.0 },
+                    { 3.0, 4.0, 5.0 } });
             TMatrix matrix2 = null;
 
             Assert.That(matrix1.Equals(matrix2), Is.False);
@@ -113,7 +113,7 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f } });
             TMatrix matrix2 = matrix1;
 
@@ -125,11 +125,11 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f } });
             var matrix2 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f },
                     { 6f, 7f, 8f }
                 });
@@ -142,7 +142,7 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f } });
             Object matrix2 = null;
 
@@ -154,7 +154,7 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f } });
             Object matrix2 = matrix1;
 
@@ -166,11 +166,11 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f } });
             Object matrix2 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f } });
 
             Assert.That(matrix1.Equals(matrix2), Is.True);
@@ -181,11 +181,11 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f } });
             var matrix2 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f },
+                    { 1.0, 2f, 3f },
                     { 3f, 4f, 5f } });
 
 
@@ -195,8 +195,8 @@ namespace TestLibTracer.Common
         [Test]
         public void Multiply_ReturnsInstanceOfMatrix_WhenMultipliedByMatrix()
         {
-            var matrix1 = new TMatrix(new Single[4, 4]);
-            var matrix2 = new TMatrix(new Single[4, 4]);
+            var matrix1 = new TMatrix(new Double[4, 4]);
+            var matrix2 = new TMatrix(new Double[4, 4]);
 
 
             Assert.That(matrix1 * matrix2, Is.InstanceOf<TMatrix>());
@@ -205,8 +205,8 @@ namespace TestLibTracer.Common
         [Test]
         public void Multiply_ReturnsMatrix_With4Rows()
         {
-            var matrix1 = new TMatrix(new Single[4, 4]);
-            var matrix2 = new TMatrix(new Single[4, 4]);
+            var matrix1 = new TMatrix(new Double[4, 4]);
+            var matrix2 = new TMatrix(new Double[4, 4]);
 
             TMatrix result = matrix1 * matrix2;
 
@@ -216,8 +216,8 @@ namespace TestLibTracer.Common
         [Test]
         public void Multiply_ReturnsMatrix_With4Columns()
         {
-            var matrix1 = new TMatrix(new Single[4, 4]);
-            var matrix2 = new TMatrix(new Single[4, 4]);
+            var matrix1 = new TMatrix(new Double[4, 4]);
+            var matrix2 = new TMatrix(new Double[4, 4]);
 
             TMatrix result = matrix1 * matrix2;
 
@@ -229,24 +229,24 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f, 4f },
+                    { 1.0, 2f, 3f, 4f },
                     { 5f, 6f, 7f, 8f },
                     { 9f, 8f, 7f, 6f },
                     { 5f, 4f, 3f, 2f }
                 });
             var matrix2 = new TMatrix(
                 new[,] {
-                    { -2f, 1f, 2f,  3f },
-                    {  3f, 2f, 1f, -1f },
+                    { -2.0, 1, 2f,  3f },
+                    {  3f, 2f, 1, -1 },
                     {  4f, 3f, 6f,  5f },
-                    {  1f, 2f, 7f,  8f }
+                    {  1, 2f, 7f,  8f }
                 });
 
             TMatrix result = matrix1 * matrix2;
 
             var expectedResult = new TMatrix(
                 new[,] {
-                    { 20f, 22f,  50f,  48f },
+                    { 20.0, 22f,  50f,  48f },
                     { 44f, 54f, 114f, 108f },
                     { 40f, 58f, 110f, 102f },
                     { 16f, 26f,  46f,  42f }
@@ -260,7 +260,7 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f, 4f },
+                    { 1.0, 2f, 3f, 4f },
                     { 5f, 6f, 7f, 8f },
                     { 9f, 8f, 7f, 6f },
                     { 5f, 4f, 3f, 2f }
@@ -275,7 +275,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Multiply_ReturnsInstanceOfVector_WhenMultiplyingByVector()
         {
-            var matrix1 = new TMatrix(new Single[4, 4]);
+            var matrix1 = new TMatrix(new Double[4, 4]);
             var vector2 = new TVector(1, 2, 3);
 
 
@@ -287,10 +287,10 @@ namespace TestLibTracer.Common
         {
             var matrix1 = new TMatrix(
                 new[,] {
-                    { 1f, 2f, 3f, 4f },
+                    { 1.0, 2f, 3f, 4f },
                     { 2f, 4f, 4f, 2f },
-                    { 8f, 6f, 4f, 1f },
-                    { 0f, 0f, 0f, 1f }
+                    { 8f, 6f, 4f, 1 },
+                    { 0f, 0f, 0f, 1 }
                 });
             var vector2 = new TVector(1, 2, 3);
 
@@ -338,10 +338,10 @@ namespace TestLibTracer.Common
             _matrix = new TMatrix(
                 new[,]
                 {
-                    { 1f, 2f, 3f, 4f },
+                    { 1.0, 2f, 3f, 4f },
                     { 2f, 4f, 4f, 2f },
-                    { 8f, 6f, 4f, 1f },
-                    { 0f, 0f, 0f, 1f }
+                    { 8f, 6f, 4f, 1 },
+                    { 0f, 0f, 0f, 1 }
                 });
 
             Assert.That(_matrix.Transpose(), Is.InstanceOf<TMatrix>());
@@ -353,19 +353,19 @@ namespace TestLibTracer.Common
             _matrix = new TMatrix(
                 new[,]
                 {
-                    { 1f, 2f, 3f, 4f },
+                    { 1.0, 2f, 3f, 4f },
                     { 2f, 4f, 4f, 2f },
-                    { 8f, 6f, 4f, 1f },
-                    { 0f, 0f, 0f, 1f }
+                    { 8f, 6f, 4f, 1 },
+                    { 0f, 0f, 0f, 1 }
                 });
 
             var expectedResult = new TMatrix(
                 new[,]
                 {
-                    { 1f, 2f, 8f, 0f },
+                    { 1.0, 2f, 8f, 0f },
                     { 2f, 4f, 6f, 0f },
                     { 3f, 4f, 4f, 0f },
-                    { 4f, 2f, 1f, 1f }
+                    { 4f, 2f, 1, 1 }
                 });
             Assert.That(_matrix.Transpose(), Is.EqualTo(expectedResult));
         }
@@ -381,7 +381,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Determinant_Returns_R0C0TimesR1C1MinusR0C1TimesR1C0()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 {  1, 5 },
                 { -3, 2 }
@@ -421,7 +421,7 @@ namespace TestLibTracer.Common
         [Test]
         public void SubMatrix_ReturnsMatrix_WithRowRemoved()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { 2, 2, 2, 2 },
                 { 2, 2, 2, 2 },
@@ -431,7 +431,7 @@ namespace TestLibTracer.Common
 
             TMatrix result = _matrix.SubMatrix(2, 0);
 
-            var expectedResult = new TMatrix(new Single[,]
+            var expectedResult = new TMatrix(new Double[,]
             {
                 { 2, 2, 2 },
                 { 2, 2, 2 },
@@ -443,7 +443,7 @@ namespace TestLibTracer.Common
         [Test]
         public void SubMatrix_ReturnsMatrix_WithColRemoved()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { 2, 2, 1, 2 },
                 { 2, 2, 1, 2 },
@@ -453,7 +453,7 @@ namespace TestLibTracer.Common
 
             TMatrix result = _matrix.SubMatrix(0, 2);
 
-            var expectedResult = new TMatrix(new Single[,]
+            var expectedResult = new TMatrix(new Double[,]
             {
                 { 2, 2, 2 },
                 { 2, 2, 2 },
@@ -465,7 +465,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Minor_ReturnsTheDeterminant_OfTheSubmatrixAtTheSpecifiedLocation()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { 3,  5,  0 },
                 { 2, -1, -7 },
@@ -478,7 +478,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Cofactor_ReturnsMinorAtLocation_WhenRowPlusColumnIsEven()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { 3,  5,  0 },
                 { 2, -1, -7 },
@@ -491,7 +491,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Cofactor_ReturnsNegativeMinorAtLocation_WhenRowPlusColumnIsOdd()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { 3,  5,  0 },
                 { 2, -1, -7 },
@@ -504,7 +504,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Determinant_Returns_DeterminantOf3x3Matrix()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 {  1, 2,  6 },
                 { -5, 8, -4 },
@@ -517,7 +517,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Determinant_Returns_DeterminantOf4x4Matrix()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { -2, -8,  3,  5 },
                 { -3,  1,  7,  3 },
@@ -531,7 +531,7 @@ namespace TestLibTracer.Common
         [Test]
         public void IsInvertable_ReturnsTrue_WhenMatrixCanBeInverted()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { 6,  4, 4,  4 },
                 { 5,  5, 7,  6 },
@@ -545,7 +545,7 @@ namespace TestLibTracer.Common
         [Test]
         public void IsInvertable_ReturnsFalse_WhenMatrixCanNotBeInverted()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { -4,  2, -2, -3 },
                 {  9,  6,  2,  6 },
@@ -559,7 +559,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Inverse_Returns_Matrix()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { -5,  2,  6, -8 },
                 {  1, -5,  1,  8 },
@@ -573,7 +573,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Inverse_Returns_InvertedMatrix()
         {
-            _matrix = new TMatrix(new Single[,]
+            _matrix = new TMatrix(new Double[,]
             {
                 { -5,  2,  6, -8 },
                 {  1, -5,  1,  8 },
@@ -583,7 +583,7 @@ namespace TestLibTracer.Common
 
             TMatrix result = _matrix.Inverse();
 
-            var expectedResult = new TMatrix(new Single[,]
+            var expectedResult = new TMatrix(new Double[,]
             {
                 {  0.21805f,  0.45113f,  0.24060f, -0.04511f },
                 { -0.80827f, -1.45677f, -0.44361f,  0.52068f },
@@ -597,7 +597,7 @@ namespace TestLibTracer.Common
         [Test]
         public void Inverse_ReturnsOriginalMatrix_WhenCalledOnInvertedMatrix()
         {
-            var original = new TMatrix(new Single[,]
+            var original = new TMatrix(new Double[,]
             {
                 { -5,  2,  6, -8 },
                 {  1, -5,  1,  8 },
@@ -830,9 +830,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationX(MathF.PI);
+            TMatrix result = _matrix.RotationX(Math.PI);
 
-            Assert.That(result[1, 1], Is.EqualTo(MathF.Cos(MathF.PI)));
+            Assert.That(result[1, 1], Is.EqualTo(Math.Cos(Math.PI)));
         }
 
         [Test]
@@ -840,9 +840,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationX(MathF.PI);
+            TMatrix result = _matrix.RotationX(Math.PI);
 
-            Assert.That(result[2, 1], Is.EqualTo(-MathF.Sin(MathF.PI)));
+            Assert.That(result[2, 1], Is.EqualTo(-Math.Sin(Math.PI)));
         }
 
         [Test]
@@ -850,9 +850,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationX(MathF.PI);
+            TMatrix result = _matrix.RotationX(Math.PI);
 
-            Assert.That(result[1, 2], Is.EqualTo(MathF.Sin(MathF.PI)));
+            Assert.That(result[1, 2], Is.EqualTo(Math.Sin(Math.PI)));
         }
 
         [Test]
@@ -860,9 +860,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationX(MathF.PI);
+            TMatrix result = _matrix.RotationX(Math.PI);
 
-            Assert.That(result[2, 2], Is.EqualTo(MathF.Cos(MathF.PI)));
+            Assert.That(result[2, 2], Is.EqualTo(Math.Cos(Math.PI)));
         }
 
         [Test]
@@ -873,7 +873,7 @@ namespace TestLibTracer.Common
 
             TPoint result = _matrix * point;
 
-            var expectedResult = new TPoint(0, MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2);
+            var expectedResult = new TPoint(0, Math.Sqrt(2) / 2, Math.Sqrt(2) / 2);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -897,7 +897,7 @@ namespace TestLibTracer.Common
 
             TPoint result = _matrix * point;
 
-            var expectedResult = new TPoint(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
+            var expectedResult = new TPoint(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -934,9 +934,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationY(MathF.PI);
+            TMatrix result = _matrix.RotationY(Math.PI);
 
-            Assert.That(result[0, 0], Is.EqualTo(MathF.Cos(MathF.PI)));
+            Assert.That(result[0, 0], Is.EqualTo(Math.Cos(Math.PI)));
         }
 
         [Test]
@@ -944,9 +944,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationY(MathF.PI);
+            TMatrix result = _matrix.RotationY(Math.PI);
 
-            Assert.That(result[2, 0], Is.EqualTo(MathF.Sin(MathF.PI)));
+            Assert.That(result[2, 0], Is.EqualTo(Math.Sin(Math.PI)));
         }
 
         [Test]
@@ -954,9 +954,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationY(MathF.PI);
+            TMatrix result = _matrix.RotationY(Math.PI);
 
-            Assert.That(result[0, 2], Is.EqualTo(-MathF.Sin(MathF.PI)));
+            Assert.That(result[0, 2], Is.EqualTo(-Math.Sin(Math.PI)));
         }
 
         [Test]
@@ -964,9 +964,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationY(MathF.PI);
+            TMatrix result = _matrix.RotationY(Math.PI);
 
-            Assert.That(result[2, 2], Is.EqualTo(MathF.Cos(MathF.PI)));
+            Assert.That(result[2, 2], Is.EqualTo(Math.Cos(Math.PI)));
         }
 
         [Test]
@@ -977,7 +977,7 @@ namespace TestLibTracer.Common
 
             TPoint result = _matrix * point;
 
-            var expectedResult = new TPoint(MathF.Sqrt(2) / 2, 0, MathF.Sqrt(2) / 2);
+            var expectedResult = new TPoint(Math.Sqrt(2) / 2, 0, Math.Sqrt(2) / 2);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -1001,7 +1001,7 @@ namespace TestLibTracer.Common
 
             TPoint result = _matrix * point;
 
-            var expectedResult = new TPoint(-MathF.Sqrt(2) / 2, 0, MathF.Sqrt(2) / 2);
+            var expectedResult = new TPoint(-Math.Sqrt(2) / 2, 0, Math.Sqrt(2) / 2);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -1038,9 +1038,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationZ(MathF.PI);
+            TMatrix result = _matrix.RotationZ(Math.PI);
 
-            Assert.That(result[0, 0], Is.EqualTo(MathF.Cos(MathF.PI)));
+            Assert.That(result[0, 0], Is.EqualTo(Math.Cos(Math.PI)));
         }
 
         [Test]
@@ -1048,9 +1048,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationZ(MathF.PI);
+            TMatrix result = _matrix.RotationZ(Math.PI);
 
-            Assert.That(result[1, 0], Is.EqualTo(-MathF.Sin(MathF.PI)));
+            Assert.That(result[1, 0], Is.EqualTo(-Math.Sin(Math.PI)));
         }
 
         [Test]
@@ -1058,9 +1058,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationZ(MathF.PI);
+            TMatrix result = _matrix.RotationZ(Math.PI);
 
-            Assert.That(result[0, 1], Is.EqualTo(MathF.Sin(MathF.PI)));
+            Assert.That(result[0, 1], Is.EqualTo(Math.Sin(Math.PI)));
         }
 
         [Test]
@@ -1068,9 +1068,9 @@ namespace TestLibTracer.Common
         {
             _matrix = new TMatrix();
 
-            TMatrix result = _matrix.RotationZ(MathF.PI);
+            TMatrix result = _matrix.RotationZ(Math.PI);
 
-            Assert.That(result[1, 1], Is.EqualTo(MathF.Cos(MathF.PI)));
+            Assert.That(result[1, 1], Is.EqualTo(Math.Cos(Math.PI)));
         }
 
         [Test]
@@ -1081,7 +1081,7 @@ namespace TestLibTracer.Common
 
             TPoint result = _matrix * point;
 
-            var expectedResult = new TPoint(-MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2, 0);
+            var expectedResult = new TPoint(-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -1105,7 +1105,7 @@ namespace TestLibTracer.Common
 
             TPoint result = _matrix * point;
 
-            var expectedResult = new TPoint(MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2, 0);
+            var expectedResult = new TPoint(Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -1262,7 +1262,7 @@ namespace TestLibTracer.Common
         public void ChainedTransformations_AreExecuted_InCorrectOrder()
         {
             // TODO: Make into a fluent API
-            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix rotate = new TMatrix().RotationX(Math.PI / 2);
             TMatrix scaling = new TMatrix().Scaling(5, 5, 5);
             TMatrix translate = new TMatrix().Translation(10, 5, 7);
             TMatrix transform = translate * scaling * rotate;
@@ -1279,7 +1279,7 @@ namespace TestLibTracer.Common
         {
             var point = new TPoint(1, 0, 1);
             TMatrix fluent = new TMatrix()
-                .RotationX(MathF.PI / 2)
+                .RotationX(Math.PI / 2)
                 .Scaling(5, 5, 5)
                 .Translation(10, 5, 7);
             TPoint fluentResult = fluent * point;
@@ -1292,10 +1292,10 @@ namespace TestLibTracer.Common
         public void Rotation_MultipliesScaling_WhenCalledFluently()
         {
             TMatrix fluent = new TMatrix()
-                .RotationX(MathF.PI / 2)
+                .RotationX(Math.PI / 2)
                 .Scaling(5, 5, 5);
 
-            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix rotate = new TMatrix().RotationX(Math.PI / 2);
             TMatrix scaling = new TMatrix().Scaling(5, 5, 5);
             TMatrix transform = scaling * rotate;
 
@@ -1306,10 +1306,10 @@ namespace TestLibTracer.Common
         public void Rotation_MultipliesTranslation_WhenCalledFluently()
         {
             TMatrix fluent = new TMatrix()
-                .RotationX(MathF.PI / 2)
+                .RotationX(Math.PI / 2)
                 .Translation(10, 5, 7);
 
-            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix rotate = new TMatrix().RotationX(Math.PI / 2);
             TMatrix translate = new TMatrix().Translation(10, 5, 7);
             TMatrix transform = translate * rotate;
 
@@ -1321,9 +1321,9 @@ namespace TestLibTracer.Common
         {
             TMatrix fluent = new TMatrix()
                 .Scaling(5, 5, 5)
-                .RotationX(MathF.PI / 2);
+                .RotationX(Math.PI / 2);
 
-            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix rotate = new TMatrix().RotationX(Math.PI / 2);
             TMatrix scaling = new TMatrix().Scaling(5, 5, 5);
             TMatrix transform = rotate * scaling;
 
@@ -1335,9 +1335,9 @@ namespace TestLibTracer.Common
         {
             TMatrix fluent = new TMatrix()
                 .Translation(10, 5, 7)
-                .RotationX(MathF.PI / 2);
+                .RotationX(Math.PI / 2);
 
-            TMatrix rotate = new TMatrix().RotationX(MathF.PI / 2);
+            TMatrix rotate = new TMatrix().RotationX(Math.PI / 2);
             TMatrix translate = new TMatrix().Translation(10, 5, 7);
             TMatrix transform = rotate * translate;
 
@@ -1385,10 +1385,10 @@ namespace TestLibTracer.Common
 
             var expectedResult = new TMatrix(new[,]
             {
-                { -0.50709f, 0.50709f,  0.67612f, -2.36643f },
-                {  0.76772f, 0.60609f,  0.12122f, -2.82843f },
-                { -0.35857f, 0.59761f, -0.71714f,  0.00000f },
-                {  0.00000f, 0.00000f,  0.00000f,  1.00000f }
+                { -0.50709, 0.50709,  0.67612, -2.36643 },
+                {  0.76772, 0.60609,  0.12122, -2.82843 },
+                { -0.35857, 0.59761, -0.71714,  0.00000 },
+                {  0.00000, 0.00000,  0.00000,  1.00000 }
             });
             Assert.That(TMatrix.ViewTransformation(from, to, up), Is.EqualTo(expectedResult));
         }

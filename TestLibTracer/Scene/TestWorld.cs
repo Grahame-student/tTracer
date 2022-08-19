@@ -62,9 +62,9 @@ namespace TestLibTracer.Scene
             {
                 Material = new Material()
                 {
-                    Colour = new TColour(0.8f, 1.0f, 0.6f),
-                    Diffuse = 0.7f,
-                    Specular = 0.2f
+                    Colour = new TColour(0.8, 1.0, 0.6),
+                    Diffuse = 0.7,
+                    Specular = 0.2
                 }
             };
             Assert.That(_world.Objects.Contains(outerSpehere), Is.True);
@@ -77,7 +77,7 @@ namespace TestLibTracer.Scene
 
             var innerSphere = new Sphere()
             {
-                Transform = new TMatrix().Scaling(0.5f, 0.5f, 0.5f)
+                Transform = new TMatrix().Scaling(0.5, 0.5, 0.5)
             };
             Assert.That(_world.Objects.Contains(innerSphere), Is.True);
         }
@@ -149,7 +149,7 @@ namespace TestLibTracer.Scene
 
             var ray = new TRay(new TPoint(0, 0, 0), new TVector(0, 0, 1));
             Shape shape = _world.Objects[1];
-            var intersection = new Intersection(0.5f, shape);
+            var intersection = new Intersection(0.5, shape);
             Computations comps = intersection.PrepareComputations(ray, new List<Intersection> { intersection });
             Assert.That(_world.ShadeHit(comps, 0), Is.InstanceOf<TColour>());
         }
@@ -173,10 +173,10 @@ namespace TestLibTracer.Scene
         public void ShadeHit_ShadesIntersection_fromInside()
         {
             _world = World.CreateWorld();
-            _world.Light = new Light(new TPoint(0, 0.25f, 0), new TColour(1, 1, 1));
+            _world.Light = new Light(new TPoint(0, 0.25, 0), new TColour(1, 1, 1));
             var ray = new TRay(new TPoint(0, 0, 0), new TVector(0, 0, 1));
             Shape shape = _world.Objects[1];
-            var intersection = new Intersection(0.5f, shape);
+            var intersection = new Intersection(0.5, shape);
             Computations comps = intersection.PrepareComputations(ray, new List<Intersection> { intersection });
 
             TColour result = _world.ShadeHit(comps, 0);
@@ -205,7 +205,7 @@ namespace TestLibTracer.Scene
 
             TColour result = _world.ShadeHit(comps, 0);
 
-            var expectedResult = new TColour(0.1f, 0.1f, 0.1f);
+            var expectedResult = new TColour(0.1, 0.1, 0.1);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -214,11 +214,11 @@ namespace TestLibTracer.Scene
         {
             _world = World.CreateWorld();
             var shape = new Plane();
-            shape.Material.Reflective = 0.5f;
+            shape.Material.Reflective = 0.5;
             shape.Transform = new TMatrix().Translation(0, -1, 0);
             _world.Objects.Add(shape);
-            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
-            var intersection = new Intersection(MathF.Sqrt(2), shape);
+            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+            var intersection = new Intersection(Math.Sqrt(2), shape);
 
             Computations comps = intersection.PrepareComputations(ray, new List<Intersection> { intersection });
             TColour colour = _world.ShadeHit(comps, 5);
@@ -232,18 +232,18 @@ namespace TestLibTracer.Scene
             _world = World.CreateWorld();
             var floor = new Plane();
             floor.Transform = new TMatrix().Translation(0, -1, 0);
-            floor.Material.Transparency = 0.5f;
-            floor.Material.RefractiveIndex = 1.5f;
+            floor.Material.Transparency = 0.5;
+            floor.Material.RefractiveIndex = 1.5;
             _world.Objects.Add(floor);
             var ball = new Sphere();
             ball.Material.Colour = new TColour(1, 0, 0);
-            ball.Material.Ambient = 0.5f;
-            ball.Transform = new TMatrix().Translation(0, -3.5f, -0.5f);
+            ball.Material.Ambient = 0.5;
+            ball.Transform = new TMatrix().Translation(0, -3.5f, -0.5);
             _world.Objects.Add(ball);
-            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
+            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             var intersections = new List<Intersection>
             {
-                new(MathF.Sqrt(2), floor)
+                new(Math.Sqrt(2), floor)
             };
 
             var comps = intersections[0].PrepareComputations(ray, intersections);
@@ -287,7 +287,7 @@ namespace TestLibTracer.Scene
             outer.Material.Ambient = 1;
             Shape inner = _world.Objects[1];
             inner.Material.Ambient = 1;
-            var ray = new TRay(new TPoint(0, 0, 0.75f), new TVector(0, 0, -1));
+            var ray = new TRay(new TPoint(0, 0, 0.75), new TVector(0, 0, -1));
 
             Assert.That(_world.ColourAt(ray, 0), Is.EqualTo(inner.Material.Colour));
         }
@@ -373,18 +373,18 @@ namespace TestLibTracer.Scene
             {
                 Material =
                 {
-                    Reflective = 0.5f
+                    Reflective = 0.5
                 },
                 Transform = new TMatrix().Translation(0, -1, 0)
             };
             _world.Objects.Add(shape);
-            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
-            var intersection = new Intersection(MathF.Sqrt(2), shape);
+            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+            var intersection = new Intersection(Math.Sqrt(2), shape);
 
             Computations comps = intersection.PrepareComputations(ray, new List<Intersection> { intersection });
             TColour colour = _world.ReflectedColour(comps, 5);
 
-            Assert.That(colour, Is.EqualTo(new TColour(0.19032f, 0.2379f, 0.14274f)));
+            Assert.That(colour, Is.EqualTo(new TColour(0.19032, 0.2379, 0.14274)));
         }
 
         [Test]
@@ -392,11 +392,11 @@ namespace TestLibTracer.Scene
         {
             _world = World.CreateWorld();
             var shape = new Plane();
-            shape.Material.Reflective = 0.5f;
+            shape.Material.Reflective = 0.5;
             shape.Transform = new TMatrix().Translation(0, -1, 0);
             _world.Objects.Add(shape);
-            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2));
-            var intersection = new Intersection(MathF.Sqrt(2), shape);
+            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+            var intersection = new Intersection(Math.Sqrt(2), shape);
 
             Computations comps = intersection.PrepareComputations(ray, new List<Intersection> { intersection });
             TColour colour = _world.ReflectedColour(comps, 0);
@@ -427,8 +427,8 @@ namespace TestLibTracer.Scene
         {
             _world = World.CreateWorld();
             Shape shape = _world.Objects[0];
-            shape.Material.Transparency = 1.0f;
-            shape.Material.RefractiveIndex = 1.5f;
+            shape.Material.Transparency = 1.0;
+            shape.Material.RefractiveIndex = 1.5;
             var ray = new TRay(new TPoint(0, 0, -5), new TVector(0, 0, 1));
             var intersections = new List<Intersection>
             {
@@ -447,13 +447,13 @@ namespace TestLibTracer.Scene
         {
             _world = World.CreateWorld();
             Shape shape = _world.Objects[0];
-            shape.Material.Transparency = 1.0f;
-            shape.Material.RefractiveIndex = 1.5f;
-            var ray = new TRay(new TPoint(0, 0, MathF.Sqrt(2) / 2), new TVector(0, 1, 0));
+            shape.Material.Transparency = 1.0;
+            shape.Material.RefractiveIndex = 1.5;
+            var ray = new TRay(new TPoint(0, 0, Math.Sqrt(2) / 2), new TVector(0, 1, 0));
             var intersections = new List<Intersection>
             {
-                new(-MathF.Sqrt(2) / 2, shape),
-                new(MathF.Sqrt(2) / 2, shape)
+                new(-Math.Sqrt(2) / 2, shape),
+                new(Math.Sqrt(2) / 2, shape)
             };
 
             Computations comps = intersections[1].PrepareComputations(ray, intersections);
@@ -467,24 +467,24 @@ namespace TestLibTracer.Scene
         {
             _world = World.CreateWorld();
             Shape shape1 = _world.Objects[0];
-            shape1.Material.Ambient = 1.0f;
+            shape1.Material.Ambient = 1.0;
             shape1.Material.Pattern = new TestPattern();
             Shape shape2 = _world.Objects[1];
-            shape2.Material.Transparency = 1.0f;
-            shape2.Material.RefractiveIndex = 1.5f;
-            var ray = new TRay(new TPoint(0, 0, 0.1f), new TVector(0, 1, 0));
+            shape2.Material.Transparency = 1.0;
+            shape2.Material.RefractiveIndex = 1.5;
+            var ray = new TRay(new TPoint(0, 0, 0.1), new TVector(0, 1, 0));
             var intersections = new List<Intersection>
             {
-                new(-0.9899f, shape1),
-                new(-0.4899f, shape2),
-                new(0.4899f, shape2),
-                new(0.9899f, shape1)
+                new(-0.9899, shape1),
+                new(-0.4899, shape2),
+                new(0.4899, shape2),
+                new(0.9899, shape1)
             };
 
             Computations comps = intersections[2].PrepareComputations(ray, intersections);
             TColour colour = _world.RefractedColour(comps, 5);
 
-            Assert.That(colour, Is.EqualTo(new TColour(0, 0.99888f, 0.04725f)));
+            Assert.That(colour, Is.EqualTo(new TColour(0, 0.99888, 0.04725)));
         }
     }
 }

@@ -8,15 +8,15 @@ namespace libTracer.Scene
     {
         private Int64 _processedPixels;
 
-        private Single _halfWidth;
-        private Single _halfHeight;
+        private Double _halfWidth;
+        private Double _halfHeight;
 
         public Canvas Canvas { get; }
-        public Single FieldOfView { get; set; }
+        public Double FieldOfView { get; set; }
         public TMatrix Transformation { get; set; }
-        public Single PixelSize { get; private set; }
+        public Double PixelSize { get; private set; }
 
-        public Camera(Int32 width, Int32 height, Single fieldOfView)
+        public Camera(Int32 width, Int32 height, Double fieldOfView)
         {
             Canvas = new Canvas(width, height);
             FieldOfView = fieldOfView;
@@ -27,8 +27,8 @@ namespace libTracer.Scene
 
         private void SetPixelSize()
         {
-            Single halfView = MathF.Tan(FieldOfView / 2);
-            Single aspect = Canvas.Width / (Single)Canvas.Height;
+            Double halfView = Math.Tan(FieldOfView / 2);
+            Double aspect = Canvas.Width / (Double)Canvas.Height;
 
             if (aspect >= 1)
             {
@@ -46,11 +46,11 @@ namespace libTracer.Scene
 
         public TRay PixelRay(Int32 pixelX, Int32 pixelY)
         {
-            Single xOffset = (pixelX + 0.5f) * PixelSize;
-            Single yOffset = (pixelY + 0.5f) * PixelSize;
+            Double xOffset = (pixelX + 0.5) * PixelSize;
+            Double yOffset = (pixelY + 0.5) * PixelSize;
 
-            Single worldX = _halfWidth - xOffset;
-            Single worldY = _halfHeight - yOffset;
+            Double worldX = _halfWidth - xOffset;
+            Double worldY = _halfHeight - yOffset;
 
             TMatrix inverse = Transformation.Inverse();
             TPoint pixel = inverse * new TPoint(worldX, worldY, -1);
@@ -74,7 +74,8 @@ namespace libTracer.Scene
             _processedPixels++;
             if (_processedPixels % 100000 == 0)
             {
-                Console.WriteLine($"Processing pixel {_processedPixels} of {Canvas.PixelCount} {_processedPixels / (Single)Canvas.PixelCount * 100:F2}%");
+                Console.WriteLine(
+                    $"Processing pixel {_processedPixels} of {Canvas.PixelCount} {_processedPixels / (Double)Canvas.PixelCount * 100:F2}%");
             };
         }
     }

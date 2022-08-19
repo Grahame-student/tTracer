@@ -30,14 +30,14 @@ namespace libTracer.Scene
             {
                 Material = new Material()
                 {
-                    Colour = new TColour(0.8f, 1.0f, 0.6f),
-                    Diffuse = 0.7f,
-                    Specular = 0.2f
+                    Colour = new TColour(0.8, 1.0, 0.6),
+                    Diffuse = 0.7,
+                    Specular = 0.2
                 }
             });
             world.Objects.Add(new Sphere()
             {
-                Transform = new TMatrix().Scaling(0.5f, 0.5f, 0.5f)
+                Transform = new TMatrix().Scaling(0.5, 0.5, 0.5)
             });
 
             return world;
@@ -79,7 +79,7 @@ namespace libTracer.Scene
         public Boolean IsShadowed(TPoint point)
         {
             TVector v = Light.Position - point;
-            Single distance = v.Magnitude;
+            Double distance = v.Magnitude;
             TVector direction = v.Normalise();
 
             var r = new TRay(point, direction);
@@ -91,7 +91,7 @@ namespace libTracer.Scene
 
         public TColour ReflectedColour(Computations comps, Int32 remaining)
         {
-            if (remaining <= 0 || comps.Object.Material.Reflective == 0.0f)
+            if (remaining <= 0 || comps.Object.Material.Reflective == 0.0)
             {
                 return ColourFactory.Black();
             }
@@ -103,19 +103,19 @@ namespace libTracer.Scene
 
         public TColour RefractedColour(Computations comps, Int32 remaining)
         {
-            if (remaining <=0 || comps.Object.Material.Transparency == 0.0f)
+            if (remaining <=0 || comps.Object.Material.Transparency == 0.0)
             {
                 return ColourFactory.Black();
             }
-            Single ratio = comps.N1 / comps.N2;
-            Single cosI = comps.EyeV.Dot(comps.NormalV);
-            Single sin2T = MathF.Pow(ratio, 2) * (1 - MathF.Pow(cosI, 2));
+            Double ratio = comps.N1 / comps.N2;
+            Double cosI = comps.EyeV.Dot(comps.NormalV);
+            Double sin2T = Math.Pow(ratio, 2) * (1 - Math.Pow(cosI, 2));
             if (sin2T > 1)
             {
                 return ColourFactory.Black();
             }
 
-            Single cosT = MathF.Sqrt(1.0f - sin2T);
+            Double cosT = Math.Sqrt(1.0 - sin2T);
             TVector direction = comps.NormalV * (ratio * cosI - cosT) - comps.EyeV * ratio;
             var refractedRay = new TRay(comps.UnderPoint, direction);
 

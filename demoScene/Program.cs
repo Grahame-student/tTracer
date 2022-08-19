@@ -21,9 +21,9 @@ internal class Program
         world.Objects.Add(CreateMediumRedSphere());
         world.Objects.Add(CreateSmallYellowSphere());
 
-        var camera = new Camera(4000, 2000, MathF.PI / 3)
+        var camera = new Camera(4000, 2000, Math.PI / 3)
         {
-            Transformation = TMatrix.ViewTransformation(new TPoint(0, 1.5f, -5), 
+            Transformation = TMatrix.ViewTransformation(new TPoint(0, 1.5, -5), 
                 new TPoint(0, 1, 0), 
                 new TVector(0, 1, 0))
         };
@@ -40,11 +40,11 @@ internal class Program
             Material = new Material
             {
                 Pattern = new Stripes(
-                    new Gradient(new TColour(1, 0.9f, 0.9f), new TColour(0.9f, 0.9f, 1)),
-                    new Solid(new TColour(0.5f, 0.5f, 0.5f))
+                    new Gradient(new TColour(1, 0.9, 0.9), new TColour(0.9, 0.9, 1)),
+                    new Solid(new TColour(0.5, 0.5, 0.5))
                     ),
                 Specular = 0,
-                Reflective = 0.5f
+                Reflective = 0.5
             }
         };
     }
@@ -53,12 +53,12 @@ internal class Program
         return new Plane
         {
             Transform = new TMatrix()
-                .RotationX(MathF.PI / 2)
-                .RotationY(-MathF.PI / 4)
+                .RotationX(Math.PI / 2)
+                .RotationY(-Math.PI / 4)
                 .Translation(0, 0, 5),
             Material = new Material
             {
-                Colour = new TColour(1, 0.9f, 0.9f),
+                Colour = new TColour(1, 0.9, 0.9),
                 Specular = 0
             }
         };
@@ -69,12 +69,12 @@ internal class Program
         return new Plane
         {
             Transform = new TMatrix()
-                .RotationX(MathF.PI / 2)
-                .RotationY(MathF.PI / 4)
+                .RotationX(Math.PI / 2)
+                .RotationY(Math.PI / 4)
                 .Translation(0, 0, 5),
             Material = new Material
             {
-                Colour = new TColour(1, 0.9f, 0.9f),
+                Colour = new TColour(1, 0.9, 0.9),
                 Specular = 0
             }
         };
@@ -85,18 +85,18 @@ internal class Program
         return new Sphere
         {
             Transform = new TMatrix()
-                .RotationY(MathF.PI/4)
-                .Translation(-0.5f, 1, 0.5f),
+                .RotationY(Math.PI/4)
+                .Translation(-0.5, 1, 0.5),
             Material = new Material
             {
                 Pattern = new Checkers(ColourFactory.White(), ColourFactory.Black())
                 {
-                    Transform = new TMatrix().Scaling(0.5f, 0.5f, 0.5f)
+                    Transform = new TMatrix().Scaling(0.5, 0.5, 0.5)
                 },
-                Colour = new TColour(0.1f, 1, 0.5f),
-                Diffuse = 0.7f,
-                Specular = 0.3f,
-                Reflective = 0.5f
+                Colour = new TColour(0.1, 1, 0.5),
+                Diffuse = 0.7,
+                Specular = 0.3,
+                Reflective = 0.5
             }
         };
     }
@@ -106,14 +106,14 @@ internal class Program
         return new Sphere
         {
             Transform = new TMatrix()
-                .RotationZ(MathF.PI / 8)
-                .Scaling(0.5f, 0.5f, 0.5f)
-                .Translation(1.5f, 0.5f, -0.5f),
+                .RotationZ(Math.PI / 8)
+                .Scaling(0.5, 0.5, 0.5)
+                .Translation(1.5, 0.5, -0.5),
             Material = new Material
             {
-                Pattern = new Gradient(new TColour(0.9f, 0.1f, 0.1f), new TColour(0.1f, 0.1f, 0.9f)),
-                Diffuse = 0.7f,
-                Specular = 0.3f
+                Pattern = new Gradient(new TColour(0.9, 0.1, 0.1), new TColour(0.1, 0.1, 0.9)),
+                Diffuse = 0.7,
+                Specular = 0.3
             }
         };
     }
@@ -123,15 +123,15 @@ internal class Program
         return new Sphere
         {
             Transform = new TMatrix()
-                .Scaling(0.33f, 0.33f, 0.33f)
-                .Translation(-1.5f, 0.33f, -0.75f),
+                .Scaling(0.33, 0.33, 0.33)
+                .Translation(-1.5, 0.33, -0.75),
             Material = new Material
             {
-                Colour = new TColour(1, 0.8f, 0.1f),
-                Diffuse = 0.7f,
-                Specular = 0.3f,
-                Transparency = 0.75f,
-                RefractiveIndex = 1.5f
+                Colour = new TColour(1, 0.8, 0.1),
+                Diffuse = 0.7,
+                Specular = 0.3,
+                Transparency = 0.75,
+                RefractiveIndex = 1.5
             }
         };
     }

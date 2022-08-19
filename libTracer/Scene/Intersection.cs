@@ -9,12 +9,12 @@ namespace libTracer.Scene
     public class Intersection : IComparable<Intersection>, IEquatable<Intersection>
     {
         // Smaller value results in scene acne
-        private const Single EPSILON = 0.01f;
+        private const Double EPSILON = 0.0001;
 
-        public Single Time { get; }
+        public Double Time { get; }
         public Shape Shape { get; }
 
-        public Intersection(Single time, Shape shape)
+        public Intersection(Double time, Shape shape)
         {
             Time = time;
             Shape = shape;
@@ -70,7 +70,7 @@ namespace libTracer.Scene
             {
                 if (intersection.Equals(this))
                 {
-                    result.N1 = containers.Count == 0 ? 1.0f : containers.Last().Material.RefractiveIndex;
+                    result.N1 = containers.Count == 0 ? 1.0 : containers.Last().Material.RefractiveIndex;
                 }
 
                 if (containers.Contains(intersection.Shape))
@@ -84,7 +84,7 @@ namespace libTracer.Scene
 
                 if (intersection.Equals(this))
                 {
-                    result.N2 = containers.Count == 0 ? 1.0f : containers.Last().Material.RefractiveIndex;
+                    result.N2 = containers.Count == 0 ? 1.0 : containers.Last().Material.RefractiveIndex;
                     break;
                 }
             }

@@ -28,7 +28,7 @@ namespace libTracer.Scene
                 GetScaledChannel(colour.Blue));
         }
 
-        private Int32 GetScaledChannel(Single channel)
+        private Int32 GetScaledChannel(Double channel)
         {
             var value = (Int32)(channel * MAX_VALUE);
             if (value < 0) value = 0;

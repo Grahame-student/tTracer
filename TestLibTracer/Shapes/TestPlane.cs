@@ -55,7 +55,7 @@ namespace TestLibTracer.Shapes
         }
 
         [Test]
-        public void Intersect_ReturnsSinglePoint_WhenRayIntersectsFromAbove()
+        public void Intersect_ReturnsDoublePoint_WhenRayIntersectsFromAbove()
         {
             _plane = new Plane();
             var ray = new TRay(new TPoint(0, 1, 0), new TVector(0, -1, 0));
@@ -88,7 +88,7 @@ namespace TestLibTracer.Shapes
         }
 
         [Test]
-        public void Intersect_ReturnsSinglePoint_WhenRayIntersectsFromBelow()
+        public void Intersect_ReturnsDoublePoint_WhenRayIntersectsFromBelow()
         {
             _plane = new Plane();
             var ray = new TRay(new TPoint(0, -1, 0), new TVector(0, 1, 0));

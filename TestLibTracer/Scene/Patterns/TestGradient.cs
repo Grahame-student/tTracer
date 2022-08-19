@@ -23,8 +23,8 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Gradient(ColourFactory.White(), ColourFactory.Black());
 
-            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(0.25f, 0, 0)),
-                Is.EqualTo(new TColour(0.75f, 0.75f, 0.75f)));
+            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(0.25, 0, 0)),
+                Is.EqualTo(new TColour(0.75, 0.75, 0.75)));
         }
 
         [Test]
@@ -32,8 +32,8 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Gradient(ColourFactory.White(), ColourFactory.Black());
 
-            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(0.5f, 0, 0)),
-                Is.EqualTo(new TColour(0.5f, 0.5f, 0.5f)));
+            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(0.5, 0, 0)),
+                Is.EqualTo(new TColour(0.5, 0.5, 0.5)));
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Gradient(ColourFactory.White(), ColourFactory.Black());
 
-            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(0.75f, 0, 0)),
-                Is.EqualTo(new TColour(0.25f, 0.25f, 0.25f)));
+            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(0.75, 0, 0)),
+                Is.EqualTo(new TColour(0.25, 0.25, 0.25)));
         }
 
         [Test]
@@ -50,7 +50,8 @@ namespace TestLibTracer.Scene.Patterns
         {
             _pattern = new Gradient(ColourFactory.White(), ColourFactory.Black());
 
-            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(1 - 0.001f, 0, 0)), Is.EqualTo(ColourFactory.Black()));
+            Assert.That(_pattern.ColourAt(new Sphere(), new TPoint(1 - Constants.EPSILON, 0, 0)),
+                Is.EqualTo(ColourFactory.Black()));
         }
     }
 }

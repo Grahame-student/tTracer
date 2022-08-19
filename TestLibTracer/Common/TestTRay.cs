@@ -37,8 +37,8 @@ namespace TestLibTracer.Common
 
             _ray = new TRay(point, direction);
 
-            var result = new TPoint(4.5f, 3, 4);
-            Assert.That(_ray.Position(2.5f), Is.EqualTo(result));
+            var result = new TPoint(4.5, 3, 4);
+            Assert.That(_ray.Position(2.5), Is.EqualTo(result));
         }
 
         [Test]
@@ -49,8 +49,8 @@ namespace TestLibTracer.Common
 
             _ray = new TRay(point, direction);
 
-            var result = new TPoint(1f, 3, 4);
-            Assert.That(_ray.Position(-1f), Is.EqualTo(result));
+            var result = new TPoint(1, 3, 4);
+            Assert.That(_ray.Position(-1), Is.EqualTo(result));
         }
 
         [Test]

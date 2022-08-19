@@ -17,8 +17,8 @@ namespace libTracer.Scene.Patterns
 
         protected override TColour LocalColourAt(Shape shape, TPoint point)
         {
-            Single position = MathF.Sqrt((point.X * point.X) + (point.Z * point.Z));
-            return MathF.Floor(position) % 2 == 0 ? A.ColourAt(shape, point) : B.ColourAt(shape, point);
+            Double position = Math.Sqrt((point.X * point.X) + (point.Z * point.Z));
+            return Math.Floor(position) % 2 == 0 ? A.ColourAt(shape, point) : B.ColourAt(shape, point);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace TestLibTracer.Scene
         {
             _material = new Material();
 
-            Assert.That(_material.Ambient, Is.EqualTo(0.1f));
+            Assert.That(_material.Ambient, Is.EqualTo(0.1));
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace TestLibTracer.Scene
         {
             _material = new Material();
 
-            Assert.That(_material.Diffuse, Is.EqualTo(0.9f));
+            Assert.That(_material.Diffuse, Is.EqualTo(0.9));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace TestLibTracer.Scene
         {
             _material = new Material();
 
-            Assert.That(_material.Specular, Is.EqualTo(0.9f));
+            Assert.That(_material.Specular, Is.EqualTo(0.9));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace TestLibTracer.Scene
         {
             _material = new Material();
 
-            Assert.That(_material.Shininess, Is.EqualTo(200f));
+            Assert.That(_material.Shininess, Is.EqualTo(200));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace TestLibTracer.Scene
         {
             _material = new Material();
 
-            Assert.That(_material.Reflective, Is.EqualTo(0.0f));
+            Assert.That(_material.Reflective, Is.EqualTo(0.0));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace TestLibTracer.Scene
         {
             _material = new Material();
 
-            Assert.That(_material.Transparency, Is.EqualTo(0.0f));
+            Assert.That(_material.Transparency, Is.EqualTo(0.0));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace TestLibTracer.Scene
         {
             _material = new Material();
 
-            Assert.That(_material.RefractiveIndex, Is.EqualTo(1.0f));
+            Assert.That(_material.RefractiveIndex, Is.EqualTo(1.0));
         }
 
         [Test]
@@ -199,7 +199,7 @@ namespace TestLibTracer.Scene
             TVector eye = new TVector(0, 0, -1);
             TVector normal = new TVector(0, 0, -1);
 
-            var expectedResult = new TColour(1.9f, 1.9f, 1.9f);
+            var expectedResult = new TColour(1.9, 1.9, 1.9);
             Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.EqualTo(expectedResult));
         }
 
@@ -209,10 +209,10 @@ namespace TestLibTracer.Scene
             _material = new Material();
             var light = new Light(new TPoint(0, 0, -10), new TColour(1, 1, 1));
             var position = new TPoint(0, 0, 0);
-            TVector eye = new TVector(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
+            TVector eye = new TVector(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
             TVector normal = new TVector(0, 0, -1);
 
-            var expectedResult = new TColour(1.0f, 1.0f, 1.0f);
+            var expectedResult = new TColour(1.0, 1.0, 1.0);
             Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.EqualTo(expectedResult));
         }
 
@@ -227,7 +227,7 @@ namespace TestLibTracer.Scene
 
             TColour result = _material.Lighting(new Sphere(), light, position, eye, normal, false);
 
-            var expectedResult = new TColour(0.7364f, 0.7364f, 0.7364f);
+            var expectedResult = new TColour(0.7364, 0.7364, 0.7364);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -237,10 +237,10 @@ namespace TestLibTracer.Scene
             _material = new Material();
             var light = new Light(new TPoint(0, 10, -10), new TColour(1, 1, 1));
             var position = new TPoint(0, 0, 0);
-            var eye = new TVector(0, -MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
+            var eye = new TVector(0, -Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2);
             var normal = new TVector(0, 0, -1);
 
-            var expectedResult = new TColour(1.6364f, 1.6364f, 1.6364f);
+            var expectedResult = new TColour(1.6364, 1.6364, 1.6364);
             Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.EqualTo(expectedResult));
         }
 
@@ -253,7 +253,7 @@ namespace TestLibTracer.Scene
             var eye = new TVector(0, 0, -1);
             var normal = new TVector(0, 0, -1);
 
-            var expectedResult = new TColour(0.1f, 0.1f, 0.1f);
+            var expectedResult = new TColour(0.1, 0.1, 0.1);
             Assert.That(_material.Lighting(new Sphere(), light, position, eye, normal, false), Is.EqualTo(expectedResult));
         }
 
@@ -269,7 +269,7 @@ namespace TestLibTracer.Scene
 
             var result = _material.Lighting(new Sphere(), light, position, eye, normal, inShadow);
 
-            var expectedResult = new TColour(0.1f, 0.1f, 0.1f);
+            var expectedResult = new TColour(0.1, 0.1, 0.1);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -287,7 +287,7 @@ namespace TestLibTracer.Scene
             var normalv = new TVector(0, 0, -1);
             var light = new Light(new TPoint(0, 0, -10), new TColour(1, 1, 1));
 
-            Assert.That(_material.Lighting(new Sphere(), light, new TPoint(0.9f, 0, 0), eyev, normalv, false),
+            Assert.That(_material.Lighting(new Sphere(), light, new TPoint(0.9, 0, 0), eyev, normalv, false),
                 Is.EqualTo(ColourFactory.White()));
         }
 
@@ -305,7 +305,7 @@ namespace TestLibTracer.Scene
             var normalv = new TVector(0, 0, -1);
             var light = new Light(new TPoint(0, 0, -10), new TColour(1, 1, 1));
 
-            Assert.That(_material.Lighting(new Sphere(), light, new TPoint(1.1f, 0, 0), eyev, normalv, false),
+            Assert.That(_material.Lighting(new Sphere(), light, new TPoint(1.1, 0, 0), eyev, normalv, false),
                 Is.EqualTo(ColourFactory.Black()));
         }
     }

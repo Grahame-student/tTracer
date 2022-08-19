@@ -6,9 +6,9 @@ namespace TestLibTracer.Common
 {
     internal class TestTVector
     {
-        private const Single SOME_X = 1.2f;
-        private const Single SOME_Y = 3.4f;
-        private const Single SOME_Z = 5.6f;
+        private const Double SOME_X = 1.2;
+        private const Double SOME_Y = 3.4;
+        private const Double SOME_Z = 5.6;
 
         private TVector _vector;
 
@@ -316,7 +316,7 @@ namespace TestLibTracer.Common
         {
             _vector = new TVector(SOME_X, SOME_Y, SOME_Z);
 
-            Single expected = MathF.Sqrt(SOME_X * SOME_X + SOME_Y * SOME_Y + SOME_Z * SOME_Z);
+            Double expected = Math.Sqrt(SOME_X * SOME_X + SOME_Y * SOME_Y + SOME_Z * SOME_Z);
 
             Assert.That(_vector.Magnitude, Is.EqualTo(expected));
         }
@@ -411,7 +411,7 @@ namespace TestLibTracer.Common
             var vector1 = new TVector(2, 3, 4);
             var vector2 = new TVector(3, 4, 5);
 
-            Single expected = 2 * 3 + 3 * 4 + 4 * 5 + 0 * 0;
+            Double expected = 2 * 3 + 3 * 4 + 4 * 5 + 0 * 0;
 
             Assert.That(vector1.Dot(vector2), Is.EqualTo(expected));
         }
@@ -609,7 +609,7 @@ namespace TestLibTracer.Common
         public void Reflect_Returns_VectorOfSlantedSurface()
         {
             var inVector = new TVector(0, -1, 0);
-            var normal = new TVector(MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2, 0);
+            var normal = new TVector(Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0);
 
             TVector result = inVector.Reflect(normal);
 

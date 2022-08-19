@@ -1,20 +1,19 @@
-﻿using libTracer;
+﻿using System;
 using libTracer.Common;
-using System;
 using libTracer.Scene;
 
-namespace projectileDemo
+namespace demoProjectile
 {
     internal class Program
     {
         static void Main(String[] args)
         {
             var start = new TPoint(0, 1, 0);
-            TVector velocity = new TVector(1, 1.8f, 0).Normalise() * 11.25f;
+            TVector velocity = new TVector(1, 1.8, 0).Normalise() * 11.25;
             var projectile = new Projectile(start, velocity);
 
-            var gravity = new TVector(0, -0.1f, 0);
-            var wind = new TVector(-0.01f, 0, 0);
+            var gravity = new TVector(0, -0.1, 0);
+            var wind = new TVector(-0.01, 0, 0);
             var env = new WorldEnvironment(gravity, wind);
 
             var canvas = new Canvas(900, 550);
