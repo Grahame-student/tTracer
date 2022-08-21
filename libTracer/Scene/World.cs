@@ -59,11 +59,22 @@ namespace libTracer.Scene
 
         public TColour ShadeHit(Computations computations, Int32 remaining)
         {
-            return computations.Object.Material.Lighting(computations.Object, Light, computations.OverPoint,
-                       computations.EyeV,
-                       computations.NormalV, IsShadowed(computations.OverPoint)) +
-                   ReflectedColour(computations, remaining) +
-                   RefractedColour(computations, remaining);
+            TColour surface = computations.Object.Material.Lighting(computations.Object, Light, computations.OverPoint,
+                computations.EyeV, computations.NormalV, IsShadowed(computations.OverPoint));
+            TColour reflected = ReflectedColour(computations, remaining);
+            TColour refracted = RefractedColour(computations, remaining);
+
+            if (computations.Object.Material.Reflective > 0 &&
+                computations.Object.Material.Transparency > 0)
+            {
+                var reflectance = Intersection.Schlick(computations);
+                return surface +  reflected * reflectance + 
+                       refracted * (1 - reflectance);
+            }
+            else
+            {
+                return surface + reflected + refracted;
+            }
         }
 
         public TColour ColourAt(TRay ray, Int32 remaining)

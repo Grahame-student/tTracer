@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoSphere", "demoSphere\de
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoProjectile", "demoProjectile\demoProjectile.csproj", "{F2E0E90E-C2F1-488B-A834-B2B05CA2BD2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demoScene", "demoScene\demoScene.csproj", "{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoScene", "demoScene\demoScene.csproj", "{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoNestedGlassScene", "demoNestedGlassScene\demoNestedGlassScene.csproj", "{4292E610-9C67-4728-A0C2-1685EC271B2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demoGridScene", "demoGridScene\demoGridScene.csproj", "{7FC0EADA-9DB0-4445-BDB0-156AA20E786A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2FA351C-7A5B-4923-982F-AF56CA85BA8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4292E610-9C67-4728-A0C2-1685EC271B2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4292E610-9C67-4728-A0C2-1685EC271B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4292E610-9C67-4728-A0C2-1685EC271B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4292E610-9C67-4728-A0C2-1685EC271B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FC0EADA-9DB0-4445-BDB0-156AA20E786A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FC0EADA-9DB0-4445-BDB0-156AA20E786A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FC0EADA-9DB0-4445-BDB0-156AA20E786A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FC0EADA-9DB0-4445-BDB0-156AA20E786A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

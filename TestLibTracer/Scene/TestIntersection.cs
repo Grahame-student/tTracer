@@ -331,5 +331,55 @@ namespace TestLibTracer.Scene
 
             Assert.That(comps.Point.Z, Is.LessThan(comps.UnderPoint.Z));
         }
+
+        [Test]
+        public void Schlick_SetReflectanceToOne_WhenTotalInternalReflectionOccurs()
+        {
+            var shape = Sphere.Glass();
+            var ray = new TRay(new TPoint(0, 0, Math.Sqrt(2) / 2), new TVector(0, 1, 0));
+            var intersections = new List<Intersection>
+            {
+                new(-Math.Sqrt(2) / 2, shape),
+                new(Math.Sqrt(2) / 2, shape)
+            };
+
+            Computations comps = intersections[1].PrepareComputations(ray, intersections);
+            Double reflectance = Intersection.Schlick(comps);
+
+            Assert.That(reflectance, Is.EqualTo(1.0));
+        }
+
+        [Test]
+        public void Schlick_ReturnsLittleReflectance_WhenRayPerpendicular()
+        {
+            var shape = Sphere.Glass();
+            var ray = new TRay(new TPoint(0, 0, 0), new TVector(0, 1, 0));
+            var intersections = new List<Intersection>
+            {
+                new(-1.0, shape),
+                new(1.0, shape)
+            };
+
+            Computations comps = intersections[1].PrepareComputations(ray, intersections);
+            Double reflectance = Intersection.Schlick(comps);
+
+            Assert.That(Math.Abs(reflectance - 0.04), Is.LessThan(Constants.EPSILON));
+        }
+
+        [Test]
+        public void Schlick_ReturnsHalfReflectance_WhenN2GreaterThanN1()
+        {
+            var shape = Sphere.Glass();
+            var ray = new TRay(new TPoint(0, 0.99, -2), new TVector(0, 0, 1));
+            var intersections = new List<Intersection>
+            {
+                new(1.8589, shape)
+            };
+
+            Computations comps = intersections[0].PrepareComputations(ray, intersections);
+            Double reflectance = Intersection.Schlick(comps);
+
+            Assert.That(Math.Abs(reflectance - 0.48873), Is.LessThan(Constants.EPSILON));
+        }
     }
 }

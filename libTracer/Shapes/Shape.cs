@@ -7,9 +7,8 @@ namespace libTracer.Shapes
 {
     public abstract class Shape : IEquatable<Shape>
     {
-        protected const Double EPSILON = 0.001f;
-
         public TMatrix Transform { get; set; }
+        public TMatrix Inverse { get; set; }
         public Material Material { get; set; }
 
         protected Shape()
@@ -20,9 +19,10 @@ namespace libTracer.Shapes
 
         public TVector Normal(TPoint point)
         {
-            TPoint objectPoint = Transform.Inverse() * point;
+            Inverse ??= Transform.Inverse();
+            TPoint objectPoint = Inverse * point;
             TVector objectNormal = LocalNormal(objectPoint);
-            TVector worldNormal = Transform.Inverse().Transpose() * objectNormal;
+            TVector worldNormal = Inverse.Transpose() * objectNormal;
             return worldNormal.Normalise();
         }
 

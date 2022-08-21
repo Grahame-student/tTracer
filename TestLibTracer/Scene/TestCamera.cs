@@ -140,7 +140,7 @@ namespace TestLibTracer.Scene
             var up = new TVector(0, 1, 0);
             _camera.Transformation = TMatrix.ViewTransformation(from, to, up);
 
-            Canvas image = _camera.Render(world);
+            Canvas image = _camera.Render(world, 5);
 
             Assert.That(image.GetPixel(5, 5), Is.EqualTo(new TColour(0.38066, 0.47583, 0.2855)));
         }

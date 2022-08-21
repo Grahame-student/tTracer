@@ -21,13 +21,13 @@ internal class Program
         world.Objects.Add(CreateMediumRedSphere());
         world.Objects.Add(CreateSmallYellowSphere());
 
-        var camera = new Camera(4000, 2000, Math.PI / 3)
+        var camera = new Camera(400, 200, Math.PI / 3)
         {
             Transformation = TMatrix.ViewTransformation(new TPoint(0, 1.5, -5), 
                 new TPoint(0, 1, 0), 
                 new TVector(0, 1, 0))
         };
-        Canvas? image = camera.Render(world);
+        Canvas? image = camera.Render(world, 5);
 
         var write = new BitmapWriter();
         write.SaveToBitmap(image, @"result.png");
@@ -131,7 +131,8 @@ internal class Program
                 Diffuse = 0.7,
                 Specular = 0.3,
                 Transparency = 0.75,
-                RefractiveIndex = 1.5
+                RefractiveIndex = 1.5,
+                Reflective = 0.6
             }
         };
     }

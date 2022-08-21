@@ -109,5 +109,22 @@ namespace libTracer.Scene
         {
             return HashCode.Combine(Time, Shape);
         }
+
+        public static Double Schlick(Computations comps)
+        {
+            Double cos = comps.EyeV.Dot(comps.NormalV);
+            if (comps.N1 > comps.N2)
+            {
+                Double n = comps.N1 / comps.N2;
+                Double sin2T = Math.Pow(n, 2) * (1.0 - Math.Pow(cos, 2));
+                if (sin2T > 1.0) return 1.0;
+
+                Double cosT = Math.Sqrt(1.0 - sin2T);
+                cos = cosT;
+            }
+
+            Double r0 = Math.Pow((comps.N1 - comps.N2) / (comps.N1 + comps.N2), 2);
+            return r0 + (1 - r0) * Math.Pow(1 - cos, 5);
+        }
     }
 }

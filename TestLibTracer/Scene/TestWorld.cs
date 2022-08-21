@@ -165,7 +165,7 @@ namespace TestLibTracer.Scene
 
             TColour result = _world.ShadeHit(comps, 0);
 
-            var expectedResult = new TColour(0.38066f, 0.47583f, 0.2855f);
+            var expectedResult = new TColour(0.38066, 0.47583, 0.2855);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -181,7 +181,7 @@ namespace TestLibTracer.Scene
 
             TColour result = _world.ShadeHit(comps, 0);
 
-            var expectedResult = new TColour(0.90498f, 0.90498f, 0.90498f);
+            var expectedResult = new TColour(0.90498, 0.90498, 0.90498);
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
@@ -223,7 +223,7 @@ namespace TestLibTracer.Scene
             Computations comps = intersection.PrepareComputations(ray, new List<Intersection> { intersection });
             TColour colour = _world.ShadeHit(comps, 5);
 
-            Assert.That(colour, Is.EqualTo(new TColour(0.87677f, 0.92436f, 0.82918f)));
+            Assert.That(colour, Is.EqualTo(new TColour(0.87677, 0.92436, 0.82918)));
         }
 
         [Test]
@@ -249,7 +249,34 @@ namespace TestLibTracer.Scene
             var comps = intersections[0].PrepareComputations(ray, intersections);
             var colour = _world.ShadeHit(comps, 5);
 
-            Assert.That(colour, Is.EqualTo(new TColour(0.93642f, 0.68642f, 0.68642f)));
+            Assert.That(colour, Is.EqualTo(new TColour(0.93642, 0.68642, 0.68642)));
+        }
+
+        [Test]
+        public void ShadeHit_Combines_ReflectionsAndTransparency()
+        {
+            _world = World.CreateWorld();
+            var floor = new Plane();
+            floor.Transform = new TMatrix().Translation(0, -1, 0);
+            floor.Material.Reflective = 0.5;
+            floor.Material.Transparency = 0.5;
+            floor.Material.RefractiveIndex = 1.5;
+            _world.Objects.Add(floor);
+            var ball = new Sphere();
+            ball.Material.Colour = new TColour(1, 0, 0);
+            ball.Material.Ambient = 0.5;
+            ball.Transform = new TMatrix().Translation(0, -3.5, -0.5);
+            _world.Objects.Add(ball);
+            var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
+            var intersections = new List<Intersection>
+            {
+                new(Math.Sqrt(2), floor)
+            };
+
+            Computations comps = intersections[0].PrepareComputations(ray, intersections);
+            TColour colour = _world.ShadeHit(comps, 5);
+
+            Assert.That(colour, Is.EqualTo(new TColour(0.93391, 0.69643, 0.69243)));
         }
 
         [Test]
