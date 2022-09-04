@@ -20,7 +20,7 @@ namespace demoNestedGlassScene
             world.Objects.Add(CreateBall());
             world.Objects.Add(CreateHollow());
 
-            var camera = new Camera(4000, 4000, 0.45)
+            var camera = new Camera(300, 300, 0.45)
             {
                 Transformation = TMatrix.ViewTransformation(new TPoint(0, 0, -5),
                     new TPoint(0, 0, 0),

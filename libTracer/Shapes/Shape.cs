@@ -7,8 +7,14 @@ namespace libTracer.Shapes
 {
     public abstract class Shape : IEquatable<Shape>
     {
+        private TMatrix _inverse;
         public TMatrix Transform { get; set; }
-        public TMatrix Inverse { get; set; }
+        public TMatrix Inverse
+        {
+            get { return _inverse ??= Transform.Inverse(); }
+            set => _inverse = value;
+        }
+
         public Material Material { get; set; }
 
         protected Shape()
@@ -19,7 +25,6 @@ namespace libTracer.Shapes
 
         public TVector Normal(TPoint point)
         {
-            Inverse ??= Transform.Inverse();
             TPoint objectPoint = Inverse * point;
             TVector objectNormal = LocalNormal(objectPoint);
             TVector worldNormal = Inverse.Transpose() * objectNormal;
