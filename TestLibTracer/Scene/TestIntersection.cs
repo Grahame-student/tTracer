@@ -283,7 +283,7 @@ namespace TestLibTracer.Scene
             shape1.Material.RefractiveIndex = 1.5;
             Sphere shape2 = Sphere.Glass();
             shape2.Transform = new TMatrix().Translation(0, 0, -0.25);
-            shape2.Material.RefractiveIndex = 2.0f;
+            shape2.Material.RefractiveIndex = 2.0;
             Sphere shape3 = Sphere.Glass();
             shape3.Transform = new TMatrix().Translation(0, 0, 0.25);
             shape3.Material.RefractiveIndex = 2.5;

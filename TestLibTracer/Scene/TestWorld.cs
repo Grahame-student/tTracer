@@ -238,7 +238,7 @@ namespace TestLibTracer.Scene
             var ball = new Sphere();
             ball.Material.Colour = new TColour(1, 0, 0);
             ball.Material.Ambient = 0.5;
-            ball.Transform = new TMatrix().Translation(0, -3.5f, -0.5);
+            ball.Transform = new TMatrix().Translation(0, -3.5, -0.5);
             _world.Objects.Add(ball);
             var ray = new TRay(new TPoint(0, 0, -3), new TVector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             var intersections = new List<Intersection>
@@ -303,7 +303,7 @@ namespace TestLibTracer.Scene
             _world = World.CreateWorld();
             var ray = new TRay(new TPoint(0, 0, -5), new TVector(0, 0, 1));
 
-            Assert.That(_world.ColourAt(ray, 0), Is.EqualTo(new TColour(0.38066f, 0.47583f, 0.2855f)));
+            Assert.That(_world.ColourAt(ray, 0), Is.EqualTo(new TColour(0.38066, 0.47583, 0.2855)));
         }
 
         [Test]

@@ -1,0 +1,2 @@
+./demoNestedGlassScene.exe
+pause

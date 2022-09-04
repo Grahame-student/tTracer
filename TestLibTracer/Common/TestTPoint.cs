@@ -6,9 +6,9 @@ namespace TestLibTracer.Common
 {
     internal class TestTPoint
     {
-        private const Double SOME_X = 1.2f;
-        private const Double SOME_Y = 3.4f;
-        private const Double SOME_Z = 5.6f;
+        private const Double SOME_X = 1.2;
+        private const Double SOME_Y = 3.4;
+        private const Double SOME_Z = 5.6;
 
         private TPoint _point;
 

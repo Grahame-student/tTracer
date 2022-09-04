@@ -135,7 +135,7 @@ namespace TestLibTracer.Common
 
             TColour result = colour * 0.2;
 
-            Assert.That(Math.Abs(result.Red - 0.02f), Is.LessThan(0.0001f));
+            Assert.That(Math.Abs(result.Red - 0.02), Is.LessThan(0.0001));
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace TestLibTracer.Common
 
             TColour result = colour * 0.3;
 
-            Assert.That(Math.Abs(result.Green - 0.06f), Is.LessThan(0.0001f));
+            Assert.That(Math.Abs(result.Green - 0.06), Is.LessThan(0.0001));
         }
 
         [Test]
@@ -153,9 +153,9 @@ namespace TestLibTracer.Common
         {
             var colour = new TColour(0, 0, 0.3);
 
-            TColour result = colour * 0.4f;
+            TColour result = colour * 0.4;
 
-            Assert.That(Math.Abs(result.Blue - 0.12f), Is.LessThan(0.0001f));
+            Assert.That(Math.Abs(result.Blue - 0.12), Is.LessThan(0.0001));
         }
 
         [Test]

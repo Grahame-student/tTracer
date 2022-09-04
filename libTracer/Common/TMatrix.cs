@@ -7,30 +7,30 @@ namespace libTracer.Common
         private const Int32 DIMINSION_ROWS = 0;
         private const Int32 DIMINSION_COLS = 1;
 
-        private readonly Double[,] _members;
-        public Int32 Rows => _members.GetLength(DIMINSION_ROWS);
+        private readonly Double[][] _members;
+        public Int32 Rows => _members.Length;
 
-        public Int32 Columns => _members.GetLength(DIMINSION_COLS);
+        public Int32 Columns => _members[0].Length;
 
         public Boolean IsInvertable => Determinant() != 0;
 
         public Double this[Int32 col, Int32 row]
         {
-            get => _members[row, col];
-            private init => _members[row, col] = value;
+            get => _members[row][col];
+            private init => _members[row][col] = value;
         }
 
-        public TMatrix() : this(new Double[,]
+        public TMatrix() : this(new[]
         {
-            { 1, 0, 0, 0 },
-            { 0, 1, 0, 0 },
-            { 0, 0, 1, 0 },
-            { 0, 0, 0, 1 },
+            new Double[] { 1, 0, 0, 0 }, 
+            new Double[] { 0, 1, 0, 0 },
+            new Double[] { 0, 0, 1, 0 }, 
+            new Double[] { 0, 0, 0, 1 },
         })
         {
         }
 
-        public TMatrix(Double[,] members)
+        public TMatrix(Double[][] members)
         {
             _members = members;
         }
@@ -38,28 +38,28 @@ namespace libTracer.Common
         public static TMatrix operator *(TMatrix m1, TMatrix m2)
         {
             // Hard coding for 4x4 matrix
-            return new TMatrix(new[,]
+            return new TMatrix(new[]
             {
-                {
+                new Double[]{
                    //  C, R       C, R       C, R       C, R       C, R       C, R       C, R       C, R
                     m1[0, 0] * m2[0, 0] + m1[1, 0] * m2[0, 1] + m1[2, 0] * m2[0, 2] + m1[3, 0] * m2[0, 3], // R0 C0
                     m1[0, 0] * m2[1, 0] + m1[1, 0] * m2[1, 1] + m1[2, 0] * m2[1, 2] + m1[3, 0] * m2[1, 3], // R0 C1
                     m1[0, 0] * m2[2, 0] + m1[1, 0] * m2[2, 1] + m1[2, 0] * m2[2, 2] + m1[3, 0] * m2[2, 3], // R0 C2
                     m1[0, 0] * m2[3, 0] + m1[1, 0] * m2[3, 1] + m1[2, 0] * m2[3, 2] + m1[3, 0] * m2[3, 3]  // R0 C3
                 },
-                {
+                new Double[]{
                     m1[0, 1] * m2[0, 0] + m1[1, 1] * m2[0, 1] + m1[2, 1] * m2[0, 2] + m1[3, 1] * m2[0, 3], // R1 C0
                     m1[0, 1] * m2[1, 0] + m1[1, 1] * m2[1, 1] + m1[2, 1] * m2[1, 2] + m1[3, 1] * m2[1, 3], // R1 C1
                     m1[0, 1] * m2[2, 0] + m1[1, 1] * m2[2, 1] + m1[2, 1] * m2[2, 2] + m1[3, 1] * m2[2, 3], // R1 C2
                     m1[0, 1] * m2[3, 0] + m1[1, 1] * m2[3, 1] + m1[2, 1] * m2[3, 2] + m1[3, 1] * m2[3, 3]  // R1 C3
                 },
-                {
+                new Double[]{
                     m1[0, 2] * m2[0, 0] + m1[1, 2] * m2[0, 1] + m1[2, 2] * m2[0, 2] + m1[3, 2] * m2[0, 3], // R2 C0
                     m1[0, 2] * m2[1, 0] + m1[1, 2] * m2[1, 1] + m1[2, 2] * m2[1, 2] + m1[3, 2] * m2[1, 3], // R2 C1
                     m1[0, 2] * m2[2, 0] + m1[1, 2] * m2[2, 1] + m1[2, 2] * m2[2, 2] + m1[3, 2] * m2[2, 3], // R2 C2
                     m1[0, 2] * m2[3, 0] + m1[1, 2] * m2[3, 1] + m1[2, 2] * m2[3, 2] + m1[3, 2] * m2[3, 3]  // R2 C3
                 },
-                {
+                new Double[]{
                     m1[0, 3] * m2[0, 0] + m1[1, 3] * m2[0, 1] + m1[2, 3] * m2[0, 2] + m1[3, 3] * m2[0, 3], // R3 C0
                     m1[0, 3] * m2[1, 0] + m1[1, 3] * m2[1, 1] + m1[2, 3] * m2[1, 2] + m1[3, 3] * m2[1, 3], // R3 C1
                     m1[0, 3] * m2[2, 0] + m1[1, 3] * m2[2, 1] + m1[2, 3] * m2[2, 2] + m1[3, 3] * m2[2, 3], // R3 C2
@@ -93,7 +93,7 @@ namespace libTracer.Common
             {
                 for (var col = 0; col < Columns; col++)
                 {
-                    if (Math.Abs(_members[row, col] - other._members[row, col]) > Constants.EPSILON) return false;
+                    if (Math.Abs(_members[row][col] - other._members[row][col]) > Constants.EPSILON) return false;
                 }
             }
 
@@ -114,7 +114,7 @@ namespace libTracer.Common
             {
                 for (var col = 0; col < Columns; col++)
                 {
-                    result = HashCode.Combine(_members[row, col], result);
+                    result = HashCode.Combine(_members[row][col], result);
                 }
             }
 
@@ -123,13 +123,15 @@ namespace libTracer.Common
 
         public TMatrix Transpose()
         {
-            var result = new Double[Columns, Rows];
-            for (var row = 0; row < Rows; row++)
+            var result = new Double[Columns][];
+            for (var col = 0; col < Columns; col++)
             {
-                for (var col = 0; col < Columns; col++)
+                var newCol = new Double[Rows];
+                for (var row = 0; row < Rows; row++)
                 {
-                    result[col, row] = _members[row, col];
+                    newCol[row] = _members[row][col];
                 }
+                result[col] = newCol;
             }
 
             return new TMatrix(result);
@@ -140,14 +142,14 @@ namespace libTracer.Common
             Double result = 0;
             if (Rows == 2 && Columns == 2)
             {
-                result = _members[0, 0] * _members[1, 1] -
-                         _members[0, 1] * _members[1, 0];
+                result = _members[0][0] * _members[1][1] -
+                         _members[0][1] * _members[1][0];
             }
             else
             {
                 for (var col = 0; col < Columns; col++)
                 {
-                    result += Cofactor(0, col) * _members[0, col];
+                    result += Cofactor(0, col) * _members[0][col];
                 }
             }
 
@@ -156,20 +158,22 @@ namespace libTracer.Common
 
         public TMatrix SubMatrix(Int32 delRow, Int32 delCol)
         {
-            var result = new Double[Rows - 1, Columns - 1];
+            var result = new Double[Rows - 1][];
             var newRow = 0;
 
             for (var curRow = 0; curRow < Rows; curRow++)
             {
+                var newRowValues = new Double[Columns - 1];
                 var newCol = 0;
                 if (curRow == delRow) continue;
                 for (var curCol = 0; curCol < Columns; curCol++)
                 {
                     if (curCol == delCol) continue;
-                    result[newRow, newCol] = _members[curRow, curCol];
+                    newRowValues[newCol] = _members[curRow][curCol];
                     newCol++;
                 }
 
+                result[newRow] = newRowValues;
                 newRow++;
             }
 
@@ -188,15 +192,17 @@ namespace libTracer.Common
 
         public TMatrix Inverse()
         {
-            var result = new Double[Rows, Columns];
+            var result = new Double[Rows][];
 
             Double determinant = Determinant();
-            for (var row = 0; row < Rows; row++)
+            for (var col = 0; col < Columns; col++)
             {
-                for (var col = 0; col < Columns; col++)
+                var newCol = new Double[Columns];
+                for (var row = 0; row < Columns; row++)
                 {
-                    result[col, row] = Cofactor(row, col) / determinant;
+                    newCol[row] = Cofactor(row, col) / determinant;
                 }
+                result[col] = newCol;
             }
 
             return new TMatrix(result);
@@ -274,12 +280,12 @@ namespace libTracer.Common
             TVector left = forward.Cross(up.Normalise());
             TVector trueUp = left.Cross(forward);
 
-            var orientation = new TMatrix(new[,]
+            var orientation = new TMatrix(new Double[][]
             {
-                {  left.X,     left.Y,     left.Z,    0 },
-                {  trueUp.X,   trueUp.Y,   trueUp.Z,  0 },
-                { -forward.X, -forward.Y, -forward.Z, 0 },
-                {  0,          0,          0,         1 }
+                new Double[] {  left.X,     left.Y,     left.Z,    0 }, 
+                new Double[] {  trueUp.X,   trueUp.Y,   trueUp.Z,  0 }, 
+                new Double[] { -forward.X, -forward.Y, -forward.Z, 0 }, 
+                new Double[] {  0,          0,          0,         1 }
             });
 
             return orientation * new TMatrix().Translation(-from.X, -from.Y, -from.Z);

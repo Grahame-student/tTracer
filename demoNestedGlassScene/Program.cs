@@ -1,4 +1,5 @@
-﻿using libTracer.Common;
+﻿using System.Diagnostics;
+using libTracer.Common;
 using libTracer.Scene;
 using libTracer.Scene.Patterns;
 using libTracer.Shapes;
@@ -20,13 +21,17 @@ namespace demoNestedGlassScene
             world.Objects.Add(CreateBall());
             world.Objects.Add(CreateHollow());
 
-            var camera = new Camera(300, 300, 0.45)
+            var camera = new Camera(500, 500, 0.45)
             {
                 Transformation = TMatrix.ViewTransformation(new TPoint(0, 0, -5),
                     new TPoint(0, 0, 0),
                     new TVector(0, 1, 0))
             };
+
+            var timer = Stopwatch.StartNew();
             Canvas? image = camera.Render(world, 5);
+            timer.Stop();
+            Console.WriteLine($"Rendered in {timer.ElapsedMilliseconds} ms");
 
             var write = new BitmapWriter();
             write.SaveToBitmap(image, @"result.png");

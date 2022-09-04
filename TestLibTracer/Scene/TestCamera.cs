@@ -36,7 +36,7 @@ namespace TestLibTracer.Scene
         {
             _camera = new Camera(SOME_WIDTH, SOME_HEIGHT, SOME_FIELD_OF_VIEW);
 
-            Assert.That(Math.Abs(_camera.FieldOfView - SOME_FIELD_OF_VIEW), Is.LessThan(0.0001f));
+            Assert.That(Math.Abs(_camera.FieldOfView - SOME_FIELD_OF_VIEW), Is.LessThan(0.0001));
         }
 
         [Test]
