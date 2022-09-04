@@ -7,13 +7,9 @@ namespace libTracer.Shapes
 {
     public abstract class Shape : IEquatable<Shape>
     {
-        private TMatrix _inverse;
+        private readonly Lazy<TMatrix> _inverse;
         public TMatrix Transform { get; set; }
-        public TMatrix Inverse
-        {
-            get { return _inverse ??= Transform.Inverse(); }
-            set => _inverse = value;
-        }
+        public TMatrix Inverse => _inverse.Value;
 
         public Material Material { get; set; }
 
@@ -21,6 +17,7 @@ namespace libTracer.Shapes
         {
             Transform = new TMatrix();
             Material = new Material();
+            _inverse = new Lazy<TMatrix>(() => Transform.Inverse());
         }
 
         public TVector Normal(TPoint point)

@@ -25,7 +25,12 @@ namespace libTracer.Common
         public static TVector operator *(TVector v, Double s) => new(v.X * s, v.Y * s, v.Z * s);
         public static TVector operator /(TVector v, Double s) => new(v.X / s, v.Y / s, v.Z / s);
 
-        public TVector Normalise() => new(X / Magnitude, Y / Magnitude, Z / Magnitude);
+        public TVector Normalise()
+        {
+            return Magnitude == 0 ? 
+                new TVector(0, 0, 0) : 
+                new TVector(X / Magnitude, Y / Magnitude, Z / Magnitude);
+        }
         public Double Dot(TVector v) => X * v.X + Y * v.Y + Z * v.Z + W * v.W;
 
         public TVector Cross(TVector vector2) => new(
