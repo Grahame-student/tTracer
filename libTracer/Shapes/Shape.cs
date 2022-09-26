@@ -8,10 +8,12 @@ namespace libTracer.Shapes
     public abstract class Shape : IEquatable<Shape>
     {
         private readonly Lazy<TMatrix> _inverse;
-        public TMatrix Transform { get; set; }
-        public TMatrix Inverse => _inverse.Value;
 
+        public TMatrix Transform { get; set; }
         public Material Material { get; set; }
+        public Shape Parent { get; set; }
+    
+        public TMatrix Inverse => _inverse.Value;
 
         protected Shape()
         {

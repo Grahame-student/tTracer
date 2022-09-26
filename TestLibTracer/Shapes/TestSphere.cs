@@ -29,6 +29,14 @@ namespace TestLibTracer.Shapes
         }
 
         [Test]
+        public void Constructor_SetsParent_ToNull()
+        {
+            _sphere = new Sphere();
+
+            Assert.That(_sphere.Parent, Is.EqualTo(null));
+        }
+
+        [Test]
         public void Intersects_ReturnsTwoElements_WhenRayPassesThroughSphere()
         {
             _sphere = new Sphere();
