@@ -35,7 +35,7 @@ namespace libTracer.Shapes
         public IList<Intersection> Intersects(TRay ray)
         {
             // Rather than translate objects to world space we translate the ray instead
-            TRay transformedRay = ray.Transform(Transform.Inverse());
+            TRay transformedRay = ray.Transform(Inverse);
             return LocalIntersects(transformedRay);
         }
 
