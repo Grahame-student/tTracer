@@ -12,30 +12,6 @@ internal class TestSphere
     private Sphere _sphere;
 
     [Test]
-    public void Constructor_SetsTransform_ToIdentityMatrix()
-    {
-        _sphere = new Sphere();
-
-        Assert.That(_sphere.Transform, Is.EqualTo(new TMatrix()));
-    }
-
-    [Test]
-    public void Constructor_SetsMaterial_ToDefaultMaterial()
-    {
-        _sphere = new Sphere();
-
-        Assert.That(_sphere.Material, Is.EqualTo(new Material()));
-    }
-
-    [Test]
-    public void Constructor_SetsParent_ToNull()
-    {
-        _sphere = new Sphere();
-
-        Assert.That(_sphere.Parent, Is.EqualTo(null));
-    }
-
-    [Test]
     public void Intersects_ReturnsTwoElements_WhenRayPassesThroughSphere()
     {
         _sphere = new Sphere();
