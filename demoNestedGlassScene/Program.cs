@@ -21,8 +21,8 @@ internal class Program
         world.Objects.Add(CreateBall());
         world.Objects.Add(CreateHollow());
 
-        // var camera = new Camera(500, 500, 0.45) // benchmark
-        var camera = new Camera(4000, 4000, 0.45)
+        var camera = new Camera(500, 500, 0.45) // benchmark
+        // var camera = new Camera(4000, 4000, 0.45)
         {
             Transformation = TMatrix.ViewTransformation(new TPoint(0, 0, -5),
                 new TPoint(0, 0, 0),

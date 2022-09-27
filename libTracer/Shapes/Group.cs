@@ -15,6 +15,8 @@ public class Group : Shape
 
     protected override TVector LocalNormal(TPoint point)
     {
+        // Groups have no normals, the contained shapes do
+        // If this method is called, that's a defect that needs to be resolved
         throw new System.NotImplementedException();
     }
 

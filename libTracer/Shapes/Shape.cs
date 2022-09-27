@@ -22,15 +22,36 @@ public abstract class Shape : IEquatable<Shape>
         _inverse = new Lazy<TMatrix>(() => Transform.Inverse());
     }
 
-    public TVector Normal(TPoint point)
+    public TVector Normal(TPoint worldPoint)
     {
-        TPoint objectPoint = Inverse * point;
-        TVector objectNormal = LocalNormal(objectPoint);
-        TVector worldNormal = Inverse.Transpose() * objectNormal;
-        return worldNormal.Normalise();
+        TPoint localPoint = WorldToObject(worldPoint);
+        TVector localNormal = LocalNormal(localPoint);
+        return NormalToWorld(localNormal);
     }
 
     protected abstract TVector LocalNormal(TPoint point);
+
+    public TPoint WorldToObject(TPoint point)
+    {
+        if (Parent != null)
+        {
+            point = Parent.WorldToObject(point);
+        }
+
+        return Inverse * point;
+    }
+
+    public TVector NormalToWorld(TVector vector)
+    {
+        TVector normal = (Inverse.Transpose() * vector).Normalise();
+
+        if (Parent != null)
+        {
+            normal = Parent.NormalToWorld(normal);
+        }
+
+        return normal;
+    }
 
     public IList<Intersection> Intersects(TRay ray)
     {
@@ -40,6 +61,11 @@ public abstract class Shape : IEquatable<Shape>
     }
 
     protected abstract IList<Intersection> LocalIntersects(TRay ray);
+
+    public override Int32 GetHashCode()
+    {
+        return HashCode.Combine(Transform, Material);
+    }
 
     public Boolean Equals(Shape other)
     {
@@ -54,10 +80,5 @@ public abstract class Shape : IEquatable<Shape>
         if (ReferenceEquals(this, obj)) return true;
         if (obj.GetType() != GetType()) return false;
         return Equals((Shape)obj);
-    }
-
-    public override Int32 GetHashCode()
-    {
-        return HashCode.Combine(Transform, Material);
     }
 }
