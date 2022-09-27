@@ -1,6 +1,5 @@
-﻿namespace TestLibTracer.Shapes
+﻿namespace TestLibTracer.Shapes;
+
+internal class TestShape
 {
-    internal class TestShape
-    {
-    }
 }

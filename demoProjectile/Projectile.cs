@@ -1,16 +1,15 @@
 ﻿using libTracer.Common;
 
-namespace demoProjectile
-{
-    internal class Projectile
-    {
-        public TPoint Position { get; }
-        public TVector Velocity { get; }
+namespace demoProjectile;
 
-        public Projectile(TPoint position, TVector velocity)
-        {
-            Position = position;
-            Velocity = velocity;
-        }
+internal class Projectile
+{
+    public TPoint Position { get; }
+    public TVector Velocity { get; }
+
+    public Projectile(TPoint position, TVector velocity)
+    {
+        Position = position;
+        Velocity = velocity;
     }
 }

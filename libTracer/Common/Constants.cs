@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace libTracer.Common
+namespace libTracer.Common;
+
+public static class Constants
 {
-    public static class Constants
-    {
-        public const Double EPSILON = 0.0001;
-    }
+    public const Double EPSILON = 0.0001;
 }

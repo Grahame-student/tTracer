@@ -3,42 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using libTracer.Common;
 
-namespace libTracer.Scene
+namespace libTracer.Scene;
+
+public class Canvas
 {
-    public class Canvas
+    private readonly IList<IList<Pixel>> _pixels;
+
+    public Int32 Width => _pixels[0].Count;
+    public Int32 Height => _pixels.Count;
+    public Int64 PixelCount { get; }
+
+    public Canvas(Int32 width, Int32 height)
     {
-        private readonly IList<IList<Pixel>> _pixels;
+        _pixels = new List<IList<Pixel>>();
+        PixelCount = width * height;
 
-        public Int32 Width => _pixels[0].Count;
-        public Int32 Height => _pixels.Count;
-        public Int64 PixelCount { get; }
-
-        public Canvas(Int32 width, Int32 height)
+        for (var row = 0; row < height; row++)
         {
-            _pixels = new List<IList<Pixel>>();
-            PixelCount = width * height;
-
-            for (var row = 0; row < height; row++)
+            var newRow = new List<Pixel>();
+            for (var col = 0; col < width; col++)
             {
-                var newRow = new List<Pixel>();
-                for (var col = 0; col < width; col++)
-                {
-                    newRow.Add(new Pixel(col, row));
-                }
-                _pixels.Add(newRow);
+                newRow.Add(new Pixel(col, row));
             }
+            _pixels.Add(newRow);
         }
+    }
 
-        public IEnumerable<Pixel> Pixels => _pixels.SelectMany(row => row);
+    public IEnumerable<Pixel> Pixels => _pixels.SelectMany(row => row);
 
-        public void SetPixel(Int32 x, Int32 y, TColour colour)
-        {
-            _pixels[y][x].SetColour(colour.Red, colour.Green, colour.Blue);
-        }
+    public void SetPixel(Int32 x, Int32 y, TColour colour)
+    {
+        _pixels[y][x].SetColour(colour.Red, colour.Green, colour.Blue);
+    }
 
-        public TColour GetPixel(Int32 x, Int32 y)
-        {
-            return _pixels[y][x].Colour;
-        }
+    public TColour GetPixel(Int32 x, Int32 y)
+    {
+        return _pixels[y][x].Colour;
     }
 }

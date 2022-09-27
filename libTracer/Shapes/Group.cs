@@ -2,39 +2,38 @@
 using libTracer.Common;
 using libTracer.Scene;
 
-namespace libTracer.Shapes
+namespace libTracer.Shapes;
+
+public class Group : Shape
 {
-    public class Group : Shape
+    public IList<Shape> Shapes { get; }
+
+    public Group()
     {
-        public IList<Shape> Shapes { get; }
+        Shapes = new List<Shape>();
+    }
 
-        public Group()
+    protected override TVector LocalNormal(TPoint point)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override IList<Intersection> LocalIntersects(TRay ray)
+    {
+        var result = new List<Intersection>();
+        foreach (Shape shape in Shapes)
         {
-            Shapes = new List<Shape>();
+            result.AddRange(shape.Intersects(ray));
         }
 
-        protected override TVector LocalNormal(TPoint point)
-        {
-            throw new System.NotImplementedException();
-        }
+        result.Sort();
 
-        protected override IList<Intersection> LocalIntersects(TRay ray)
-        {
-            var result = new List<Intersection>();
-            foreach (Shape shape in Shapes)
-            {
-                result.AddRange(shape.Intersects(ray));
-            }
+        return result;
+    }
 
-            result.Sort();
-
-            return result;
-        }
-
-        public void Add(Shape shape)
-        {
-            Shapes.Add(shape);
-            shape.Parent = this;
-        }
+    public void Add(Shape shape)
+    {
+        Shapes.Add(shape);
+        shape.Parent = this;
     }
 }
