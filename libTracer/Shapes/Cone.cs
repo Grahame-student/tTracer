@@ -9,6 +9,7 @@ public class Cone : Shape
 {
     public Double Minimum { get; set; }
     public Double Maximum { get; set; }
+
     public Boolean Closed { get; set; }
 
     public Cone()
@@ -16,6 +17,14 @@ public class Cone : Shape
         Minimum = Double.NegativeInfinity;
         Maximum = Double.PositiveInfinity;
         Closed = false;
+    }
+
+    protected override Bounds LocalBounds()
+    {
+        // Note: If this gets expensive investigate a way to cache
+        return new Bounds(
+            new TPoint(-1, Minimum, -1),
+            new TPoint(1, Maximum, 1));
     }
 
     protected override TVector LocalNormal(TPoint point)

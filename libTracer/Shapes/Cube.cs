@@ -8,6 +8,11 @@ namespace libTracer.Shapes;
 
 public class Cube : Shape
 {
+    protected override Bounds LocalBounds()
+    {
+        return new Bounds(new TPoint(-1, -1, -1), new TPoint(1, 1, 1));
+    }
+
     protected override TVector LocalNormal(TPoint point)
     {
         Double maxc = new[] { Math.Abs(point.X), Math.Abs(point.Y), Math.Abs(point.Z) }.Max();

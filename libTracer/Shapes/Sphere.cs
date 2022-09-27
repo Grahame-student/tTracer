@@ -27,6 +27,11 @@ public class Sphere : Shape
         return result;
     }
 
+    protected override Bounds LocalBounds()
+    {
+        return new Bounds(new TPoint(-1, -1, -1), new TPoint(1, 1, 1));
+    }
+
     protected override TVector LocalNormal(TPoint point)
     {
         return point - new TPoint(0, 0, 0);

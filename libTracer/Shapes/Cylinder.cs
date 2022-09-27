@@ -10,6 +10,7 @@ public class Cylinder : Shape
 {
     public Double Minimum { get; set; }
     public Double Maximum { get; set; }
+
     public Boolean Closed { get; set; }
 
     public Cylinder()
@@ -17,6 +18,13 @@ public class Cylinder : Shape
         Minimum = Double.NegativeInfinity;
         Maximum = Double.PositiveInfinity;
         Closed = false;
+    }
+
+    protected override Bounds LocalBounds()
+    {
+        return new Bounds(
+            new TPoint(-1, Minimum, -1),
+            new TPoint(1, Maximum, 1));
     }
 
     protected override TVector LocalNormal(TPoint point)

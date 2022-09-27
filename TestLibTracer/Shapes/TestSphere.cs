@@ -381,4 +381,20 @@ internal class TestSphere
 
         Assert.That(sphere1.GetHashCode(), Is.EqualTo(sphere2.GetHashCode()));
     }
+
+    [Test]
+    public void Constructor_SetsMinimumBoundary_ToMinimumBoundary()
+    {
+        _sphere = new Sphere();
+
+        Assert.That(_sphere.Bounds.Minimum, Is.EqualTo(new TPoint(-1, -1, -1)));
+    }
+
+    [Test]
+    public void Constructor_SetsMaximumBoundary_ToMaximumBoundary()
+    {
+        _sphere = new Sphere();
+
+        Assert.That(_sphere.Bounds.Maximum, Is.EqualTo(new TPoint(1, 1, 1)));
+    }
 }

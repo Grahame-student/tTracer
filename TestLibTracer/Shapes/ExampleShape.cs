@@ -7,6 +7,11 @@ namespace TestLibTracer.Shapes;
 
 internal class ExampleShape : Shape
 {
+    protected override Bounds LocalBounds()
+    {
+        throw new System.NotImplementedException();
+    }
+
     protected override TVector LocalNormal(TPoint point)
     {
         throw new System.NotImplementedException();

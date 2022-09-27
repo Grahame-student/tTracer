@@ -7,6 +7,13 @@ namespace libTracer.Shapes;
 
 public class Plane : Shape
 {
+    protected override Bounds LocalBounds()
+    {
+        return new Bounds(
+            new TPoint(Double.NegativeInfinity, 0, Double.NegativeInfinity),
+            new TPoint(Double.PositiveInfinity, 0, Double.PositiveInfinity));
+    }
+
     protected override TVector LocalNormal(TPoint point)
     {
         return new TVector(0, 1, 0);

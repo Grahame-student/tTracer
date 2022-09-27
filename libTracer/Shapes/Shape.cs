@@ -12,6 +12,8 @@ public abstract class Shape : IEquatable<Shape>
     public TMatrix Transform { get; set; }
     public Material Material { get; set; }
     public Shape Parent { get; set; }
+
+    public Bounds Bounds => LocalBounds();
     
     public TMatrix Inverse => _inverse.Value;
 
@@ -21,6 +23,8 @@ public abstract class Shape : IEquatable<Shape>
         Material = new Material();
         _inverse = new Lazy<TMatrix>(() => Transform.Inverse());
     }
+
+    protected abstract Bounds LocalBounds();
 
     public TVector Normal(TPoint worldPoint)
     {
