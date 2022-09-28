@@ -32,9 +32,10 @@ public class Cube : Shape
 
     protected override IList<Intersection> LocalIntersects(TRay ray)
     {
-        (Double tmin, Double tmax) xt = CheckAxis(ray.Origin.X, ray.Direction.X);
-        (Double tmin, Double tmax) yt = CheckAxis(ray.Origin.Y, ray.Direction.Y);
-        (Double tmin, Double tmax) zt = CheckAxis(ray.Origin.Z, ray.Direction.Z);
+        // TODO: Duplicate of code in Bounds class
+        (Double tmin, Double tmax) xt = Bounds.CheckAxis(ray.Origin.X, ray.Direction.X, -1, 1);
+        (Double tmin, Double tmax) yt = Bounds.CheckAxis(ray.Origin.Y, ray.Direction.Y, -1, 1);
+        (Double tmin, Double tmax) zt = Bounds.CheckAxis(ray.Origin.Z, ray.Direction.Z, -1, 1);
 
         Double tmin = new[] { xt.tmin, yt.tmin, zt.tmin }.Max();
         Double tmax = new[] { xt.tmax, yt.tmax, zt.tmax }.Min();
@@ -48,31 +49,5 @@ public class Cube : Shape
         result.Add(new Intersection(tmin, this));
         result.Add(new Intersection(tmax, this));
         return result;
-    }
-
-    private static (Double tmin, Double tmax) CheckAxis(Double origin, Double direction)
-    {
-        Double tminNumerator = (-1 - origin);
-        Double tmaxNumerator = (1 - origin);
-
-        Double tmin;
-        Double tmax;
-        if (Math.Abs(direction) >= Constants.EPSILON)
-        {
-            tmin = tminNumerator / direction;
-            tmax = tmaxNumerator / direction;
-        }
-        else
-        {
-            tmin = tminNumerator * Double.PositiveInfinity;
-            tmax = tmaxNumerator * Double.PositiveInfinity;
-        }
-
-        if (tmin > tmax)
-        {
-            (tmax, tmin) = (tmin, tmax);
-        }
-
-        return (tmin, tmax);
     }
 }

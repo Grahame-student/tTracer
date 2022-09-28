@@ -42,6 +42,7 @@ public class Bounds
 
     public Boolean Intersected(TRay ray)
     {
+        // TODO: Duplicate of code in Cube class
         (Double tmin, Double tmax) xt = CheckAxis(ray.Origin.X, ray.Direction.X, Minimum.X, Maximum.X);
         (Double tmin, Double tmax) yt = CheckAxis(ray.Origin.Y, ray.Direction.Y, Minimum.Y, Maximum.Y);
         (Double tmin, Double tmax) zt = CheckAxis(ray.Origin.Z, ray.Direction.Z, Minimum.Z, Maximum.Z);
@@ -52,7 +53,7 @@ public class Bounds
         return tmin < tmax;
     }
 
-    private static (Double tmin, Double tmax) CheckAxis(Double origin, Double direction, Double min, Double max)
+    public static (Double tmin, Double tmax) CheckAxis(Double origin, Double direction, Double min, Double max)
     {
         Double tminNumerator = (min - origin);
         Double tmaxNumerator = (max - origin);
