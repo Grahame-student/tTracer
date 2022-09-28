@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using libTracer.Common;
 using libTracer.Scene;
 using libTracer.Shapes;
@@ -64,11 +65,11 @@ internal class TestGroup
     {
         _shape = new Group();
         var sphere1 = new Sphere();
-        var sphere2 = new Sphere()
+        var sphere2 = new Sphere
         {
             Transform = new TMatrix().Translation(0, 0, -3)
         };
-        var sphere3 = new Sphere()
+        var sphere3 = new Sphere
         {
             Transform = new TMatrix().Translation(5, 0, 0)
         };
@@ -87,11 +88,11 @@ internal class TestGroup
     {
         _shape = new Group();
         var sphere1 = new Sphere();
-        var sphere2 = new Sphere()
+        var sphere2 = new Sphere
         {
             Transform = new TMatrix().Translation(0, 0, -3)
         };
-        var sphere3 = new Sphere()
+        var sphere3 = new Sphere
         {
             Transform = new TMatrix().Translation(5, 0, 0)
         };
@@ -110,11 +111,11 @@ internal class TestGroup
     {
         _shape = new Group();
         var sphere1 = new Sphere();
-        var sphere2 = new Sphere()
+        var sphere2 = new Sphere
         {
             Transform = new TMatrix().Translation(0, 0, -3)
         };
-        var sphere3 = new Sphere()
+        var sphere3 = new Sphere
         {
             Transform = new TMatrix().Translation(5, 0, 0)
         };
@@ -133,11 +134,11 @@ internal class TestGroup
     {
         _shape = new Group();
         var sphere1 = new Sphere();
-        var sphere2 = new Sphere()
+        var sphere2 = new Sphere
         {
             Transform = new TMatrix().Translation(0, 0, -3)
         };
-        var sphere3 = new Sphere()
+        var sphere3 = new Sphere
         {
             Transform = new TMatrix().Translation(5, 0, 0)
         };
@@ -156,11 +157,11 @@ internal class TestGroup
     {
         _shape = new Group();
         var sphere1 = new Sphere();
-        var sphere2 = new Sphere()
+        var sphere2 = new Sphere
         {
             Transform = new TMatrix().Translation(0, 0, -3)
         };
-        var sphere3 = new Sphere()
+        var sphere3 = new Sphere
         {
             Transform = new TMatrix().Translation(5, 0, 0)
         };
@@ -177,11 +178,11 @@ internal class TestGroup
     [Test]
     public void Intersect_AppliesGroupAndChildTransformation()
     {
-        _shape = new Group()
+        _shape = new Group
         {
             Transform = new TMatrix().Scaling(2, 2, 2)
         };
-        var sphere1 = new Sphere()
+        var sphere1 = new Sphere
         {
             Transform = new TMatrix().Translation(5, 0, 0)
         };
@@ -191,5 +192,117 @@ internal class TestGroup
         IList<Intersection> result = _shape.Intersects(ray);
 
         Assert.That(result.Count, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void BoundsMinimum_ReturnsPositiveInfinity_WhenGroupEmpty()
+    {
+        _shape = new Group();
+
+        var expectedResult = new TPoint(Double.PositiveInfinity, Double.PositiveInfinity, Double.PositiveInfinity);
+
+        Assert.That(_shape.Bounds.Minimum, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void BoundsMaximum_ReturnsNegativeInfinity_WhenGroupEmpty()
+    {
+        _shape = new Group();
+
+        var expectedResult = new TPoint(Double.NegativeInfinity, Double.NegativeInfinity, Double.NegativeInfinity);
+
+        Assert.That(_shape.Bounds.Maximum, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void BoundsMinimum_ReturnsMinimum_OfSingleUntransformedObject()
+    {
+        _shape = new Group();
+        _shape.Add(new Sphere());
+
+        var expectedResult = new TPoint(-1, -1, -1);
+
+        Assert.That(_shape.Bounds.Minimum, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void BoundsMaximum_ReturnsMaximum_OfSingleUntransformedObject()
+    {
+        _shape = new Group();
+        _shape.Add(new Sphere());
+
+        var expectedResult = new TPoint(1, 1, 1);
+
+        Assert.That(_shape.Bounds.Maximum, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void BoundsMinimum_ReturnsMinimum_OfSingleTransformedObject()
+    {
+        _shape = new Group();
+        var sphere = new Sphere
+        {
+            Transform = new TMatrix().Scaling(2, 3, 4)
+        };
+        _shape.Add(sphere);
+
+        var expectedResult = new TPoint(-2, -3, -4);
+
+        Assert.That(_shape.Bounds.Minimum, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void BoundsMaximum_ReturnsMaximum_OfSingleTransformedObject()
+    {
+        _shape = new Group();
+        var sphere = new Sphere
+        {
+            Transform = new TMatrix().Scaling(2, 3, 4)
+        };
+        _shape.Add(sphere);
+
+        var expectedResult = new TPoint(2, 3, 4);
+
+        Assert.That(_shape.Bounds.Maximum, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void BoundsMinimum_ReturnsMinimum_OfMultipleObjects()
+    {
+        _shape = new Group();
+        var sphere = new Sphere
+        {
+            Transform = new TMatrix().Scaling(2, 3, 4)
+        };
+        var sphere2 = new Sphere
+        {
+            Transform = new TMatrix().Scaling(4, 2, 5)
+        };
+        _shape.Add(sphere);
+        _shape.Add(sphere2);
+
+        var expectedResult = new TPoint(-4, -3, -5);
+
+        Assert.That(_shape.Bounds.Minimum, Is.EqualTo(expectedResult));
+    }
+
+    [Test]
+    public void BoundsMaximum_ReturnsMaximum_OfMultipleObjects()
+    {
+        _shape = new Group();
+        var sphere = new Sphere
+        {
+            Transform = new TMatrix().Scaling(2, 3, 4)
+        };
+        var sphere2 = new Sphere
+        {
+            Transform = new TMatrix().Scaling(4, 2, 5)
+        };
+        _shape.Add(sphere);
+        _shape.Add(sphere2);
+
+        var expectedResult = new TPoint(4, 3, 5);
+
+        Assert.That(_shape.Bounds.Maximum, Is.EqualTo(expectedResult));
     }
 }

@@ -25,9 +25,9 @@ public class TPoint : IEquatable<TPoint>
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return Math.Abs(X - other.X) < Constants.EPSILON &&
-               Math.Abs(Y - other.Y) < Constants.EPSILON &&
-               Math.Abs(Z - other.Z) < Constants.EPSILON;
+        return ((X == other.X) || (Math.Abs(X - other.X) < Constants.EPSILON)) &&
+               ((Y == other.Y) || (Math.Abs(Y - other.Y) < Constants.EPSILON)) &&
+               ((Z == other.Z) || (Math.Abs(Z - other.Z) < Constants.EPSILON));
     }
 
     public override Boolean Equals(Object obj)

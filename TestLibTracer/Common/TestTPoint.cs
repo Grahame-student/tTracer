@@ -225,7 +225,7 @@ internal class TestTPoint
     }
 
     [Test]
-    public void Equals_ReturnsFalse_WhenOtherIsVectorAndNull()
+    public void Equals_ReturnsFalse_WhenOtherIsPointAndNull()
     {
         var point1 = new TPoint(0, 0, 0);
         TPoint point2 = null;
@@ -234,10 +234,64 @@ internal class TestTPoint
     }
 
     [Test]
-    public void Equals_ReturnsTrue_WhenOtherIsVectorAndSameReference()
+    public void Equals_ReturnsTrue_WhenOtherIsPointAndSameReference()
     {
         var point1 = new TPoint(0, 0, 0);
         TPoint point2 = point1;
+
+        Assert.That(point1.Equals(point2), Is.True);
+    }
+
+    [Test]
+    public void Equals_ReturnsTrue_WhenXPositiveInfinite()
+    {
+        var point1 = new TPoint(Double.PositiveInfinity, 0, 0);
+        var point2 = new TPoint(Double.PositiveInfinity, 0, 0);
+
+        Assert.That(point1.Equals(point2), Is.True);
+    }
+
+    [Test]
+    public void Equals_ReturnsTrue_WhenXNegativeInfinite()
+    {
+        var point1 = new TPoint(Double.NegativeInfinity, 0, 0);
+        var point2 = new TPoint(Double.NegativeInfinity, 0, 0);
+
+        Assert.That(point1.Equals(point2), Is.True);
+    }
+
+    [Test]
+    public void Equals_ReturnsTrue_WhenYPositiveInfinite()
+    {
+        var point1 = new TPoint(0, Double.PositiveInfinity, 0);
+        var point2 = new TPoint(0, Double.PositiveInfinity, 0);
+
+        Assert.That(point1.Equals(point2), Is.True);
+    }
+
+    [Test]
+    public void Equals_ReturnsTrue_WhenYNegativeInfinite()
+    {
+        var point1 = new TPoint(0, Double.NegativeInfinity, 0);
+        var point2 = new TPoint(0, Double.NegativeInfinity, 0);
+
+        Assert.That(point1.Equals(point2), Is.True);
+    }
+
+    [Test]
+    public void Equals_ReturnsTrue_WhenZPositiveInfinite()
+    {
+        var point1 = new TPoint(0, 0, Double.PositiveInfinity);
+        var point2 = new TPoint(0, 0, Double.PositiveInfinity);
+
+        Assert.That(point1.Equals(point2), Is.True);
+    }
+
+    [Test]
+    public void Equals_ReturnsTrue_WhenZNegativeInfinite()
+    {
+        var point1 = new TPoint(0, 0, Double.NegativeInfinity);
+        var point2 = new TPoint(0, 0, Double.NegativeInfinity);
 
         Assert.That(point1.Equals(point2), Is.True);
     }
