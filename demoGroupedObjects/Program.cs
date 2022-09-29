@@ -8,7 +8,7 @@ namespace demoGroupedObjects;
 
 internal class Program
 {
-    static void Main(string[] args)
+    static void Main(String[] args)
     {
         var world = new World
         {
