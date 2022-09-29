@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using System.Collections.Generic;
 using libTracer.Common;
 using libTracer.Scene;
 
@@ -9,15 +6,13 @@ namespace libTracer.Shapes;
 
 public class Group : Shape
 {
-    private Bounds _localBounds;
+    private readonly Bounds _localBounds;
 
     public IList<Shape> Shapes { get; }
 
     public Group()
     {
-        _localBounds = new Bounds(
-            new TPoint(Double.PositiveInfinity, Double.PositiveInfinity, Double.PositiveInfinity),
-            new TPoint(Double.NegativeInfinity, Double.NegativeInfinity, Double.NegativeInfinity));
+        _localBounds = new Bounds();
         Shapes = new List<Shape>();
     }
 

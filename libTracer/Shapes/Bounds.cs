@@ -11,6 +11,12 @@ public class Bounds
     public TPoint Minimum { get; private set; }
     public TPoint Maximum { get; private set; }
 
+    public Bounds() : this(
+        new TPoint(Double.PositiveInfinity, Double.PositiveInfinity, Double.PositiveInfinity),
+        new TPoint(Double.NegativeInfinity, Double.NegativeInfinity, Double.NegativeInfinity))
+    {
+    }
+
     public Bounds(TPoint minimum, TPoint maximum)
     {
         Minimum = minimum;

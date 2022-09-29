@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoNestedGlassScene", "dem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoGridScene", "demoGridScene\demoGridScene.csproj", "{7FC0EADA-9DB0-4445-BDB0-156AA20E786A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demoGroupedObjects", "demoGroupedObjects\demoGroupedObjects.csproj", "{F3F76F57-B741-4D26-8A85-EFEE3DA476FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "demoGroupedObjects", "demoGroupedObjects\demoGroupedObjects.csproj", "{F3F76F57-B741-4D26-8A85-EFEE3DA476FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demoTriangles", "demoTriangles\demoTriangles.csproj", "{4784B52D-BD48-4F1D-AE98-867466DBA8E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{F3F76F57-B741-4D26-8A85-EFEE3DA476FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3F76F57-B741-4D26-8A85-EFEE3DA476FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3F76F57-B741-4D26-8A85-EFEE3DA476FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4784B52D-BD48-4F1D-AE98-867466DBA8E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4784B52D-BD48-4F1D-AE98-867466DBA8E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4784B52D-BD48-4F1D-AE98-867466DBA8E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4784B52D-BD48-4F1D-AE98-867466DBA8E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,7 +16,7 @@ internal class Program
                 new TPoint(1, 1, -5),
                 new TColour(0.9, 0.9, 0.9))
         };
-        var hex = Hexagon();
+        Shape hex = Hexagon();
         // hex.Transform = new TMatrix().RotationX(Math.PI / 2);
         world.Objects.Add(hex);
 

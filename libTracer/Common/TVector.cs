@@ -23,6 +23,7 @@ public class TVector : IEquatable<TVector>
     public static TVector operator -(TVector v1, TVector v2) => new(v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z);
     public static TVector operator -(TVector v1) => new(-v1.X, -v1.Y, -v1.Z);
     public static TVector operator *(TVector v, Double s) => new(v.X * s, v.Y * s, v.Z * s);
+    public static TVector operator *(Double s, TVector v) => new(v.X * s, v.Y * s, v.Z * s);
     public static TVector operator /(TVector v, Double s) => new(v.X / s, v.Y / s, v.Z / s);
 
     public TVector Normalise()

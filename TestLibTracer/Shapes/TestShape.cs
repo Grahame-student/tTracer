@@ -73,7 +73,7 @@ internal class TestShape
     }
 
     [Test]
-    public void NormalToWorld_ReturnsNoramlWithParentTransformationApplied_WhenParentNotNull()
+    public void NormalToWorld_ReturnsNormalWithParentTransformationApplied_WhenParentNotNull()
     {
         var group1 = new Group
         {
